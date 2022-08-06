@@ -1,26 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SearchPage from "./views/Search/SearchPage";
+import BinsPage from "./views/Bins/BinsPage";
+import RecyclePointsPage from "./views/RecyclePoints/RecyclePointsPage";
+import ProfilePage from "./views/Profile/ProfilePage";
+import AboutPage from "./views/About/AboutPage";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export enum ROUTE_MAP {
+  SEARCH = "/",
+  MY_BINS = "/bins",
+  RECYCLE_POINTS = "/recycle-points",
+  PROFILE = "/profile",
+  ABOUT = "/about",
 }
 
-export default App;
+interface IPage {
+  name: string;
+  path: string;
+}
+
+export const pages: IPage[] = [
+  {
+    name: "Search",
+    path: ROUTE_MAP.SEARCH,
+  },
+  {
+    name: "My bins",
+    path: ROUTE_MAP.MY_BINS,
+  },
+  {
+    name: "Recycle points",
+    path: ROUTE_MAP.RECYCLE_POINTS,
+  },
+  {
+    name: "Profile",
+    path: ROUTE_MAP.PROFILE,
+  },
+  {
+    name: "About",
+    path: ROUTE_MAP.ABOUT,
+  },
+];
+
+export default function App(): JSX.Element {
+  return (
+    // <ThemeProvider theme={theme}>
+    //   <Button variant="contained">Hello World</Button>
+    // </ThemeProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path={ROUTE_MAP.SEARCH} element={<SearchPage />} />
+        <Route path={ROUTE_MAP.MY_BINS} element={<BinsPage />} />
+        <Route
+          path={ROUTE_MAP.RECYCLE_POINTS}
+          element={<RecyclePointsPage />}
+        />
+        <Route path={ROUTE_MAP.PROFILE} element={<ProfilePage />} />
+        <Route path={ROUTE_MAP.ABOUT} element={<AboutPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
