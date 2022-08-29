@@ -7,45 +7,61 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { useState } from 'react';
-import {
-  IUnionListItem,
-  SearchItemType,
-} from "../../views/Search/SearchPage";
+import { KeyboardEvent } from 'react';
+
+import * as hooks from '../../hooks';
+import { SearchItemKind } from '../../api/api.interface';
 import theme from "../../styles/theme";
 import { StyledSearchBar, SearchInput, HintsList } from "./SearchBarStyles";
 
 
 interface ISearchBarProps {
+  searchInputValue: string;
+  setSearchInputValue: React.Dispatch<React.SetStateAction<string>>;
   placeholder?: string;
-  onSearchInputChange: (value: string) => void;
-  addFilter: (hint: IUnionListItem) => void;
+  addFilter: (tagID: string) => void;
+  exactSearch: (query: string) => void;
   searchBarWidth: string;
-  hints: IUnionListItem[];
 }
 
 export const SearchBar = ({
+  searchInputValue,
+  setSearchInputValue,
   placeholder,
-  onSearchInputChange,
   addFilter,
   searchBarWidth,
-  hints,
+  exactSearch
 }: ISearchBarProps): JSX.Element => {
 
-  const [inputValue, setInputValue] = useState<string>('');
+  const fetchSearchListQ = hooks.useFetchSearchList();
+  const hints = hooks.useFuseSearch(fetchSearchListQ.data?.union);
+
+  const searchByEnterKey = (event: KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+      hints.search('');
+      setSearchInputValue(event.target.value);
+      exactSearch(event.target.value);
+    }
+  };
 
   return (
     <StyledSearchBar>
-      <SearchInput withHints={hints.length > 0}>
+      <SearchInput withHints={hints.searchResult.length > 0}>
         <SearchIcon
           sx={{ margin: "0 14px", color: `${theme.palette.primary.main}` }}
         />
+        {/* TODO on Enter */}
         <Input
+          type="search"
           placeholder={placeholder}
-          value={inputValue}
+          value={searchInputValue}
+          onKeyDown={searchByEnterKey}
           onChange={(e): void => {
-            onSearchInputChange(e.target.value);
-            setInputValue(e.target.value);
+            hints.search(e.target.value);
+            setSearchInputValue(e.target.value);
+            if (e.target.value === '') {
+              exactSearch('');
+            }
           }}
           sx={{
             width: searchBarWidth,
@@ -54,28 +70,40 @@ export const SearchBar = ({
           }}
           disableUnderline
         />
-        <Button variant="contained" size="small" sx={{ margin: "0 10px" }}>
+        <Button
+          onClick={(): void => {
+            hints.search('');
+            setSearchInputValue(searchInputValue);
+            exactSearch(searchInputValue);
+          }}
+          variant="contained"
+          size="small"
+          sx={{ margin: "0 10px" }}>
           Find
         </Button>
       </SearchInput>
-      {hints.length > 0 &&
+      {hints.searchResult.length > 0 &&
         <HintsList>
           <List>
-            {hints?.map((hint) => (
+            {hints.searchResult?.map((hint) => (
               <ListItem key={hint.title} disablePadding>
-                <ListItemButton>
+                <ListItemButton onClick={(): void => {
+                  hints.search('');
+                  setSearchInputValue(hint.title);
+                  exactSearch(hint.title);
+                }}>
                   <SearchIcon sx={{ marginRight: "10px" }} />
                   <ListItemText primary={hint.title} />
-                  {(hint.type === SearchItemType.category ||
-                    hint.type === SearchItemType.cluster)
-                    && < Button onClick={(): void => {
-                      addFilter(hint);
-                      onSearchInputChange('');
-                      setInputValue('');
-                    }} variant="contained" size="small" >
-                      Add filter
-                    </Button>}
                 </ListItemButton>
+                {(hint.kind === SearchItemKind.tag)
+                  && < Button
+                    sx={{ margin: "0 10px" }}
+                    onClick={(): void => {
+                      addFilter(hint._id);
+                      hints.search('');
+                    }} variant="contained" size="small" >
+                    Add filter
+                  </Button>}
               </ListItem>
             ))}
           </List>

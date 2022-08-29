@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledSearch = styled.div`
+export const StyledSearchPage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

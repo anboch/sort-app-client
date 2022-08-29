@@ -1,189 +1,104 @@
 
 import { useEffect, useState } from "react";
-import Fuse from "fuse.js";
 
 import { SearchBar } from "../../components/SearchBar/";
 import { withLayout } from "../../components/layout/Layout";
 import { Filters } from '../../components/Filters';
-
-import mockSearchLists from "../../mock/api-material-searchList.json";
-import { StyledSearch } from './SearchPageStyles';
-import { MaterialsList } from '../../components/MaterialsList';
-import { ICategory, IMaterial } from '../../mock/api.interface';
+import * as hooks from '../../hooks';
+import { StyledSearchPage } from './SearchPageStyles';
+import { MaterialList } from '../../components/MaterialList';
+import { IMaterial, ITag, SearchItemKind } from '../../api/api.interface';
+import { TagList } from '../../components/TagList';
 
 export type OnChangeEvent = React.ChangeEvent<
   HTMLTextAreaElement | HTMLInputElement
 >;
 
-export enum SearchItemType {
-  material = 'material',
-  cluster = 'cluster',
-  category = 'category'
-}
-
-export interface IUnionListItem {
-  _id: string;
-  title: string;
-  type: SearchItemType
-}
-
-export const fuseOptions = {
-  // isCaseSensitive: false,
-  includeScore: true,
-  shouldSort: false,
-  // includeMatches: true,
-  // findAllMatches: false,
-  minMatchCharLength: 2,
-  // location: 0,
-  threshold: 0.4,
-  // distance: 100,
-  // useExtendedSearch: false,
-  // ignoreLocation: false,
-  // ignoreFieldNorm: false,
-  // fieldNormWeight: 1,
-};
-
-
-const flatTagList = (): IUnionListItem[] => {
-  const tagList: IUnionListItem[] = [];
-  mockSearchLists.clusters.forEach((cluster) =>
-    cluster.titles.forEach((title) =>
-      tagList.push({ _id: cluster._id, title, type: SearchItemType.cluster })
-    )
-  );
-  return tagList;
-};
-
-const createUnionSearchList = (): IUnionListItem[] => {
-  const unionSearchList: IUnionListItem[] = [];
-
-  mockSearchLists.categories.forEach(({ _id, title }) =>
-    unionSearchList.push({ _id, title, type: SearchItemType.category })
-  );
-
-  // the same as flatTagList() ---
-  mockSearchLists.clusters.forEach((cluster) =>
-    cluster.titles.forEach((title) =>
-      unionSearchList.push({ _id: cluster._id, title, type: SearchItemType.cluster })
-    )
-  );
-  // ---
-
-  mockSearchLists.materials.forEach((material) =>
-    material.titles.forEach((title) =>
-      unionSearchList.push({ _id: material._id, title, type: SearchItemType.material })
-    )
-  );
-
-  return unionSearchList;
-};
-
-const fuseSearchKeys: [keyof IUnionListItem] = ["title"];
-const fuseByUnionSearchList = new Fuse<IUnionListItem>(
-  createUnionSearchList(),
-  {
-    keys: fuseSearchKeys,
-    ...fuseOptions,
-  });
-
-const findHints = (query: string): IUnionListItem[] => {
-  const queryWords = query.split(/\s+/);
-  if (queryWords.length === 0) return [];
-
-  const resultList: Fuse.FuseResult<IUnionListItem>[] = [];
-  queryWords.forEach((word) => {
-    resultList.push(...fuseByUnionSearchList.search(word));
-  });
-  return resultList
-    .filter((i) => {
-      if (i.score) {
-        return i.score < fuseOptions.threshold;
-      } else {
-        return true;
-      }
-    })
-    .sort((a, b) => {
-      if (a.score && b.score) {
-        if (a.score > b.score) {
-          return 1;
-        } else if (a.score < b.score) {
-          return -1;
-        }
-      }
-      if (a.refIndex > b.refIndex) {
-        return 1;
-      } else if (a.refIndex < b.refIndex) {
-        return -1;
-      }
-      return 0;
-    })
-    .map((i) => i.item);
-};
-
-
-
 const Search = (): JSX.Element => {
-  const [hints, setHints] = useState<IUnionListItem[]>([]);
-  const [categoryList, setCategoryList] = useState<ICategory[]>(mockSearchLists.categories);
-  const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
-  const [tagList, setTagList] = useState<IUnionListItem[]>(flatTagList());
-  const [selectedTags, setSelectedTag] = useState<IUnionListItem[]>([]);
-  const [resultList, setResultList] = useState<IMaterial[]>(mockSearchLists.materials);
+  const [selectedTags, setSelectedTag] = useState<ITag[]>([]);
+  const [materialList, setMaterialList] = useState<IMaterial[]>([]);
+  const [tagList, setTagList] = useState<ITag[]>([]);
+  const [searchInputValue, setSearchInputValue] = useState<string>('');
 
-  const onSearchInputChange = (value: string): void => setHints(findHints(value));
+  const fetchSearchListQ = hooks.useFetchSearchList();
+  const { searchResult, search } = hooks.useFuseSearch(fetchSearchListQ.data?.union);
 
-  const addFilter = (hint: IUnionListItem): void => {
-    if (hint.type === SearchItemType.category) {
-      setSelectedCategory(hint);
-    }
-    if (hint.type === SearchItemType.cluster) {
-      setSelectedTag((currentSelectedTags) => [...currentSelectedTags, hint]);
+  const addFilter = (tagID: string): void => {
+    const selectedTagIDs = selectedTags.map(selectedTag => selectedTag._id);
+    const newSelectedTag = fetchSearchListQ.data?.tags.find(tag => tag._id === tagID);
+
+    if (!selectedTagIDs.includes(tagID) && newSelectedTag) {
+      setSearchInputValue('');
+      search('');
+      setSelectedTag((currentSelectedTags) => [...currentSelectedTags, newSelectedTag]);
     }
   };
 
-
   useEffect(() => {
-    let filteredMaterialList = mockSearchLists.materials;
+    const allMaterials = Object.values(fetchSearchListQ.data?.materialsObj ?? {});
+    const allMaterialsObj = fetchSearchListQ.data?.materialsObj;
+    const selectedTagIDs = selectedTags.map(selectedTag => selectedTag._id);
+    let newMaterialList: IMaterial[] = [];
+    const newTagList: ITag[] = [];
 
-    if (selectedCategory) {
-      filteredMaterialList = filteredMaterialList.filter(i => i.categoryID._id === selectedCategory._id);
+    if ((searchResult.length > 0 && allMaterialsObj) || selectedTags.length > 0) {
+      newMaterialList = allMaterials;
     }
+
+    if (searchResult.length > 0 && allMaterialsObj) {
+      newMaterialList = [];
+      searchResult
+        .filter(i => (i.kind === SearchItemKind.material))
+        .map(i => i._id)
+        .forEach(id => newMaterialList.push(allMaterialsObj[id]));
+
+      searchResult
+        .filter(i => (i.kind === SearchItemKind.tag))
+        .map(i => i._id)
+        .forEach(id => {
+          const foundTag = fetchSearchListQ.data?.tags.find(tag => tag._id === id);
+          if (foundTag && !selectedTagIDs.includes(foundTag._id)) {
+            newTagList.push(foundTag);
+          }
+        });
+    }
+
     if (selectedTags.length > 0) {
-      filteredMaterialList = filteredMaterialList.filter(i => {
-        if (i.clusterID) {
-          return selectedTags.map(tag => tag._id).includes(i.clusterID._id);
-        }
+      newMaterialList = newMaterialList.filter(material => {
+        const currentMaterialTagIDs = material.tagIDs.map(tag => tag._id);
+
+        return currentMaterialTagIDs.filter(id => selectedTagIDs.includes(id)).length === selectedTagIDs.length;
       });
     }
 
-    setResultList(filteredMaterialList);
-  }, [selectedCategory, selectedTags]);
-
+    setMaterialList(newMaterialList);
+    setTagList(newTagList);
+  }, [selectedTags, fetchSearchListQ.data?.materialsObj, searchResult, fetchSearchListQ.data?.tags]);
 
 
   return (
-    <StyledSearch>
+    <StyledSearchPage>
       <SearchBar
+        searchInputValue={searchInputValue}
+        setSearchInputValue={setSearchInputValue}
         placeholder="Search by name or type"
-        onSearchInputChange={onSearchInputChange}
         addFilter={addFilter}
         searchBarWidth="60vw"
-        hints={hints}
+        exactSearch={search}
       />
-      <Filters
-        categoryList={categoryList}
-        selectedCategory={selectedCategory}
-        onCategoryChange={(_, value: ICategory | null): void => {
-          setSelectedCategory(value);
-        }}
-        tagList={tagList}
-        selectedTags={selectedTags}
-        onTagChange={(_, value: IUnionListItem[]): void => {
-          setSelectedTag(value);
-        }}
-      />
-      <MaterialsList materials={resultList} />
-    </StyledSearch>
+      {selectedTags.length > 0 &&
+        <Filters
+          tagList={fetchSearchListQ.data?.tags}
+          selectedTags={selectedTags}
+          onTagChange={(_, value: ITag[]): void => {
+            setSelectedTag(value);
+          }}
+        />}
+      {tagList.length > 0 &&
+        <TagList tags={tagList} addFilter={addFilter} />
+      }
+      <MaterialList materials={materialList} />
+    </StyledSearchPage>
   );
 };
 

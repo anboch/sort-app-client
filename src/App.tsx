@@ -1,10 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import SearchPage from "./views/Search/SearchPage";
 import BinsPage from "./views/Bins/BinsPage";
 import RecyclePointsPage from "./views/RecyclePoints/RecyclePointsPage";
 import ProfilePage from "./views/Profile/ProfilePage";
 import AboutPage from "./views/About/AboutPage";
 import "./App.css";
+import { CssBaseline } from '@mui/material';
 
 export enum ROUTE_MAP {
   SEARCH = "/",
@@ -42,22 +46,30 @@ export const pages: IPage[] = [
   },
 ];
 
+const queryClient = new QueryClient();
+
 export default function App(): JSX.Element {
   return (
     // <ThemeProvider theme={theme}>
     //   <Button variant="contained">Hello World</Button>
     // </ThemeProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path={ROUTE_MAP.SEARCH} element={<SearchPage />} />
-        <Route path={ROUTE_MAP.MY_BINS} element={<BinsPage />} />
-        <Route
-          path={ROUTE_MAP.RECYCLE_POINTS}
-          element={<RecyclePointsPage />}
-        />
-        <Route path={ROUTE_MAP.PROFILE} element={<ProfilePage />} />
-        <Route path={ROUTE_MAP.ABOUT} element={<AboutPage />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <CssBaseline />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path={ROUTE_MAP.SEARCH} element={<SearchPage />} />
+            <Route path={ROUTE_MAP.MY_BINS} element={<BinsPage />} />
+            <Route
+              path={ROUTE_MAP.RECYCLE_POINTS}
+              element={<RecyclePointsPage />}
+            />
+            <Route path={ROUTE_MAP.PROFILE} element={<ProfilePage />} />
+            <Route path={ROUTE_MAP.ABOUT} element={<AboutPage />} />
+          </Routes>
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </>
   );
 }
