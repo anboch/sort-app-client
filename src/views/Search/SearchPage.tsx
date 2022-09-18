@@ -9,6 +9,7 @@ import { StyledSearchPage } from './SearchPageStyles';
 import { MaterialList } from '../../components/MaterialList';
 import { IMaterial, ITag, SearchItemKind } from '../../api/api.interface';
 import { TagList } from '../../components/TagList';
+import { useQueryClient } from '@tanstack/react-query';
 
 export type OnChangeEvent = React.ChangeEvent<
   HTMLTextAreaElement | HTMLInputElement
@@ -21,7 +22,10 @@ const Search = (): JSX.Element => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
 
   const fetchSearchListQ = hooks.useFetchSearchList();
+  // const getUser = hooks.useGetUser();
+  // const queryClient = useQueryClient();
   const { searchResult, search } = hooks.useFuseSearch(fetchSearchListQ.data?.union);
+
 
   const addFilter = (tagID: string): void => {
     const selectedTagIDs = selectedTags.map(selectedTag => selectedTag._id);
@@ -40,6 +44,9 @@ const Search = (): JSX.Element => {
     const selectedTagIDs = selectedTags.map(selectedTag => selectedTag._id);
     let newMaterialList: IMaterial[] = [];
     const newTagList: ITag[] = [];
+
+    // queryClient.invalidateQueries(['user']);
+    // console.log('getUser:', getUser)
 
     if ((searchResult.length > 0 && allMaterialsObj) || selectedTags.length > 0) {
       newMaterialList = allMaterials;

@@ -9,12 +9,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { pages, ROUTE_MAP } from "../../../App";
+import { pages } from "../../../App";
 import { Link, useLocation } from "react-router-dom";
 import theme from "../../../styles/theme";
+import { pageRoutes } from '../../../routes';
 
 export const ResponsiveAppBar = (): JSX.Element => {
-  const menuItems = pages.filter(({ path }) => path !== ROUTE_MAP.SEARCH);
+  const menuItems = pages.filter(({ path }) => path !== pageRoutes.search);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -34,8 +35,8 @@ export const ResponsiveAppBar = (): JSX.Element => {
       <Container maxWidth="xl" >
         <Toolbar disableGutters>
           <Link
-            to={ROUTE_MAP.SEARCH}
-            key={ROUTE_MAP.SEARCH}
+            to={pageRoutes.search}
+            key={pageRoutes.search}
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <Typography

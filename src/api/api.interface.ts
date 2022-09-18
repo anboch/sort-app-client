@@ -4,6 +4,18 @@
 //   __v?: number;
 // }
 
+// Request
+export interface IConfirmDto {
+  email: string;
+  confirmCode: string;
+}
+
+// Response
+export interface IJWTs {
+  access_token: string;
+  refresh_token: string;
+}
+
 export enum TagGroup {
   CATEGORY = "category",
   CODE = "code",
@@ -16,9 +28,14 @@ export interface ITag {
   group: TagGroup;
 }
 
-export interface IWay {
-  recyclePointID: string;
-  ruleIDs: IRule[];
+// export interface IWay {
+//   recyclePointID: string;
+//   ruleIDs: IRule[];
+// }
+export interface IRuleSet {
+  _id: string;
+  recyclePointIDs: string[] | IRecyclePoint[];
+  ruleIDs: string[] | IRule[];
 }
 
 export interface IRule {
@@ -38,7 +55,8 @@ interface IRuleLists {
 export interface IType {
   _id: string;
   title: string;
-  ways: IWay[];
+  // todo. more precisely ruleSetIDs: string[] | IRuleSet[];
+  ruleSetIDs: IRuleSet[];
 }
 export type SimilarMaterial = Pick<IMaterial, "_id" | "titles">;
 
@@ -51,6 +69,74 @@ export interface IMaterial {
   images: string[];
   typeIDs: IType[];
   sortedRules: IRuleLists;
+}
+
+enum Role {
+  USER = "user",
+  ADMIN = "admin",
+}
+
+export interface IBin {
+  _id: string;
+  title?: string;
+  // todo. more precisely typeID: string | IType;
+  typeID: IType;
+  ruleSetID: string | IRuleSet;
+}
+
+enum Weekdays {
+  Monday = 1,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
+}
+interface IOpeningHours {
+  dayAndNight: boolean;
+  weekSchedule?: IDailySchedule[];
+}
+
+interface IDailySchedule {
+  day: Weekdays;
+  periods: [{ start: string; end: string }];
+}
+interface IContacts {
+  site: string;
+}
+
+interface ICoordinates {
+  latitude: number;
+  longitude: number;
+}
+interface IPosition {
+  coordinates: ICoordinates;
+  address?: string;
+}
+
+interface ICity {
+  coordinates: ICoordinates;
+  name?: string;
+}
+
+interface IRecyclePoint {
+  _id: string;
+  title: string;
+  description?: string;
+  openingHours?: IOpeningHours;
+  contacts?: IContacts;
+  position: IPosition;
+}
+export interface IUser {
+  _id: string;
+  role: Role;
+  email: string;
+  name?: string;
+  binIDs?: string[] | IBin[];
+  recyclePointIDs?: string[] | IRecyclePoint[];
+  position?: IPosition;
+  city?: ICity;
 }
 
 export enum SearchItemKind {
@@ -68,4 +154,9 @@ export interface ISearchLists {
   materialsObj: { [key: string]: IMaterial };
   tags: ITag[];
   union: IUnionListItem[];
+}
+
+export interface IConfirmRequestInfo {
+  email: string;
+  codeExpirationTime: number;
 }

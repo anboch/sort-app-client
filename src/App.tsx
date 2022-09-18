@@ -9,14 +9,9 @@ import ProfilePage from "./views/Profile/ProfilePage";
 import AboutPage from "./views/About/AboutPage";
 import "./App.css";
 import { CssBaseline } from '@mui/material';
-
-export enum ROUTE_MAP {
-  SEARCH = "/",
-  MY_BINS = "/bins",
-  RECYCLE_POINTS = "/recycle-points",
-  PROFILE = "/profile",
-  ABOUT = "/about",
-}
+import { pageRoutes } from './routes';
+import { LoginFormProvider } from './context/LoginFormContext';
+// import { UserProvider } from './context/UserContext';
 
 interface IPage {
   name: string;
@@ -26,27 +21,39 @@ interface IPage {
 export const pages: IPage[] = [
   {
     name: "Search",
-    path: ROUTE_MAP.SEARCH,
+    path: pageRoutes.search,
   },
   {
     name: "My bins",
-    path: ROUTE_MAP.MY_BINS,
+    path: pageRoutes.myBins,
   },
   {
     name: "Recycle points",
-    path: ROUTE_MAP.RECYCLE_POINTS,
+    path: pageRoutes.recyclePoints,
   },
   {
     name: "Profile",
-    path: ROUTE_MAP.PROFILE,
+    path: pageRoutes.profile,
   },
   {
     name: "About",
-    path: ROUTE_MAP.ABOUT,
+    path: pageRoutes.about,
   },
 ];
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  // defaultOptions: {
+  // queries: {
+  // notifyOnChangeProps: 'all',
+  //   refetchOnWindowFocus: false,
+  //   refetchOnmount: false,
+  //   refetchOnReconnect: false,
+  //   retry: false,
+  //   staleTime: 5 * 60 * 1000,
+  // },
+  // },
+});
+
 
 export default function App(): JSX.Element {
   return (
@@ -56,18 +63,23 @@ export default function App(): JSX.Element {
     <>
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes>
-            <Route path={ROUTE_MAP.SEARCH} element={<SearchPage />} />
-            <Route path={ROUTE_MAP.MY_BINS} element={<BinsPage />} />
-            <Route
-              path={ROUTE_MAP.RECYCLE_POINTS}
-              element={<RecyclePointsPage />}
-            />
-            <Route path={ROUTE_MAP.PROFILE} element={<ProfilePage />} />
-            <Route path={ROUTE_MAP.ABOUT} element={<AboutPage />} />
-          </Routes>
-        </BrowserRouter>
+        {/* <UserProvider> */}
+        <LoginFormProvider>
+          <BrowserRouter>
+            {/* // todo to separate component 'Routes' */}
+            <Routes>
+              <Route path={pageRoutes.search} element={<SearchPage />} />
+              <Route path={pageRoutes.myBins} element={<BinsPage />} />
+              <Route
+                path={pageRoutes.recyclePoints}
+                element={<RecyclePointsPage />}
+              />
+              <Route path={pageRoutes.profile} element={<ProfilePage />} />
+              <Route path={pageRoutes.about} element={<AboutPage />} />
+            </Routes>
+          </BrowserRouter>
+        </LoginFormProvider>
+        {/* </UserProvider> */}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>

@@ -1,7 +1,7 @@
 import { Chip, ListItemText, Accordion, AccordionSummary, AccordionDetails, Typography, Button } from '@mui/material';
 import React from 'react';
-import { IMaterial, IRule, IType } from '../../api/api.interface';
-import { StyledMaterialList, MaterialTitles, Tags, MaterialInfo, SimilarMaterial, MaterialPreview, MaterialAcceptInfo, MaterialDescription, SimilarMaterialAndDescription, MaterialRules, MaterialImages, Buttons } from './MaterialListStyles';
+import { IMaterial } from '../../api/api.interface';
+import * as S from './MaterialListStyles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
@@ -20,7 +20,7 @@ export const MaterialList = ({ materials }: MaterialListProps): JSX.Element => {
 
   // TODO add message that materials have not found
   return (
-    <StyledMaterialList>
+    <S.MaterialList>
       {materials.length > 0 &&
         materials?.map(({ _id, titles, tagIDs, similarMaterialIDs, sortedRules, description, typeIDs }) => (
           <Accordion key={_id} sx={{ width: "95%" }} expanded={expanded === _id} onChange={handleChange(_id)}>
@@ -30,39 +30,39 @@ export const MaterialList = ({ materials }: MaterialListProps): JSX.Element => {
             // aria-controls="panel1bh-content"
             // id="panel1bh-header"
             >
-              <MaterialPreview>
-                <MaterialTitles>
+              <S.MaterialPreview>
+                <S.MaterialTitles>
                   {titles.map((title) => (
                     <ListItemText key={title} primary={`- ${title}`} />
                   ))}
-                </MaterialTitles>
-                <MaterialAcceptInfo>
+                </S.MaterialTitles>
+                <S.MaterialAcceptInfo>
                   {typeIDs.length > 0 &&
                     <PublishedWithChangesIcon color='success' />
                   }
-                </MaterialAcceptInfo>
-                <Tags>
+                </S.MaterialAcceptInfo>
+                <S.Tags>
                   {tagIDs.map((tag) => (
                     <Chip key={tag.titles[0]} label={tag.titles.join(', ')} variant="outlined" size="small" />
                   ))}
-                </Tags>
-              </MaterialPreview>
+                </S.Tags>
+              </S.MaterialPreview>
             </AccordionSummary>
             <AccordionDetails>
-              <MaterialInfo>
-                <SimilarMaterialAndDescription>
+              <S.MaterialInfo>
+                <S.SimilarMaterialAndDescription>
                   {similarMaterialIDs.length > 0 &&
-                    <SimilarMaterial>
+                    <S.SimilarMaterial>
                       <Typography variant={"subtitle2"}>Often confused with:</Typography>
                       {similarMaterialIDs.map((material) => (
                         <ListItemText key={material._id} secondary={`- ${material.titles.join(', ')}`} />
                       ))}
-                    </SimilarMaterial>}
-                  <MaterialDescription>
+                    </S.SimilarMaterial>}
+                  <S.MaterialDescription>
                     <Typography variant={"body2"}>{description}</Typography>
-                  </MaterialDescription>
-                </SimilarMaterialAndDescription>
-                <MaterialRules>
+                  </S.MaterialDescription>
+                </S.SimilarMaterialAndDescription>
+                <S.MaterialRules>
                   {sortedRules.generalRules.length > 0 &&
                     <Typography variant={"subtitle2"}>General rules:</Typography>
                   }
@@ -75,21 +75,22 @@ export const MaterialList = ({ materials }: MaterialListProps): JSX.Element => {
                   {sortedRules.localRules.map((rule) =>
                     (<ListItemText key={rule._id} secondary={`- ${rule.description}`} />)
                   )}
-                </MaterialRules>
-                <MaterialImages>
-                  <MaterialImages></MaterialImages>
-                </MaterialImages>
-              </MaterialInfo>
-              <Buttons>
-                <Button size="small" variant="contained" endIcon={<PlaylistAddIcon />}>
+                </S.MaterialRules>
+                <S.MaterialImages>
+                  Images
+                </S.MaterialImages>
+              </S.MaterialInfo>
+              <S.Buttons>
+                <Button
+                  size="small" variant="contained" endIcon={<PlaylistAddIcon />}>
                   Add to bin
                 </Button>
-              </Buttons>
+              </S.Buttons>
             </AccordionDetails>
             {/* </MaterialItem> */}
           </Accordion>
         ))
       }
-    </StyledMaterialList >
+    </S.MaterialList >
   );
 };

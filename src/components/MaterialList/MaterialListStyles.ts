@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledMaterialList = styled.div`
+export const MaterialList = styled.div`
   display: flex;
   align-items: center;
   /* justify-content: center; */
