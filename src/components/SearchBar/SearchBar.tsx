@@ -37,7 +37,7 @@ export const SearchBar = ({
   const hints = hooks.useFuseSearch(fetchSearchListQ.data?.union);
 
   const searchByEnterKey = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
       hints.search('');
       setSearchInputValue(event.target.value);
       exactSearch(event.target.value);
