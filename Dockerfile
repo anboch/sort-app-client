@@ -1,11 +1,14 @@
-FROM node:16.16-alpine
+FROM node:16.16-alpine as build
 WORKDIR /opt/app
-ADD package.json package.json
+ADD *.json ./
 RUN npm install
 ADD . .
-# ENV NODE_ENV production
-# RUN npm run build
-# RUN npm prune --production
-# todo prune src
-# CMD ["npm", "start"]
-# EXPOSE 3000
+RUN npm run build
+
+FROM node:16.16-alpine
+WORKDIR /opt/app
+ADD package.json ./
+RUN npm install --only=prod
+COPY --from=build /opt/app/build ./build
+RUN npm install -g serve
+CMD ["serve", "-s", "build"]
