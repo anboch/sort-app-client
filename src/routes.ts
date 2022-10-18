@@ -7,15 +7,15 @@ export const pageRoutes = {
 } as const;
 
 export const apiRoutes = {
-  fetchSearchList: "/searchList",
-  requestConfirmCode: "/auth/request",
-  confirmAndLogin: "/auth/confirm",
-  getUser: "/user",
-  updateUser: "/user",
-  getBins: "/bin/all",
-  updateBin: "/bin",
-  getTypeById: "/type/by-id/",
-  getRuleSetById: "/rule-set/by-id/",
-  refreshTokens: "/auth/refresh",
-  logout: "/auth/logout",
+  fetchSearchList: "/api/searchList",
+  requestConfirmCode: "/api/auth/request",
+  confirmAndLogin: "/api/auth/confirm",
+  getUser: "/api/user",
+  updateUser: "/api/user",
+  getBins: "/api/bin/all",
+  updateBin: "/api/bin",
+  getTypeById: "/api/type/by-id/",
+  getRuleSetById: "/api/rule-set/by-id/",
+  refreshTokens: "/api/auth/refresh",
+  logout: "/api/auth/logout",
 } as const;
