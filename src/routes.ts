@@ -13,6 +13,7 @@ export const apiRoutes = {
   getUser: "/api/user",
   updateUser: "/api/user",
   getBins: "/api/bin/all",
+  createBin: "/api/bin/create",
   updateBin: "/api/bin",
   getTypeById: "/api/type/by-id/",
   getRuleSetById: "/api/rule-set/by-id/",

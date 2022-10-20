@@ -45,6 +45,10 @@ export const api = Object.freeze({
     return (await $api.get<IBin[]>(apiRoutes.getBins)).data;
   },
 
+  async createBin(valuesForCreate: Partial<IBin>): Promise<IBin> {
+    return (await $api.post<IBin>(apiRoutes.createBin, valuesForCreate)).data;
+  },
+
   async updateBin(valuesForUpdate: Partial<IBin>): Promise<IBin> {
     return (await $api.patch<IBin>(apiRoutes.updateBin, valuesForUpdate)).data;
   },
