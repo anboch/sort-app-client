@@ -67,7 +67,7 @@ export interface IMaterial {
   similarMaterialIDs: SimilarMaterial[];
   description: string;
   images: string[];
-  typeIDs: IType[];
+  typeIDs: IType[] | string[];
   sortedRules: IRuleLists;
 }
 
@@ -80,7 +80,7 @@ export interface IBin {
   _id: string;
   title?: string;
   // todo. more precisely typeID: string | IType;
-  typeID: IType;
+  typeID: IType | string;
   ruleSetID: string | IRuleSet;
 }
 
@@ -120,7 +120,7 @@ interface ICity {
   name?: string;
 }
 
-interface IRecyclePoint {
+export interface IRecyclePoint {
   _id: string;
   title: string;
   description?: string;
