@@ -51,7 +51,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
                 textDecoration: "none",
               }}
             >
-              RecycleBin
+              For-Recycling
             </Typography>
           </Link>
           <Box
