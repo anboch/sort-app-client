@@ -15,7 +15,6 @@ import theme from "../../../styles/theme";
 import { pageRoutes } from '../../../routes';
 
 export const ResponsiveAppBar = (): JSX.Element => {
-  const menuItems = pages.filter(({ path }) => path !== pageRoutes.search);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -62,7 +61,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
               justifyContent: { sm: "flex-end" },
             }}
           >
-            {menuItems.map(({ name, path }) => (
+            {pages.map(({ name, path }) => (
               <Link to={path} key={name} style={{ textDecoration: "none" }}>
                 <Button
                   key={name}
@@ -116,7 +115,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
                 display: { xs: "block", sm: "none" },
               }}
             >
-              {menuItems.map(({ name, path }) => (
+              {pages.map(({ name, path }) => (
                 <Link
                   to={path}
                   key={name}

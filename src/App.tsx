@@ -4,7 +4,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import SearchPage from "./views/Search/SearchPage";
 import BinsPage from "./views/Bins/BinsPage";
-import RecyclePointsPage from "./views/RecyclePoints/RecyclePointsPage";
 import ProfilePage from "./views/Profile/ProfilePage";
 import AboutPage from "./views/About/AboutPage";
 import "./App.css";
@@ -26,10 +25,6 @@ export const pages: IPage[] = [
   {
     name: "My bins",
     path: pageRoutes.myBins,
-  },
-  {
-    name: "Recycle points",
-    path: pageRoutes.recyclePoints,
   },
   {
     name: "Profile",
@@ -66,14 +61,9 @@ export default function App(): JSX.Element {
         {/* <UserProvider> */}
         <LoginFormProvider>
           <BrowserRouter>
-            {/* // todo to separate component 'Routes' */}
             <Routes>
               <Route path={pageRoutes.search} element={<SearchPage />} />
               <Route path={pageRoutes.myBins} element={<BinsPage />} />
-              <Route
-                path={pageRoutes.recyclePoints}
-                element={<RecyclePointsPage />}
-              />
               <Route path={pageRoutes.profile} element={<ProfilePage />} />
               <Route path={pageRoutes.about} element={<AboutPage />} />
             </Routes>

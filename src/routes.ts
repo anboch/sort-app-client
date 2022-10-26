@@ -1,7 +1,6 @@
 export const pageRoutes = {
   search: "/",
   myBins: "/bins",
-  recyclePoints: "/recycle-points",
   profile: "/profile",
   about: "/about",
 } as const;
