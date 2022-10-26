@@ -1,13 +1,13 @@
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Checkbox, Collapse, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Button, Checkbox, Collapse, DialogActions, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+
+import MapGL, { Marker } from '@urbica/react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import * as S from './BinStyles';
-import { IBin, IRule, IRuleSet, IType } from '../../api/api.interface';
+import { IBin, IRecyclePoint, IRule, IRuleSet, IType } from '../../api/api.interface';
 import { useState } from 'react';
 import { useUpdateBin } from '../../hooks/useUpdateBin';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
@@ -17,10 +17,14 @@ import { useGetUniqRulesSortedByQuantity } from '../../hooks/useGetUniqRulesSort
 import { getId, getIDs } from '../../utils/utils';
 import { useGetRuleSet } from '../../hooks/useGetRuleSet';
 import { EditableValue } from '../common/EditableValue';
+import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecyclePoint';
+import { useGetTypes } from '../../hooks/useGetTypes';
+import { useDeleteBin } from '../../hooks/useDeleteBin';
+import { AlertDialog } from '../AlertDialog/AlertDialog';
 
 const BinTitle = ({ _id, title = '' }: Pick<IBin, '_id' | 'title'>) => {
   const binM = useUpdateBin();
-  const mutationFunc = (inputValue: string) => binM.mutate({ _id, title: inputValue })
+  const mutationFunc = (inputValue: string) => binM.mutate({ _id, title: inputValue });
 
   return (
     <S.BinTitle>
@@ -45,59 +49,164 @@ const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
 
 };
 
-const BinRules = ({ ruleSetID }: { ruleSetID: IRuleSet | undefined }) => {
+export const BinRules = ({ selectedRuleSet, allRuleSets, isEditMode = false }:
+  { selectedRuleSet: IRuleSet | null, allRuleSets: IRuleSet[] | null, isEditMode?: boolean }) => {
+  const uniqRulesSortedByQuantity = useGetUniqRulesSortedByQuantity(isEditMode ? (allRuleSets || []) : (selectedRuleSet ? [selectedRuleSet] : []));
+  const selectedRuleIds = getIDs(selectedRuleSet?.ruleIDs ?? []);
+  const isSelected = (ruleId: string) => isEditMode ? selectedRuleIds?.includes(ruleId) : true;
 
+  // todo change 'Loading..'
   return (
     <>
       <Typography variant="caption" >
         rules
       </Typography>
-      {ruleSetID && ruleSetID.ruleIDs.map((rule) => {
-        if (typeof rule === 'object' && rule.description) {
-          return (<Typography key={rule._id}>- {rule.description}</Typography>);
-        }
-      })
-      }
-    </>);
-
+      {(isEditMode && allRuleSets && selectedRuleIds.length === 0) ? (
+        <Typography variant='subtitle1' >
+          Choose a recycling point to see rules
+        </Typography>
+      ) : (
+        (allRuleSets && selectedRuleIds.length > 0) ? (
+          uniqRulesSortedByQuantity.map((rule) => {
+            if (typeof rule === 'object' && rule.description) {
+              return (<S.BinRule key={rule._id} selected={isSelected(rule._id)}>
+                - {rule.description}
+              </S.BinRule>);
+            }
+          })
+        ) : (
+          <Typography>
+            Loading...
+          </Typography>)
+      )}
+    </>
+  );
 };
 
-const BinRecyclePoints = ({ ruleSetID }: { ruleSetID: IRuleSet | undefined }) => {
+interface IBinRecyclePointsProps {
+  // selectedRecyclePoint: IRecyclePoint | null,
+  isEditMode?: boolean,
+  allRecyclePoints: IRecyclePoint[],
+  selectedRuleSet: IRuleSet | null,
+  setSelectedRecyclePoint: Dispatch<SetStateAction<IRecyclePoint | null>>
+}
+
+export const BinRecyclePoints = ({
+  isEditMode = true,
+  // selectedRecyclePoint,
+  allRecyclePoints,
+  selectedRuleSet,
+  setSelectedRecyclePoint
+}: IBinRecyclePointsProps) => {
+  const [viewport, setViewport] = useState({
+    latitude: 55.755836,
+    longitude: 37.617659,
+    zoom: 9
+  });
+  const isSelected = (recyclePointId: string) => getIDs((selectedRuleSet?.recyclePointIDs ?? [])).includes(recyclePointId);
+
+  const styleSelected = {
+    padding: '10px',
+    color: '#fff',
+    cursor: 'pointer',
+    background: '#19c850',
+    borderRadius: '6px'
+  };
+
+  const style = {
+    padding: '5px',
+    color: '#fff',
+    cursor: 'pointer',
+    background: '#5d6972',
+    borderRadius: '6px'
+  };
+
+
 
   return (
     <>
       <Typography variant="caption" >
         recycle points
       </Typography>
-      {typeof ruleSetID === 'object' && ruleSetID.recyclePointIDs.map((recyclePoint) => {
-        if (typeof recyclePoint === 'object' && recyclePoint.title) {
-          return (<Typography key={recyclePoint._id}>- {recyclePoint.title}</Typography>);
-        }
-      })
-      }
-    </>);
+      <MapGL
+        style={{ width: '100%', height: '400px' }}
+        // mapStyle='mapbox://styles/mapbox/light-v9'
+        mapStyle="mapbox://styles/mapbox/streets-v8"
+        accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+        latitude={viewport.latitude}
+        longitude={viewport.longitude}
+        zoom={viewport.zoom}
+        onViewportChange={setViewport}
+      >
+        {allRecyclePoints.map(recyclePoint => {
+          if (isEditMode || isSelected(recyclePoint._id)) {
+            return (
+              <Marker
+                key={recyclePoint._id}
+                latitude={recyclePoint?.position?.coordinates.latitude ?? null}
+                longitude={recyclePoint?.position?.coordinates.longitude ?? null}
+                onClick={() => setSelectedRecyclePoint(recyclePoint)}
+              >
+                <div style={isSelected(recyclePoint._id) ? styleSelected : style}>!</div>
+              </Marker>
+            );
+          }
+        })}
+      </MapGL>
+    </>
+  );
 };
 
-const BinActions = ({ isSettingsOpen, setIsSettingsOpen }: { isSettingsOpen: boolean, setIsSettingsOpen: Dispatch<SetStateAction<boolean>> }) => {
+const BinActions = ({ isEditMode, setCurrentRecyclePointAsSelected, setIsEditMode, deleteBin, handleSaveClick }:
+  {
+    isEditMode: boolean,
+    setCurrentRecyclePointAsSelected: () => void,
+    deleteBin: () => void,
+    setIsEditMode: Dispatch<SetStateAction<boolean>>,
+    handleSaveClick: () => void
+  }) => {
 
-  const handleExpandClick = () => {
-    setIsSettingsOpen((prev) => !prev);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const deleteAlertMessage = 'Do you want to delete the bin?'
+
+  const handleEditClick = () => {
+    setCurrentRecyclePointAsSelected();
+    setIsEditMode(true);
   };
+
+  const handleDeleteClick = () => {
+    setIsAlertOpen(true);
+  };
+
+  // todo add handleConfirmDelete with success sign
 
   return (
     <S.BinActions>
-      <IconButton
-        onClick={handleExpandClick}
-        size="small">
-        <SettingsIcon fontSize="inherit" />
-      </IconButton>
+      <DialogActions>
+        {isEditMode ?
+          (<>
+            <Button onClick={handleSaveClick}>Save</Button>
+            <Button onClick={() => setIsEditMode(false)}>Cancel</Button>
+          </>)
+          :
+          (<>
+            <Button onClick={handleDeleteClick}>Delete</Button>
+            <Button onClick={handleEditClick}>Edit</Button>
+          </>)
+        }
+      </DialogActions>
+      <AlertDialog
+        isOpen={isAlertOpen}
+        setIsOpen={setIsAlertOpen}
+        message={deleteAlertMessage}
+        action={deleteBin}
+      />
     </S.BinActions>
   );
 };
 
-// todo. better typeID: Pick<IBin, 'typeID'>['typeID']
 const BinSettings = ({ binId, typeID, isSettingsOpen, currentRuleSetId }:
-  { binId: string, typeID: IType, isSettingsOpen: boolean, currentRuleSetId: string }) => {
+  { binId: string, typeID: IBin['typeID'], isSettingsOpen: boolean, currentRuleSetId: string }) => {
 
   const typeQ = useGetType(getId(typeID), isSettingsOpen);
   const binM = useUpdateBin();
@@ -112,7 +221,6 @@ const BinSettings = ({ binId, typeID, isSettingsOpen, currentRuleSetId }:
       binM.mutate({ _id: binId, ruleSetID: newRuleSetId });
     }
   };
-
 
   return (
     <Collapse in={isSettingsOpen} timeout="auto" unmountOnExit>
@@ -160,26 +268,71 @@ const BinSettings = ({ binId, typeID, isSettingsOpen, currentRuleSetId }:
 };
 
 export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
-  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  // const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const ruleSetQ = useGetRuleSet(getId(bin.ruleSetID));
+  const typeQ = useGetType(getId(bin.typeID));
+  const binM = useUpdateBin();
+  const deleteBinM = useDeleteBin();
+  const {
+    allRuleSets,
+    allRecyclePoints,
+    selectedType,
+    selectedRuleSet,
+    selectedRecyclePoint,
+    setSelectedRecyclePoint,
+  } = useChangeSelectedRecyclePoint(useMemo(() => [typeQ.data], [typeQ.data]));
 
+  const setCurrentRecyclePointAsSelected = () => setSelectedRecyclePoint(typeof ruleSetQ.data?.recyclePointIDs[0] === 'object' ? ruleSetQ.data?.recyclePointIDs[0] : null);
 
+  const deleteBin = () => deleteBinM.mutate(bin._id);
+
+  const saveUpdatedBin = () => {
+    if (selectedRuleSet && selectedRuleSet?._id !== getId(bin.ruleSetID)) {
+      binM.mutate({ _id: bin._id, ruleSetID: selectedRuleSet?._id },
+        {
+          onSuccess() {
+            // todo add loading and Success sign
+            setIsEditMode(false);
+          },
+        });
+    } else {
+      setIsEditMode(false);
+    }
+    // todo handle selectedRuleSet === null
+  };
+
+  // todo add spinner while loading ruleSetQ
   return (
     <S.Bin>
+      <BinActions
+        isEditMode={isEditMode}
+        setCurrentRecyclePointAsSelected={setCurrentRecyclePointAsSelected}
+        setIsEditMode={setIsEditMode}
+        deleteBin={deleteBin}
+        handleSaveClick={saveUpdatedBin} />
       <BinTitle
         _id={bin._id}
         title={bin.title}
       />
       <BinType typeID={bin.typeID} />
       <Divider variant="middle" />
-      <BinRules ruleSetID={ruleSetQ.data} />
-      <BinRecyclePoints ruleSetID={ruleSetQ.data} />
-      <Divider variant="middle" />
-      <BinActions isSettingsOpen setIsSettingsOpen={setIsSettingsOpen} />
-      <BinSettings
+      <BinRules
+        isEditMode={isEditMode}
+        // todo create constant
+        selectedRuleSet={isEditMode ? selectedRuleSet : (ruleSetQ.data ?? null)}
+        allRuleSets={allRuleSets} />
+      <BinRecyclePoints
+        isEditMode={isEditMode}
+        // todo create constant
+        selectedRuleSet={isEditMode ? selectedRuleSet : (ruleSetQ.data ?? null)}
+        allRecyclePoints={allRecyclePoints}
+        setSelectedRecyclePoint={setSelectedRecyclePoint} />
+      {/* <Divider variant="middle" /> */}
+      {/* <BinSettings
         binId={bin._id}
         typeID={bin.typeID}
         isSettingsOpen={isSettingsOpen}
-        currentRuleSetId={getId(bin.ruleSetID)} />
+        currentRuleSetId={getId(bin.ruleSetID)} /> */}
     </S.Bin>);
 };

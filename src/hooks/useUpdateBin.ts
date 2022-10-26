@@ -6,17 +6,17 @@ import { api } from "../api/api";
 import { queryKeys } from "../api/api.constants";
 import { IBin } from "../api/api.interface";
 
+interface IUpdateBinProps extends Partial<IBin> {
+  _id: string;
+}
+
 export const useUpdateBin = () => {
   const client = useQueryClient();
 
   return useMutation(
-    // todo redo Partial<IBin> to AtLeastOneAndID type
-    (valuesForUpdate: Partial<IBin>) => api.updateBin(valuesForUpdate),
+    (valuesForUpdate: IUpdateBinProps) => api.updateBin(valuesForUpdate),
     {
-      onMutate: async (valuesForUpdate: Partial<IBin>) => {
-        if (!valuesForUpdate._id) {
-          return;
-        }
+      onMutate: async (valuesForUpdate: IUpdateBinProps) => {
         await client.cancelQueries([queryKeys.bins]);
 
         const oldBins = client.getQueryData<IBin[]>([queryKeys.bins]);

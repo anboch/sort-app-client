@@ -1,4 +1,4 @@
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import styled from "styled-components";
 
 export const BinActions = styled.div`
@@ -16,3 +16,7 @@ export const Bin = styled(Paper)(({ theme }) => ({
   padding: "10px",
   marginBottom: "10px",
 }));
+
+export const BinRule = styled(Typography)<{ selected: boolean }>`
+  ${({ selected }) => !selected && `text-decoration-line: line-through;`};
+`;

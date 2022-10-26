@@ -1,7 +1,5 @@
-/* Core */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-/* Instruments */
 import { api } from "../api/api";
 import { queryKeys } from "../api/api.constants";
 import { IBin } from "../api/api.interface";
@@ -10,10 +8,9 @@ export const useCreateBin = () => {
   const client = useQueryClient();
 
   return useMutation(
-    // todo redo Partial<IBin> to AtLeastOneAndID type
     (valuesForCreate: Partial<IBin>) => api.createBin(valuesForCreate),
     {
-      onMutate: async (valuesForCreate: Partial<IBin>) => {
+      onMutate: async () => {
         await client.cancelQueries([queryKeys.bins]);
         const oldBins = client.getQueryData<IBin[]>([queryKeys.bins]);
         return { oldBins };

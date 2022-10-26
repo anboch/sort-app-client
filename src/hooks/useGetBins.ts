@@ -8,7 +8,7 @@ export const useGetBins = (): UseQueryResult<IBin[]> => {
     // retry: false,
     enabled: !!localStorage.getItem("access_token"),
     // ToDO think about staleTime(access_token time !?) and cacheTime(refresh_token time !?)
-    staleTime: Infinity,
-    cacheTime: Infinity,
+    // staleTime: Infinity,
+    // cacheTime: Infinity,
   });
 };

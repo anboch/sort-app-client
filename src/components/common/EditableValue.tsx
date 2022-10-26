@@ -7,7 +7,7 @@ import { Typography, IconButton, TextField } from '@mui/material';
 import * as S from './EditableValueStyles';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 
-export const EditableValue = ({ mutationFunc, value = '' }: { mutationFunc: (inputValue: string) => void, value: string }) => {
+export const EditableValue = ({ mutationFunc, value = '' }: { mutationFunc: (inputValue: string) => void, value: string | undefined }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const ref = useOutsideClick(() => setIsEditMode(false));
@@ -35,7 +35,7 @@ export const EditableValue = ({ mutationFunc, value = '' }: { mutationFunc: (inp
               {value}
             </Typography>
             : <Typography onClick={() => setIsEditMode(true)} variant="subtitle1" >
-              Enter a title for the bin...
+              Enter a value...
             </Typography>
           }
         </div>

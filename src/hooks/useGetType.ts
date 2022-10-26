@@ -3,9 +3,10 @@ import { api } from "../api";
 import { queryKeys } from "../api/api.constants";
 import { IType } from "../api/api.interface";
 
+// todo switch to useGetTypes
 export const useGetType = (
   typeID: string,
-  enabled: boolean
+  enabled = true
 ): UseQueryResult<IType> => {
   return useQuery<IType>(
     [queryKeys.type, typeID],
