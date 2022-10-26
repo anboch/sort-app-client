@@ -79,7 +79,6 @@ enum Role {
 export interface IBin {
   _id: string;
   title?: string;
-  // todo. more precisely typeID: string | IType;
   typeID: IType | string;
   ruleSetID: string | IRuleSet;
 }

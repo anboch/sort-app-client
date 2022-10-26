@@ -23,13 +23,13 @@ const ProfileInfoItem = ({ property }: { property: string }) => {
         edit
       </Link> */}
     </S.ProfileInfoItem>
-  )
-}
+  );
+};
 
 
 export const ProfileInfo = ({ userData }: IProfileInfoProps): JSX.Element => {
   const userM = useUpdateUser();
-  const nameMutationFunc = (inputValue: string) => userM.mutate({ name: inputValue })
+  const nameMutationFunc = (inputValue: string) => userM.mutate({ name: inputValue });
   return (
     <S.ProfileInfo>
       <EditableValue value={userData.name} mutationFunc={nameMutationFunc} />

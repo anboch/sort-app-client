@@ -1,6 +1,5 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -10,16 +9,14 @@ import { LoginFormContext } from '../../context/LoginFormContext';
 import { api } from '../../api';
 import * as S from './LoginFormStyles';
 import { useQuery } from '@tanstack/react-query';
-import { Box, CircularProgress, Link } from '@mui/material';
+import { Box, CircularProgress, Link, Dialog } from '@mui/material';
 import { useCountdown, useConfirmAndLogin, useGetUser } from '../../hooks';
 import { responseErrorMessages } from '../../api/api.constants';
-// import { UserContext } from '../../context/UserContext';
 
 
 
 export const LoginForm = (): JSX.Element => {
   const { isOpen, setIsOpen } = useContext(LoginFormContext);
-  // const { injectUser } = useContext(UserContext);
   const userQ = useGetUser();
   const [inputEmailValue, setInputEmailValue] = useState('');
   const [inputCodeValue, setInputCodeValue] = useState('');
@@ -66,7 +63,6 @@ export const LoginForm = (): JSX.Element => {
       confirmAndLoginQ.remove();
 
       (async (): Promise<void> => {
-        // await injectUser()
         await userQ.refetch();
       })()
       handleClose()
@@ -112,7 +108,6 @@ export const LoginForm = (): JSX.Element => {
     setConfirmFor('');
     setCountdown(null);
     requestConfirmCodeQ.remove()
-    // setInputEmailValue('');
   };
 
   return (

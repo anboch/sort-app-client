@@ -8,11 +8,8 @@ interface IProfileActionsProps {
   userData: IUser;
 }
 
-
-
 export const ProfileActions = ({ userData }: IProfileActionsProps): JSX.Element => {
   const { logout } = useLogout();
-
 
   return (
     <S.ProfileActions>
