@@ -53,6 +53,10 @@ export const api = Object.freeze({
     return (await $api.patch<IBin>(apiRoutes.updateBin, valuesForUpdate)).data;
   },
 
+  async deleteBin(binId: string): Promise<void> {
+    return (await $api.delete<void>(apiRoutes.deleteBin + "/" + binId)).data;
+  },
+
   async fetchType(id: string): Promise<IType> {
     return (await $api.get<IType>(apiRoutes.getTypeById + id)).data;
   },

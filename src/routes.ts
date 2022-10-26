@@ -14,6 +14,7 @@ export const apiRoutes = {
   getBins: "/api/bin/all",
   createBin: "/api/bin/create",
   updateBin: "/api/bin",
+  deleteBin: "/api/bin",
   getTypeById: "/api/type/by-id/",
   getRuleSetById: "/api/rule-set/by-id/",
   refreshTokens: "/api/auth/refresh",
