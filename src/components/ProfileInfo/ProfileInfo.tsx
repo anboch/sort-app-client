@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import React from 'react';
 import { IUser } from '../../api/api.interface';
 import { useUpdateUser } from '../../hooks/useUpdateUser';
@@ -32,8 +32,7 @@ export const ProfileInfo = ({ userData }: IProfileInfoProps): JSX.Element => {
   const nameMutationFunc = (inputValue: string) => userM.mutate({ name: inputValue })
   return (
     <S.ProfileInfo>
-      {userData.name &&
-        <EditableValue value={userData.name} mutationFunc={nameMutationFunc} />}
+      <EditableValue value={userData.name} mutationFunc={nameMutationFunc} />
       {userData.email &&
         <ProfileInfoItem property={userData.email} />}
     </S.ProfileInfo>
