@@ -9,7 +9,7 @@ const axiosConfig = {
   //   "Access-Control-Allow-Origin": "http://localhost:5000",
   //   "Content-Type": "application/json",
   // },
-  baseURL: process.env.REACT_APP_RB_API_URL,
+  // baseURL: process.env.REACT_APP_RB_API_URL,
 };
 
 export const $api = axios.create(axiosConfig);

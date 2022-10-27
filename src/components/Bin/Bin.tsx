@@ -98,6 +98,8 @@ export const BinRecyclePoints = ({
   selectedRuleSet,
   setSelectedRecyclePoint
 }: IBinRecyclePointsProps) => {
+  // todo to env
+  const mapboxPublicAccessToken = 'pk.eyJ1IjoiYW5ib2NoIiwiYSI6ImNsOGFvMWVjYjBpcWkzb251NWh5bGRjeGUifQ.WPV0N6nsgi2bt6LBvUQn9w'
   const [viewport, setViewport] = useState({
     latitude: 55.755836,
     longitude: 37.617659,
@@ -121,8 +123,7 @@ export const BinRecyclePoints = ({
     borderRadius: '6px'
   };
 
-
-
+  // todo add handle error if REACT_APP_MAPBOX_ACCESS_TOKEN is undefined
   return (
     <>
       <Typography variant="caption" >
@@ -132,7 +133,7 @@ export const BinRecyclePoints = ({
         style={{ width: '100%', height: '400px' }}
         // mapStyle='mapbox://styles/mapbox/light-v9'
         mapStyle="mapbox://styles/mapbox/streets-v8"
-        accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+        accessToken={mapboxPublicAccessToken}
         latitude={viewport.latitude}
         longitude={viewport.longitude}
         zoom={viewport.zoom}
