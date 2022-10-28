@@ -28,7 +28,10 @@ const BinTitle = ({ _id, title = '' }: Pick<IBin, '_id' | 'title'>) => {
 
   return (
     <S.BinTitle>
-      <EditableValue mutationFunc={mutationFunc} value={title} />
+      <EditableValue
+        mutationFunc={mutationFunc}
+        value={title}
+        title={'title'} />
     </S.BinTitle>
   );
 };
@@ -98,8 +101,10 @@ export const BinRecyclePoints = ({
   selectedRuleSet,
   setSelectedRecyclePoint
 }: IBinRecyclePointsProps) => {
+
   // todo to env
   const mapboxPublicAccessToken = 'pk.eyJ1IjoiYW5ib2NoIiwiYSI6ImNsOGFvMWVjYjBpcWkzb251NWh5bGRjeGUifQ.WPV0N6nsgi2bt6LBvUQn9w'
+
   const [viewport, setViewport] = useState({
     latitude: 55.755836,
     longitude: 37.617659,
@@ -121,6 +126,11 @@ export const BinRecyclePoints = ({
     cursor: 'pointer',
     background: '#5d6972',
     borderRadius: '6px'
+  };
+
+  const style2 = {
+    width: '100%',
+    height: '100%',
   };
 
   // todo add handle error if REACT_APP_MAPBOX_ACCESS_TOKEN is undefined
