@@ -64,8 +64,8 @@ export const LoginForm = (): JSX.Element => {
 
       (async (): Promise<void> => {
         await userQ.refetch();
-      })()
-      handleClose()
+      })();
+      handleClose();
     }
 
   }, [confirmAndLoginQ.isSuccess]);
@@ -75,7 +75,7 @@ export const LoginForm = (): JSX.Element => {
       setInputCodeValue('');
       setConfirmFor('');
       setCountdown(null);
-      requestConfirmCodeQ.remove()
+      requestConfirmCodeQ.remove();
     }
   }, [countdown]);
 
@@ -84,7 +84,7 @@ export const LoginForm = (): JSX.Element => {
     if (inputCodeValue.length === 6) {
       (async (): Promise<void> => {
         await confirmAndLoginQ.refetch();
-      })()
+      })();
     }
   }, [inputCodeValue]);
 
@@ -107,7 +107,7 @@ export const LoginForm = (): JSX.Element => {
     setInputCodeValue('');
     setConfirmFor('');
     setCountdown(null);
-    requestConfirmCodeQ.remove()
+    requestConfirmCodeQ.remove();
   };
 
   return (
@@ -187,7 +187,7 @@ export const LoginForm = (): JSX.Element => {
                   setConfirmFor('');
                   setInputCodeValue('');
                   setCountdown(null);
-                  requestConfirmCodeQ.remove()
+                  requestConfirmCodeQ.remove();
                 }}>
                 Edit
               </Link>
