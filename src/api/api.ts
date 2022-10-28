@@ -41,6 +41,10 @@ export const api = Object.freeze({
       .data;
   },
 
+  async deleteUser(userId: IUser["_id"]): Promise<void> {
+    return (await $api.delete<void>(apiRoutes.deleteUser + "/" + userId)).data;
+  },
+
   async fetchBins(): Promise<IBin[]> {
     return (await $api.get<IBin[]>(apiRoutes.getBins)).data;
   },

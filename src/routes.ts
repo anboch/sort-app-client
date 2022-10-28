@@ -11,6 +11,7 @@ export const apiRoutes = {
   confirmAndLogin: "/api/auth/confirm",
   getUser: "/api/user",
   updateUser: "/api/user",
+  deleteUser: "/api/user",
   getBins: "/api/bin/all",
   createBin: "/api/bin/create",
   updateBin: "/api/bin",
