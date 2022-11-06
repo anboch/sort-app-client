@@ -135,6 +135,7 @@ export interface IUser {
   email: string;
   name?: string;
   binIDs?: string[] | IBin[];
+  binCounter?: number;
   recyclePointIDs?: string[] | IRecyclePoint[];
   position?: IPosition;
   city?: ICity;
