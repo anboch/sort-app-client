@@ -7,12 +7,13 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { KeyboardEvent } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 
 import * as hooks from '../../hooks';
 import { SearchItemKind } from '../../api/api.interface';
 import theme from "../../styles/theme";
 import { StyledSearchBar, SearchInput, HintsList } from "./SearchBarStyles";
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 
 interface ISearchBarProps {
@@ -35,23 +36,33 @@ export const SearchBar = ({
 
   const fetchSearchListQ = hooks.useFetchSearchList();
   const hints = hooks.useFuseSearch(fetchSearchListQ.data?.union);
+  const [isInputInFocus, setIsInputInFocus] = useState(true)
+  const ref = useOutsideClick(() => setIsInputInFocus(false));
 
   const searchByEnterKey = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
-      hints.search('');
-      setSearchInputValue(event.target.value);
       exactSearch(event.target.value);
+      event.target.blur()
+      setIsInputInFocus(false)
     }
   };
 
+  useEffect(() => {
+    hints.search(searchInputValue);
+  }, [searchInputValue])
+
+
+  // todo redo hints to Menu from List to navigate by keyboard
   return (
-    <StyledSearchBar>
-      <SearchInput withHints={hints.searchResult.length > 0}>
+    <StyledSearchBar ref={ref}>
+      <SearchInput withHints={isInputInFocus && hints.searchResult.length > 0}>
         <SearchIcon
           sx={{ margin: "0 14px", color: `${theme.palette.primary.main}` }}
         />
-        {/* TODO on Enter */}
         <Input
+          onFocus={() => {
+            setIsInputInFocus(true)
+          }}
           type="search"
           placeholder={placeholder}
           value={searchInputValue}
@@ -72,9 +83,8 @@ export const SearchBar = ({
         />
         <Button
           onClick={(): void => {
-            hints.search('');
-            setSearchInputValue(searchInputValue);
             exactSearch(searchInputValue);
+            setIsInputInFocus(false)
           }}
           variant="contained"
           size="small"
@@ -82,15 +92,15 @@ export const SearchBar = ({
           Find
         </Button>
       </SearchInput>
-      {hints.searchResult.length > 0 &&
+      {isInputInFocus && hints.searchResult.length > 0 &&
         <HintsList>
           <List>
             {hints.searchResult?.map((hint) => (
               <ListItem key={hint.title} disablePadding>
                 <ListItemButton onClick={(): void => {
-                  hints.search('');
                   setSearchInputValue(hint.title);
                   exactSearch(hint.title);
+                  setIsInputInFocus(false)
                 }}>
                   <SearchIcon sx={{ marginRight: "10px" }} />
                   <ListItemText primary={hint.title} />
@@ -100,7 +110,8 @@ export const SearchBar = ({
                     sx={{ margin: "0 10px" }}
                     onClick={(): void => {
                       addFilter(hint._id);
-                      hints.search('');
+                      setSearchInputValue('')
+                      setIsInputInFocus(false)
                     }} variant="contained" size="small" >
                     Add filter
                   </Button>}

@@ -3,7 +3,10 @@ import {
   IBin,
   IConfirmDto,
   IConfirmRequestInfo,
+  IFeedback,
   IJWTs,
+  IMaterial,
+  IRecyclePoint,
   IRuleSet,
   ISearchLists,
   IType,
@@ -87,6 +90,10 @@ export const api = Object.freeze({
 
   async logout(): Promise<AxiosResponse> {
     return $api.get(apiRoutes.logout);
+  },
+
+  async createFeedback(values: Omit<IFeedback, "_id">): Promise<void> {
+    return (await $api.post<void>(apiRoutes.createFeedback, values)).data;
   },
 
   // async createTodo(newTodo) {

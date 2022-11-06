@@ -14,6 +14,7 @@ export const apiRoutes = {
   deleteUser: "/api/user",
   getBins: "/api/bin/all",
   createBin: "/api/bin/create",
+  createFeedback: "/api/feedback/create",
   updateBin: "/api/bin",
   deleteBin: "/api/bin",
   getTypeById: "/api/type/by-id/",

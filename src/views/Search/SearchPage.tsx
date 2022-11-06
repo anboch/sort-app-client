@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { SearchBar } from "../../components/SearchBar/";
 import { withLayout } from "../../components/layout/Layout";
@@ -9,7 +9,8 @@ import { StyledSearchPage } from './SearchPageStyles';
 import { MaterialList } from '../../components/MaterialList';
 import { IMaterial, ITag, SearchItemKind } from '../../api/api.interface';
 import { TagList } from '../../components/TagList';
-import { useQueryClient } from '@tanstack/react-query';
+import { getIDs } from '../../utils/utils';
+import { MaterialNotFoundNotice } from '../../components/MaterialNotFoundNotice/MaterialNotFoundNotice';
 
 export type OnChangeEvent = React.ChangeEvent<
   HTMLTextAreaElement | HTMLInputElement
@@ -21,16 +22,24 @@ const Search = (): JSX.Element => {
   const [tagList, setTagList] = useState<ITag[]>([]);
   const [searchInputValue, setSearchInputValue] = useState<string>('');
 
+
   const fetchSearchListQ = hooks.useFetchSearchList();
-  // const getUser = hooks.useGetUser();
-  // const queryClient = useQueryClient();
-  const { searchResult, search } = hooks.useFuseSearch(fetchSearchListQ.data?.union);
+  const allMaterialsObj = fetchSearchListQ.data?.materialsObj;
+  const allTags = useMemo(
+    () => fetchSearchListQ.data?.tags ?? [],
+    [fetchSearchListQ.data?.tags]);
+  const allMaterials = useMemo(
+    () => Object.values(allMaterialsObj ?? {}),
+    [allMaterialsObj]);
 
+  const { searchQuery, searchResult, search } = hooks.useFuseSearch(fetchSearchListQ.data?.union);
 
+  // todo filters to a hook
   const addFilter = (tagID: string): void => {
-    const selectedTagIDs = selectedTags.map(selectedTag => selectedTag._id);
-    const newSelectedTag = fetchSearchListQ.data?.tags.find(tag => tag._id === tagID);
+    const selectedTagIDs = getIDs(selectedTags);
+    const newSelectedTag = allTags.find(tag => tag._id === tagID);
 
+    // todo filter tags from suggestion list before
     if (!selectedTagIDs.includes(tagID) && newSelectedTag) {
       setSearchInputValue('');
       search('');
@@ -39,21 +48,15 @@ const Search = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const allMaterials = Object.values(fetchSearchListQ.data?.materialsObj ?? {});
-    const allMaterialsObj = fetchSearchListQ.data?.materialsObj;
-    const selectedTagIDs = selectedTags.map(selectedTag => selectedTag._id);
+    if (!allMaterialsObj) {
+      return;
+    }
+
     let newMaterialList: IMaterial[] = [];
     const newTagList: ITag[] = [];
 
-    // queryClient.invalidateQueries(['user']);
-    // console.log('getUser:', getUser)
+    if (searchQuery) {
 
-    if ((searchResult.length > 0 && allMaterialsObj) || selectedTags.length > 0) {
-      newMaterialList = allMaterials;
-    }
-
-    if (searchResult.length > 0 && allMaterialsObj) {
-      newMaterialList = [];
       searchResult
         .filter(i => (i.kind === SearchItemKind.material))
         .map(i => i._id)
@@ -63,24 +66,28 @@ const Search = (): JSX.Element => {
         .filter(i => (i.kind === SearchItemKind.tag))
         .map(i => i._id)
         .forEach(id => {
-          const foundTag = fetchSearchListQ.data?.tags.find(tag => tag._id === id);
-          if (foundTag && !selectedTagIDs.includes(foundTag._id)) {
+          const foundTag = allTags.find(tag => tag._id === id);
+          if (foundTag && !getIDs(selectedTags).includes(foundTag._id)) {
             newTagList.push(foundTag);
           }
         });
+    } else if (selectedTags.length > 0) {
+      newMaterialList = allMaterials;
     }
 
     if (selectedTags.length > 0) {
       newMaterialList = newMaterialList.filter(material => {
         const currentMaterialTagIDs = material.tagIDs.map(tag => tag._id);
 
-        return currentMaterialTagIDs.filter(id => selectedTagIDs.includes(id)).length === selectedTagIDs.length;
+        return getIDs(selectedTags).every(tagId => currentMaterialTagIDs.includes(tagId));
       });
     }
 
     setMaterialList(newMaterialList);
     setTagList(newTagList);
-  }, [selectedTags, fetchSearchListQ.data?.materialsObj, searchResult, fetchSearchListQ.data?.tags]);
+  }, [allMaterialsObj, allMaterials, searchResult, selectedTags, allTags]);
+
+
 
 
   return (
@@ -95,7 +102,7 @@ const Search = (): JSX.Element => {
       />
       {selectedTags.length > 0 &&
         <Filters
-          tagList={fetchSearchListQ.data?.tags}
+          tagList={allTags}
           selectedTags={selectedTags}
           onTagChange={(_, value: ITag[]): void => {
             setSelectedTag(value);
@@ -105,6 +112,15 @@ const Search = (): JSX.Element => {
         <TagList tags={tagList} addFilter={addFilter} />
       }
       <MaterialList materials={materialList} />
+      <MaterialNotFoundNotice
+        selectedTagsLength={selectedTags.length}
+        searchQuery={searchQuery}
+        searchResultLength={searchResult.length}
+        materialListLength={materialList.length}
+        clearSelectedTags={() => setSelectedTag([])}
+        clearSearch={() => search('')}
+
+      />
     </StyledSearchPage>
   );
 };

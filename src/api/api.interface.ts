@@ -4,6 +4,8 @@
 //   __v?: number;
 // }
 
+import { feedbackTypes } from "../components/common/constants";
+
 // Request
 export interface IConfirmDto {
   email: string;
@@ -158,4 +160,10 @@ export interface ISearchLists {
 export interface IConfirmRequestInfo {
   email: string;
   codeExpirationTime: number;
+}
+
+export interface IFeedback {
+  _id?: string;
+  type: typeof feedbackTypes[keyof typeof feedbackTypes];
+  description: string;
 }
