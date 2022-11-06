@@ -3,7 +3,10 @@ import { api } from "../api";
 import { queryKeys } from "../api/api.constants";
 import { IRuleSet } from "../api/api.interface";
 
-export const useGetRuleSet = (ruleSetId: string): UseQueryResult<IRuleSet> => {
+export const useGetRuleSet = (
+  ruleSetId: string
+  // enabled = true
+): UseQueryResult<IRuleSet> => {
   return useQuery<IRuleSet>(
     [queryKeys.ruleSet, ruleSetId],
     () => api.fetchRuleSet(ruleSetId),
