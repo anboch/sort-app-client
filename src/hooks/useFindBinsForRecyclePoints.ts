@@ -1,11 +1,6 @@
-import { useMemo } from "react";
-import { IBin, IRuleSet } from "../api/api.interface";
-import {
-  getId,
-  getAllRecyclePointsFromRuleSets,
-  makeUniqueById,
-  getIDs,
-} from "../utils/utils";
+import { useMemo } from 'react';
+import { IBin, IRuleSet } from '../api/api.interface';
+import { getId, getAllRecyclePointsFromRuleSets, makeUniqueById, getIDs } from '../utils/utils';
 
 interface IBinsForRecyclePoints {
   [key: string]: IBin[];
@@ -22,7 +17,7 @@ export const useFindBinsForRecyclePoints = (bins: IBin[] | undefined) => {
     const binsForRecyclePoints: IBinsForRecyclePoints = {};
 
     bins.forEach((bin) => {
-      if (typeof bin.ruleSetID === "object") {
+      if (typeof bin.ruleSetID === 'object') {
         bin.ruleSetID.recyclePointIDs.forEach((recyclePoint) => {
           if (binsForRecyclePoints[getId(recyclePoint)]) {
             binsForRecyclePoints[getId(recyclePoint)].push(bin);
@@ -41,9 +36,7 @@ export const useFindBinsForRecyclePoints = (bins: IBin[] | undefined) => {
     }, [] as IRuleSet[]);
 
     // todo fix getAllRecyclePointsFromRuleSets to get right types
-    const allRecyclePointsIds = getAllRecyclePointsFromRuleSets(
-      makeUniqueById(allRuleSets)
-    );
+    const allRecyclePointsIds = getAllRecyclePointsFromRuleSets(makeUniqueById(allRuleSets));
     return {
       allRecyclePointsIds: [...new Set(getIDs(allRecyclePointsIds))],
       binsForRecyclePoints,

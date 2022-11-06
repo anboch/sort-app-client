@@ -1,3 +1,3 @@
-import { MyRecyclePoints } from "./MyRecyclePoints";
+import { MyRecyclePoints } from './MyRecyclePoints';
 
 export { MyRecyclePoints };

@@ -1,8 +1,7 @@
+import { useEffect, useMemo, useState } from 'react';
 
-import { useEffect, useMemo, useState } from "react";
-
-import { SearchBar } from "../../components/SearchBar/";
-import { withLayout } from "../../components/layout/Layout";
+import { SearchBar } from '../../components/SearchBar/';
+import { withLayout } from '../../components/layout/Layout';
 import { Filters } from '../../components/Filters';
 import * as hooks from '../../hooks';
 import { StyledSearchPage } from './SearchPageStyles';
@@ -12,9 +11,7 @@ import { TagList } from '../../components/TagList';
 import { getIDs } from '../../utils/utils';
 import { MaterialNotFoundNotice } from '../../components/MaterialNotFoundNotice/MaterialNotFoundNotice';
 
-export type OnChangeEvent = React.ChangeEvent<
-  HTMLTextAreaElement | HTMLInputElement
->;
+export type OnChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
 const Search = (): JSX.Element => {
   const [selectedTags, setSelectedTag] = useState<ITag[]>([]);
@@ -22,22 +19,17 @@ const Search = (): JSX.Element => {
   const [tagList, setTagList] = useState<ITag[]>([]);
   const [searchInputValue, setSearchInputValue] = useState<string>('');
 
-
   const fetchSearchListQ = hooks.useFetchSearchList();
   const allMaterialsObj = fetchSearchListQ.data?.materialsObj;
-  const allTags = useMemo(
-    () => fetchSearchListQ.data?.tags ?? [],
-    [fetchSearchListQ.data?.tags]);
-  const allMaterials = useMemo(
-    () => Object.values(allMaterialsObj ?? {}),
-    [allMaterialsObj]);
+  const allTags = useMemo(() => fetchSearchListQ.data?.tags ?? [], [fetchSearchListQ.data?.tags]);
+  const allMaterials = useMemo(() => Object.values(allMaterialsObj ?? {}), [allMaterialsObj]);
 
   const { searchQuery, searchResult, search } = hooks.useFuseSearch(fetchSearchListQ.data?.union);
 
   // todo filters to a hook
   const addFilter = (tagID: string): void => {
     const selectedTagIDs = getIDs(selectedTags);
-    const newSelectedTag = allTags.find(tag => tag._id === tagID);
+    const newSelectedTag = allTags.find((tag) => tag._id === tagID);
 
     // todo filter tags from suggestion list before
     if (!selectedTagIDs.includes(tagID) && newSelectedTag) {
@@ -56,17 +48,16 @@ const Search = (): JSX.Element => {
     const newTagList: ITag[] = [];
 
     if (searchQuery) {
+      searchResult
+        .filter((i) => i.kind === SearchItemKind.material)
+        .map((i) => i._id)
+        .forEach((id) => newMaterialList.push(allMaterialsObj[id]));
 
       searchResult
-        .filter(i => (i.kind === SearchItemKind.material))
-        .map(i => i._id)
-        .forEach(id => newMaterialList.push(allMaterialsObj[id]));
-
-      searchResult
-        .filter(i => (i.kind === SearchItemKind.tag))
-        .map(i => i._id)
-        .forEach(id => {
-          const foundTag = allTags.find(tag => tag._id === id);
+        .filter((i) => i.kind === SearchItemKind.tag)
+        .map((i) => i._id)
+        .forEach((id) => {
+          const foundTag = allTags.find((tag) => tag._id === id);
           if (foundTag && !getIDs(selectedTags).includes(foundTag._id)) {
             newTagList.push(foundTag);
           }
@@ -76,19 +67,16 @@ const Search = (): JSX.Element => {
     }
 
     if (selectedTags.length > 0) {
-      newMaterialList = newMaterialList.filter(material => {
-        const currentMaterialTagIDs = material.tagIDs.map(tag => tag._id);
+      newMaterialList = newMaterialList.filter((material) => {
+        const currentMaterialTagIDs = material.tagIDs.map((tag) => tag._id);
 
-        return getIDs(selectedTags).every(tagId => currentMaterialTagIDs.includes(tagId));
+        return getIDs(selectedTags).every((tagId) => currentMaterialTagIDs.includes(tagId));
       });
     }
 
     setMaterialList(newMaterialList);
     setTagList(newTagList);
   }, [allMaterialsObj, allMaterials, searchResult, selectedTags, allTags]);
-
-
-
 
   return (
     <StyledSearchPage>
@@ -100,17 +88,16 @@ const Search = (): JSX.Element => {
         searchBarWidth="60vw"
         exactSearch={search}
       />
-      {selectedTags.length > 0 &&
+      {selectedTags.length > 0 && (
         <Filters
           tagList={allTags}
           selectedTags={selectedTags}
           onTagChange={(_, value: ITag[]): void => {
             setSelectedTag(value);
           }}
-        />}
-      {tagList.length > 0 &&
-        <TagList tags={tagList} addFilter={addFilter} />
-      }
+        />
+      )}
+      {tagList.length > 0 && <TagList tags={tagList} addFilter={addFilter} />}
       <MaterialList materials={materialList} />
       <MaterialNotFoundNotice
         selectedTagsLength={selectedTags.length}
@@ -119,7 +106,6 @@ const Search = (): JSX.Element => {
         materialListLength={materialList.length}
         clearSelectedTags={() => setSelectedTag([])}
         clearSearch={() => search('')}
-
       />
     </StyledSearchPage>
   );

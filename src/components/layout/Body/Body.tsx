@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { BodyProps } from "./Body.props";
+import styled from 'styled-components';
+import { BodyProps } from './Body.props';
 
 const Body = ({ children, className }: BodyProps): JSX.Element => {
   return <div className={className}>{children}</div>;

@@ -1,3 +1,3 @@
-import { MaterialList } from "./MaterialList";
+import { MaterialList } from './MaterialList';
 
 export { MaterialList };

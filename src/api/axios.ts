@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { apiRoutes } from "../routes";
-import { IJWTs } from "./api.interface";
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { apiRoutes } from '../routes';
+import { IJWTs } from './api.interface';
 
 const axiosConfig = {
   // todo set right headers
@@ -14,19 +14,15 @@ const axiosConfig = {
 
 export const $api = axios.create(axiosConfig);
 
-$api.interceptors.request.use(
-  (config: AxiosRequestConfig): AxiosRequestConfig => {
-    if (config.headers) {
-      // todo localStorage names to var
-      config.headers.Authorization = `Bearer ${localStorage.getItem(
-        "access_token"
-      )}`;
-    }
-    return config;
+$api.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
+  if (config.headers) {
+    // todo localStorage names to var
+    config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
   }
-);
+  return config;
+});
 
-declare module "axios" {
+declare module 'axios' {
   export interface AxiosRequestConfig {
     _isRetry?: boolean;
   }
@@ -41,14 +37,14 @@ $api.interceptors.response.use(
     // todo 401 status can be in different situation !?
     if (error.response?.status === 401 && !originalRequest?._isRetry) {
       originalRequest._isRetry = true;
-      const response = await axios.get<Pick<IJWTs, "access_token">>(
+      const response = await axios.get<Pick<IJWTs, 'access_token'>>(
         apiRoutes.refreshTokens,
         axiosConfig
       );
       // todo redo to try catch (https://www.youtube.com/watch?v=fN25fMQZ2v0&t=1337s)
       if (response.status === 200) {
         // todo localStorage names to var
-        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem('access_token', response.data.access_token);
         return $api.request(originalRequest);
       }
     }

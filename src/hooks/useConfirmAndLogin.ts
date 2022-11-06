@@ -1,14 +1,10 @@
-import {
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "@tanstack/react-query";
-import { AxiosError, AxiosResponse } from "axios";
-import { api } from "../api";
-import { IConfirmDto, IJWTs } from "../api/api.interface";
-import { apiRoutes } from "../routes";
-import { queryKeys, responseErrorMessages } from "../api/api.constants";
-import { useEffect } from "react";
+import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
+import { api } from '../api';
+import { IConfirmDto, IJWTs } from '../api/api.interface';
+import { apiRoutes } from '../routes';
+import { queryKeys, responseErrorMessages } from '../api/api.constants';
+import { useEffect } from 'react';
 
 interface IErrorResponseData {
   error: string;
@@ -19,16 +15,10 @@ interface IErrorResponseData {
 export const useConfirmAndLogin = (
   // todo change on Mutation
   confirmDto: IConfirmDto
-): UseQueryResult<
-  AxiosResponse<Pick<IJWTs, "access_token">>,
-  AxiosError<IErrorResponseData>
-> => {
+): UseQueryResult<AxiosResponse<Pick<IJWTs, 'access_token'>>, AxiosError<IErrorResponseData>> => {
   const client = useQueryClient();
 
-  return useQuery<
-    AxiosResponse<Pick<IJWTs, "access_token">>,
-    AxiosError<IErrorResponseData>
-  >({
+  return useQuery<AxiosResponse<Pick<IJWTs, 'access_token'>>, AxiosError<IErrorResponseData>>({
     queryKey: [apiRoutes.confirmAndLogin, confirmDto],
     queryFn: () => api.confirmAndLogin(confirmDto),
     enabled: false,
@@ -38,7 +28,7 @@ export const useConfirmAndLogin = (
     onSuccess: async ({ data }) => {
       if (data?.access_token) {
         // todo localStorage names to var
-        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem('access_token', data.access_token);
       }
       await client.invalidateQueries([queryKeys.user]);
       await client.invalidateQueries([queryKeys.bins]);

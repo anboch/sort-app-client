@@ -12,7 +12,8 @@ const RecyclePointsPage = (): JSX.Element => {
   return (
     <>
       <MyRecyclePoints />
-    </>);
+    </>
+  );
 };
 
 export default withLayout(RecyclePointsPage);

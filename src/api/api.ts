@@ -1,4 +1,4 @@
-import { $api } from "./axios";
+import { $api } from './axios';
 import {
   IBin,
   IConfirmDto,
@@ -11,28 +11,23 @@ import {
   ISearchLists,
   IType,
   IUser,
-} from "./api.interface";
-import { AxiosResponse } from "axios";
-import { apiRoutes } from "../routes";
+} from './api.interface';
+import { AxiosResponse } from 'axios';
+import { apiRoutes } from '../routes';
 
 export const api = Object.freeze({
   async fetchSearchList(): Promise<ISearchLists> {
     return (await $api.get<ISearchLists>(apiRoutes.fetchSearchList)).data;
   },
 
-  async requestConfirmCode(
-    email: string
-  ): Promise<AxiosResponse<IConfirmRequestInfo>> {
+  async requestConfirmCode(email: string): Promise<AxiosResponse<IConfirmRequestInfo>> {
     return $api.post(apiRoutes.requestConfirmCode, { email });
   },
 
   async confirmAndLogin(
     confirmDto: IConfirmDto
-  ): Promise<AxiosResponse<Pick<IJWTs, "access_token">>> {
-    return $api.post<Pick<IJWTs, "access_token">>(
-      apiRoutes.confirmAndLogin,
-      confirmDto
-    );
+  ): Promise<AxiosResponse<Pick<IJWTs, 'access_token'>>> {
+    return $api.post<Pick<IJWTs, 'access_token'>>(apiRoutes.confirmAndLogin, confirmDto);
   },
 
   async fetchUser(): Promise<IUser> {
@@ -40,11 +35,10 @@ export const api = Object.freeze({
   },
 
   async updateUser(valuesForUpdate: Partial<IUser>): Promise<IUser> {
-    return (await $api.patch<IUser>(apiRoutes.updateUser, valuesForUpdate))
-      .data;
+    return (await $api.patch<IUser>(apiRoutes.updateUser, valuesForUpdate)).data;
   },
 
-  async deleteUser(userId: IUser["_id"]): Promise<void> {
+  async deleteUser(userId: IUser['_id']): Promise<void> {
     return (await $api.delete<void>(apiRoutes.deleteUser + userId)).data;
   },
 
@@ -69,18 +63,14 @@ export const api = Object.freeze({
   },
 
   async fetchMaterialsByType(typeId: string): Promise<IMaterial[]> {
-    return (
-      await $api.get<IMaterial[]>(apiRoutes.getMaterialsByTypeId + typeId)
-    ).data;
+    return (await $api.get<IMaterial[]>(apiRoutes.getMaterialsByTypeId + typeId)).data;
   },
 
   async fetchRuleSet(id: string): Promise<IRuleSet> {
     return (await $api.get<IRuleSet>(apiRoutes.getRuleSetById + id)).data;
   },
 
-  async fetchRecyclePointsByIds(
-    recyclePointIds: string[]
-  ): Promise<IRecyclePoint[]> {
+  async fetchRecyclePointsByIds(recyclePointIds: string[]): Promise<IRecyclePoint[]> {
     return (
       await $api.put<IRecyclePoint[]>(apiRoutes.getRecyclePointsByIds, {
         recyclePointIds,
@@ -92,7 +82,7 @@ export const api = Object.freeze({
     return $api.get(apiRoutes.logout);
   },
 
-  async createFeedback(values: Omit<IFeedback, "_id">): Promise<void> {
+  async createFeedback(values: Omit<IFeedback, '_id'>): Promise<void> {
     return (await $api.post<void>(apiRoutes.createFeedback, values)).data;
   },
 

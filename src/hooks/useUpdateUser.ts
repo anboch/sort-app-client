@@ -1,10 +1,10 @@
 /* Core */
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 /* Instruments */
-import { api } from "../api/api";
-import { queryKeys } from "../api/api.constants";
-import { IUser } from "../api/api.interface";
+import { api } from '../api/api';
+import { queryKeys } from '../api/api.constants';
+import { IUser } from '../api/api.interface';
 
 export const useUpdateUser = () => {
   const client = useQueryClient();

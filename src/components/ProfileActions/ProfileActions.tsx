@@ -13,14 +13,14 @@ interface IProfileActionsProps {
 export const ProfileActions = ({ userData }: IProfileActionsProps): JSX.Element => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const { logout } = useLogout();
-  const deleteUserM = useDeleteUser()
+  const deleteUserM = useDeleteUser();
   const deleteAccount = () => deleteUserM.mutate(userData._id);
-  const deleteAlertMessage = 'Do you want to delete the account?'
+  const deleteAlertMessage = 'Do you want to delete the account?';
 
   const handleDeleteClick = () => {
     setIsAlertOpen(true);
     // todo add success sign
-  }
+  };
 
   return (
     <S.ProfileActions>

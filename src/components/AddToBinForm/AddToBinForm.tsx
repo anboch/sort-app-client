@@ -16,48 +16,43 @@ import { useGetRuleSet } from '../../hooks/useGetRuleSet';
 import { BinType } from '../Bin/Bin';
 
 interface IAddToBinFormProps {
-  setIsOpen: Dispatch<SetStateAction<boolean>>,
-  bin: IBin
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  bin: IBin;
 }
 
 export const AddToBinForm = ({ setIsOpen, bin }: IAddToBinFormProps): JSX.Element => {
-  const ruleSetQ = useGetRuleSet(getId(bin.ruleSetID))
-  const handleCloseDialog = () => { setIsOpen(false); };
+  const ruleSetQ = useGetRuleSet(getId(bin.ruleSetID));
+  const handleCloseDialog = () => {
+    setIsOpen(false);
+  };
 
   return (
     <S.ConfirmAdd>
       <DialogTitle>Success</DialogTitle>
       {/* todo add info about the bin */}
       <DialogContent>
-        <DialogContentText display="inline">
-          Put the material in the bin called
-        </DialogContentText>
-        <Typography display="inline" variant='h6'>
+        <DialogContentText display="inline">Put the material in the bin called</DialogContentText>
+        <Typography display="inline" variant="h6">
           {` ${bin?.title}`}
         </Typography>
-        <Typography display='block' variant="caption" >
+        <Typography display="block" variant="caption">
           type
         </Typography>
-        {
-          (typeof bin.typeID === 'object') &&
-          <Typography >{bin.typeID?.title}</Typography>
-        }
-        <Typography display='block' variant="caption" >
+        {typeof bin.typeID === 'object' && <Typography>{bin.typeID?.title}</Typography>}
+        <Typography display="block" variant="caption">
           rules
         </Typography>
         {ruleSetQ.data &&
-          (typeof ruleSetQ.data?.ruleIDs === 'object') &&
+          typeof ruleSetQ.data?.ruleIDs === 'object' &&
           ruleSetQ.data.ruleIDs.map((rule) => {
             if (typeof rule === 'object' && rule.description) {
-              return (<Typography key={rule._id}>
-                - {rule.description}
-              </Typography>);
+              return <Typography key={rule._id}>- {rule.description}</Typography>;
             }
           })}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseDialog}>OK</Button>
       </DialogActions>
-    </ S.ConfirmAdd>)
-
+    </S.ConfirmAdd>
+  );
 };

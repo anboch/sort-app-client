@@ -15,18 +15,19 @@ export const BinList = (): JSX.Element => {
 
   if (!binsQ.data) {
     // todo add spinner
-    return (<>Error or loading</>)
+    return <>Error or loading</>;
   }
   if (binsQ.data.length === 0) {
-    return (<>You have no bins yet</>);
+    return <>You have no bins yet</>;
   }
   return (
     <S.BinList>
-      {binsQ.data.map((bin) =>
-        <Bin key={bin._id} bin={bin} />)}
+      {binsQ.data.map((bin) => (
+        <Bin key={bin._id} bin={bin} />
+      ))}
     </S.BinList>
   );
-}
+};
 
 // const [expanded, setExpanded] = React.useState<string | false>(false);
 // const handleChange =
@@ -34,7 +35,8 @@ export const BinList = (): JSX.Element => {
 //     setExpanded(isExpanded ? panel : false);
 //   };
 
-{/* <Accordion expanded={expanded === bin._id} onChange={handleChange(bin._id)}>
+{
+  /* <Accordion expanded={expanded === bin._id} onChange={handleChange(bin._id)}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
         // aria-controls="panel1bh-content"
@@ -69,4 +71,5 @@ export const BinList = (): JSX.Element => {
             <Typography sx={{ color: 'text.secondary' }}>{bin.typeID.title}</Typography>
           }
         </AccordionDetails>
-      </Accordion> */}
+      </Accordion> */
+}

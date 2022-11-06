@@ -1,3 +1,3 @@
-import { TagList } from "./TagList";
+import { TagList } from './TagList';
 
 export { TagList };

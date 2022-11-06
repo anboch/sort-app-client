@@ -4,7 +4,7 @@
 //   __v?: number;
 // }
 
-import { feedbackTypes } from "../components/common/constants";
+import { feedbackTypes } from '../components/common/constants';
 
 // Request
 export interface IConfirmDto {
@@ -19,9 +19,9 @@ export interface IJWTs {
 }
 
 export enum TagGroup {
-  CATEGORY = "category",
-  CODE = "code",
-  NO = "",
+  CATEGORY = 'category',
+  CODE = 'code',
+  NO = '',
 }
 
 export interface ITag {
@@ -60,7 +60,7 @@ export interface IType {
   // todo. more precisely ruleSetIDs: string[] | IRuleSet[];
   ruleSetIDs: IRuleSet[];
 }
-export type SimilarMaterial = Pick<IMaterial, "_id" | "titles">;
+export type SimilarMaterial = Pick<IMaterial, '_id' | 'titles'>;
 
 export interface IMaterial {
   _id: string;
@@ -74,8 +74,8 @@ export interface IMaterial {
 }
 
 enum Role {
-  USER = "user",
-  ADMIN = "admin",
+  USER = 'user',
+  ADMIN = 'admin',
 }
 
 export interface IBin {
@@ -142,8 +142,8 @@ export interface IUser {
 }
 
 export enum SearchItemKind {
-  material = "material",
-  tag = "tag",
+  material = 'material',
+  tag = 'tag',
 }
 
 export interface IUnionListItem {

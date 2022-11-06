@@ -1,5 +1,5 @@
-import { Paper } from "@mui/material";
-import styled from "styled-components";
+import { Paper } from '@mui/material';
+import styled from 'styled-components';
 
 export const BinCreation = styled(Paper)(({ theme }) => ({
   // ...theme.typography.body2,
@@ -8,6 +8,6 @@ export const BinCreation = styled(Paper)(({ theme }) => ({
   // height: 60,
   // lineHeight: "60px",
   // minWidth: "320px",
-  padding: "10px",
+  padding: '10px',
   // marginBottom: "10px",
 }));

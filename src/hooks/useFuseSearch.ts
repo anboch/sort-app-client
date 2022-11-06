@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { IUnionListItem } from "../api/api.interface";
-import Fuse from "fuse.js";
+import { useState } from 'react';
+import { IUnionListItem } from '../api/api.interface';
+import Fuse from 'fuse.js';
 
 export const fuseOptions = {
   // isCaseSensitive: false,
@@ -21,13 +21,13 @@ export const fuseOptions = {
 export const useFuseSearch = (
   unionSearchList: IUnionListItem[] | undefined
 ): {
-  searchQuery: string,
+  searchQuery: string;
   searchResult: IUnionListItem[];
   search: (value: string) => void;
 } => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResult, setSearchResult] = useState<IUnionListItem[]>([]);
-  const fuseSearchKeys: [keyof IUnionListItem] = ["title"];
+  const fuseSearchKeys: [keyof IUnionListItem] = ['title'];
 
   const makeFuseResultsUniq = (
     list: Fuse.FuseResult<IUnionListItem>[]
@@ -44,10 +44,7 @@ export const useFuseSearch = (
       if (sameItems.length === 1) {
         uniqFuseResults.push(sameItems[0]);
       } else {
-        const newScore = sameItems.reduce(
-          (acc, current) => acc * (current.score ?? 1),
-          1
-        );
+        const newScore = sameItems.reduce((acc, current) => acc * (current.score ?? 1), 1);
 
         sameItems[0].score = newScore;
         uniqFuseResults.push(sameItems[0]);
@@ -62,11 +59,7 @@ export const useFuseSearch = (
     unionSearchList: IUnionListItem[] | undefined
   ): IUnionListItem[] => {
     const queryWords = query.split(/\s+/);
-    if (
-      queryWords.length === 0 ||
-      !unionSearchList ||
-      unionSearchList.length === 0
-    ) {
+    if (queryWords.length === 0 || !unionSearchList || unionSearchList.length === 0) {
       return [];
     }
 
@@ -75,9 +68,7 @@ export const useFuseSearch = (
       ...fuseOptions,
     });
 
-    const fuseResults: Fuse.FuseResult<IUnionListItem>[] = [
-      ...new Set([query, ...queryWords]),
-    ]
+    const fuseResults: Fuse.FuseResult<IUnionListItem>[] = [...new Set([query, ...queryWords])]
       .filter((word) => word.length >= fuseOptions.minMatchCharLength)
       .flatMap((word) => fuseByUnionSearchList.search(word));
 

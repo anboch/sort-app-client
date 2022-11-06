@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface ISearchInputProps {
   withHints: boolean;
@@ -9,8 +9,7 @@ export const SearchInput = styled.div<ISearchInputProps>`
   align-items: center;
   /* todo color from theme */
   border: 1px solid #cdd2d7;
-  border-radius: ${({ withHints }): string =>
-    withHints ? "10px 10px 0px 0px" : "10px"};
+  border-radius: ${({ withHints }): string => (withHints ? '10px 10px 0px 0px' : '10px')};
   /* TODO constant search bar hight */
   height: 44px;
   /* background: #e7ebf0b3; */

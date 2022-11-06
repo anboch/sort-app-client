@@ -1,3 +1,3 @@
-import RecyclePointsPage from "./RecyclePointsPage";
+import RecyclePointsPage from './RecyclePointsPage';
 
 export { RecyclePointsPage };

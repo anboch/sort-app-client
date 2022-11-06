@@ -1,4 +1,4 @@
-import { withLayout } from "../../components/layout/Layout";
+import { withLayout } from '../../components/layout/Layout';
 
 const About = (): JSX.Element => {
   return <>About</>;

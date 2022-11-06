@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MyRecyclePoints = styled.div`
   display: flex;

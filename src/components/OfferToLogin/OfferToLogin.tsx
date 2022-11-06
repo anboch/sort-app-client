@@ -8,6 +8,13 @@ export const OfferToLogin = (): JSX.Element => {
   return (
     <>
       You need to
-      <Button onClick={() => { setIsOpen(true); }}>register</Button>
-    </>);
+      <Button
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
+        register
+      </Button>
+    </>
+  );
 };

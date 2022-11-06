@@ -1,3 +1,3 @@
-import { MaterialItem } from "./MaterialItem";
+import { MaterialItem } from './MaterialItem';
 
 export { MaterialItem };

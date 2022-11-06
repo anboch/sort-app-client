@@ -9,8 +9,6 @@ export interface IFiltersProps {
   onTagChange: (event: SyntheticEvent<Element, Event>, value: ITag[]) => void;
 }
 
-
-
 export const Filters = ({ tagList, selectedTags, onTagChange }: IFiltersProps): JSX.Element => {
   return (
     <StyledFilter>
@@ -23,7 +21,9 @@ export const Filters = ({ tagList, selectedTags, onTagChange }: IFiltersProps): 
         options={tagList ?? []}
         getOptionLabel={(item): string => item.titles.join(', ')}
         sx={{ width: 300 }}
-        renderInput={(params): JSX.Element => <TextField {...params} variant="standard" label="Filters" />}
+        renderInput={(params): JSX.Element => (
+          <TextField {...params} variant="standard" label="Filters" />
+        )}
       />
     </StyledFilter>
   );

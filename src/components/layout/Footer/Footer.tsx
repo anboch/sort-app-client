@@ -1,14 +1,12 @@
-import { AppBar, Container, Toolbar, Typography } from "@mui/material";
-import styled from "styled-components";
-import theme from "../../../styles/theme";
-import { FooterProps } from "./Footer.props";
+import { AppBar, Container, Toolbar, Typography } from '@mui/material';
+import styled from 'styled-components';
+import theme from '../../../styles/theme';
+import { FooterProps } from './Footer.props';
 
 const Footer = ({ className }: FooterProps): JSX.Element => {
   return (
     <div className={className}>
-      <Typography variant={"subtitle2"}>
-        Recycle Bin © 2021 - {new Date().getFullYear()}
-      </Typography>
+      <Typography variant={'subtitle2'}>Recycle Bin © 2021 - {new Date().getFullYear()}</Typography>
     </div>
   );
 };

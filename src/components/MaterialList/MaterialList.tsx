@@ -6,7 +6,7 @@ import { useGetBins } from '../../hooks/useGetBins';
 import { useEffect } from 'react';
 
 export interface MaterialListProps {
-  materials: IMaterial[]
+  materials: IMaterial[];
 }
 
 export const MaterialList = ({ materials }: MaterialListProps): JSX.Element => {
@@ -18,14 +18,8 @@ export const MaterialList = ({ materials }: MaterialListProps): JSX.Element => {
     <S.MaterialList>
       {materials.length > 0 &&
         materials.map((material) => (
-          <MaterialItem
-            key={material._id}
-            material={material}
-            userQ={userQ}
-            binsQ={binsQ}
-          />
-        ))
-      }
-    </S.MaterialList >
+          <MaterialItem key={material._id} material={material} userQ={userQ} binsQ={binsQ} />
+        ))}
+    </S.MaterialList>
   );
 };

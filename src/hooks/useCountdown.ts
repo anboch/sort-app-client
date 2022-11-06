@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export interface ICountdown {
   raw: number;
@@ -41,9 +41,7 @@ export const useCountdown = (
   };
 };
 
-const formatCountdown = (
-  countdown: number
-): Pick<ICountdown, "minutes" | "seconds"> => {
+const formatCountdown = (countdown: number): Pick<ICountdown, 'minutes' | 'seconds'> => {
   // todo 00:00 format instead of 0:0
   const minutes = Math.floor((countdown % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((countdown % (1000 * 60)) / 1000);

@@ -1,9 +1,9 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
 enum gridAreasEnum {
-  body = "body",
-  header = "header",
-  footer = "footer",
+  body = 'body',
+  header = 'header',
+  footer = 'footer',
 }
 
 export interface CustomTheme {
@@ -18,8 +18,8 @@ export interface CustomTheme {
 
 const theme = createTheme({
   bg: {
-    main: "#fff",
-    light: "#F4F5F7",
+    main: '#fff',
+    light: '#F4F5F7',
   },
   gridAreas: {
     body: gridAreasEnum.body,

@@ -1,7 +1,7 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { api } from "../api";
-import { queryKeys } from "../api/api.constants";
-import { ISearchLists } from "../api/api.interface";
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { api } from '../api';
+import { queryKeys } from '../api/api.constants';
+import { ISearchLists } from '../api/api.interface';
 
 export const useFetchSearchList = (): UseQueryResult<ISearchLists> => {
   return useQuery<ISearchLists>([queryKeys.searchList], api.fetchSearchList, {

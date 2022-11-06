@@ -12,9 +12,7 @@ interface IProfileInfoProps {
 const ProfileInfoItem = ({ property }: { property: string }) => {
   return (
     <S.ProfileInfoItem>
-      <Typography variant="subtitle1" >
-        {property}
-      </Typography>
+      <Typography variant="subtitle1">{property}</Typography>
       {/* <Link
         href="#"
         variant="caption"
@@ -26,18 +24,13 @@ const ProfileInfoItem = ({ property }: { property: string }) => {
   );
 };
 
-
 export const ProfileInfo = ({ userData }: IProfileInfoProps): JSX.Element => {
   const userM = useUpdateUser();
   const nameMutationFunc = (inputValue: string) => userM.mutate({ name: inputValue });
   return (
     <S.ProfileInfo>
-      <EditableValue
-        value={userData.name}
-        mutationFunc={nameMutationFunc}
-        title={'name'} />
-      {userData.email &&
-        <ProfileInfoItem property={userData.email} />}
+      <EditableValue value={userData.name} mutationFunc={nameMutationFunc} title={'name'} />
+      {userData.email && <ProfileInfoItem property={userData.email} />}
     </S.ProfileInfo>
   );
 };

@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { HeaderProps } from "./Header.props";
-import { ResponsiveAppBar } from "./AppBar";
+import styled from 'styled-components';
+import { HeaderProps } from './Header.props';
+import { ResponsiveAppBar } from './AppBar';
 
 const Header = ({ className }: HeaderProps): JSX.Element => {
   return (

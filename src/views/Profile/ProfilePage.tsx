@@ -1,4 +1,4 @@
-import { withLayout } from "../../components/layout/Layout";
+import { withLayout } from '../../components/layout/Layout';
 import { OfferToLogin } from '../../components/OfferToLogin/OfferToLogin';
 import { ProfileActions } from '../../components/ProfileActions/ProfileActions';
 import { ProfileInfo } from '../../components/ProfileInfo/ProfileInfo';
