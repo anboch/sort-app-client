@@ -1,6 +1,7 @@
 export const pageRoutes = {
   search: "/",
-  myBins: "/bins",
+  bins: "/bins",
+  recyclePoints: "/recycle-points",
   profile: "/profile",
   about: "/about",
 } as const;
@@ -11,12 +12,12 @@ export const apiRoutes = {
   confirmAndLogin: "/api/auth/confirm",
   getUser: "/api/user",
   updateUser: "/api/user",
-  deleteUser: "/api/user",
+  deleteUser: "/api/user/",
   getBins: "/api/bin/all",
   createBin: "/api/bin/create",
   createFeedback: "/api/feedback/create",
   updateBin: "/api/bin",
-  deleteBin: "/api/bin",
+  deleteBin: "/api/bin/",
   getTypeById: "/api/type/by-id/",
   getRuleSetById: "/api/rule-set/by-id/",
   getRecyclePointsByIds: "/api/recycle-point/by-ids",

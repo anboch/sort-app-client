@@ -45,7 +45,7 @@ export const api = Object.freeze({
   },
 
   async deleteUser(userId: IUser["_id"]): Promise<void> {
-    return (await $api.delete<void>(apiRoutes.deleteUser + "/" + userId)).data;
+    return (await $api.delete<void>(apiRoutes.deleteUser + userId)).data;
   },
 
   async fetchBins(): Promise<IBin[]> {
@@ -61,7 +61,7 @@ export const api = Object.freeze({
   },
 
   async deleteBin(binId: string): Promise<void> {
-    return (await $api.delete<void>(apiRoutes.deleteBin + "/" + binId)).data;
+    return (await $api.delete<void>(apiRoutes.deleteBin + binId)).data;
   },
 
   async fetchType(id: string): Promise<IType> {
