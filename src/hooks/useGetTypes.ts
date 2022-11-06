@@ -5,8 +5,8 @@ import { IType } from "../api/api.interface";
 
 // ToDO think about staleTime and cacheTime
 export const useGetTypes = (
-  typeIDs: string[]
-  // enabled: boolean
+  typeIDs: string[],
+  enabled = true
 ): UseQueryResult<IType>[] => {
   return useQueries({
     queries: typeIDs.map((typeId) => {
@@ -14,7 +14,7 @@ export const useGetTypes = (
         queryKey: [queryKeys.type, typeId],
         queryFn: () => api.fetchType(typeId),
         staleTime: 60 * 60 * 1000,
-        // enabled,
+        enabled,
       };
     }),
   });

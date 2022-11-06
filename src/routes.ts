@@ -19,6 +19,7 @@ export const apiRoutes = {
   getTypeById: "/api/type/by-id/",
   getRuleSetById: "/api/rule-set/by-id/",
   getRecyclePointsByIds: "/api/recycle-point/by-ids",
+  getMaterialsByTypeId: "/api/material/by-type-id/",
   refreshTokens: "/api/auth/refresh",
   logout: "/api/auth/logout",
 } as const;

@@ -12,4 +12,5 @@ export const queryKeys = {
   type: "type",
   ruleSet: "rule-set",
   recyclePoints: "recycle-points",
+  materialsByType: "materials-by-type",
 } as const;

@@ -65,6 +65,12 @@ export const api = Object.freeze({
     return (await $api.get<IType>(apiRoutes.getTypeById + id)).data;
   },
 
+  async fetchMaterialsByType(typeId: string): Promise<IMaterial[]> {
+    return (
+      await $api.get<IMaterial[]>(apiRoutes.getMaterialsByTypeId + typeId)
+    ).data;
+  },
+
   async fetchRuleSet(id: string): Promise<IRuleSet> {
     return (await $api.get<IRuleSet>(apiRoutes.getRuleSetById + id)).data;
   },

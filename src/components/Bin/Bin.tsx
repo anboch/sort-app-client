@@ -36,19 +36,63 @@ const BinTitle = ({ _id, title = '' }: Pick<IBin, '_id' | 'title'>) => {
   );
 };
 
-const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
+export const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [materialForPreview, setMaterialForPreview] = useState<IMaterial | null>(null);
+  const materialsQ = useGetMaterialsByType(getId(typeID), isExpanded)
 
+  const handleChange = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
+  // todo change Loading...
   return (
+
     <>
-      {typeof typeID === 'object' && typeID.title &&
-        <>
-          <Typography variant="caption" >
-            type
-          </Typography>
-          <Typography >{typeID.title}</Typography>
-        </>
-      }
-    </>);
+      <Typography variant="caption" >
+        type
+      </Typography>
+      <Accordion expanded={isExpanded} onChange={handleChange}>
+
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+        >
+          {
+            (typeof typeID === 'object') &&
+            <Typography >{typeID?.title}</Typography>
+          }
+        </AccordionSummary>
+        <AccordionDetails>
+          <>
+            {materialsQ.data &&
+              materialsQ.data.map(material => {
+                return (
+                  <Link
+                    key={material._id}
+                    sx={{ padding: '3px' }}
+                    component="button"
+                    variant="body2"
+                    underline="hover"
+                    onClick={() => setMaterialForPreview(material)}
+                  // todo , to pseudo element
+                  >
+                    {material.titles[0]},
+                  </Link>
+                )
+              })}
+            {materialsQ.isError && <Typography>Error...</Typography>}
+            {materialsQ.isLoading && <span>Loading...</span>}
+          </>
+        </AccordionDetails>
+      </Accordion>
+      <MaterialPreviewDialog
+        material={materialForPreview}
+        setMaterial={setMaterialForPreview} />
+    </>
+
+  );
 
 };
 
