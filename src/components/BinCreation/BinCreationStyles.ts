@@ -9,5 +9,5 @@ export const BinCreation = styled(Paper)(({ theme }) => ({
   // lineHeight: "60px",
   // minWidth: "320px",
   padding: "10px",
-  marginBottom: "10px",
+  // marginBottom: "10px",
 }));

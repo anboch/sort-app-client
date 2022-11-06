@@ -10,39 +10,54 @@ import { useGetBins } from '../../hooks/useGetBins';
 import { BinCreation } from '../BinCreation/BinCreation';
 import { getId } from '../../utils/utils';
 import { useGetTypes } from '../../hooks/useGetTypes';
+import { Dispatch, useEffect, SetStateAction } from 'react';
+import { IBin } from '../../api/api.interface';
+import { useGetRuleSet } from '../../hooks/useGetRuleSet';
+import { BinType } from '../Bin/Bin';
 
-export const AddToBinForm = ({ materialTypeIds, setIsOpen }: { materialTypeIds: string[], setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }): JSX.Element => {
-  const binsQ = useGetBins();
-  const suitableBin = binsQ.data?.find(bin => materialTypeIds.includes(getId(bin.typeID)));
-  const typeQs = useGetTypes(materialTypeIds);
+interface IAddToBinFormProps {
+  setIsOpen: Dispatch<SetStateAction<boolean>>,
+  bin: IBin
+}
 
+export const AddToBinForm = ({ setIsOpen, bin }: IAddToBinFormProps): JSX.Element => {
+  const ruleSetQ = useGetRuleSet(getId(bin.ruleSetID))
   const handleCloseDialog = () => { setIsOpen(false); };
 
   return (
-    <Dialog fullWidth scroll={'body'} open onClose={handleCloseDialog}>
-      {binsQ.isFetching &&
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-          <CircularProgress />
-        </Box>}
-      {binsQ.isSuccess && suitableBin &&
-        <S.ConfirmAdd>
-          <DialogTitle>Success</DialogTitle>
-          {/* todo add info about the bin */}
-          <DialogContent>
-            <DialogContentText display="inline">
-              Put the material in the bin called
-            </DialogContentText>
-            <Typography display="inline" variant='h6'>
-              {` ${suitableBin?.title}`}
-            </Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog}>OK</Button>
-          </DialogActions>
-        </S.ConfirmAdd>}
-      {binsQ.isSuccess && !suitableBin &&
-        <BinCreation handleCloseDialog={handleCloseDialog} materialTypes={typeQs.map(typeQ => typeQ.data)} />
-      }
-    </Dialog >
-  );
+    <S.ConfirmAdd>
+      <DialogTitle>Success</DialogTitle>
+      {/* todo add info about the bin */}
+      <DialogContent>
+        <DialogContentText display="inline">
+          Put the material in the bin called
+        </DialogContentText>
+        <Typography display="inline" variant='h6'>
+          {` ${bin?.title}`}
+        </Typography>
+        <Typography display='block' variant="caption" >
+          type
+        </Typography>
+        {
+          (typeof bin.typeID === 'object') &&
+          <Typography >{bin.typeID?.title}</Typography>
+        }
+        <Typography display='block' variant="caption" >
+          rules
+        </Typography>
+        {ruleSetQ.data &&
+          (typeof ruleSetQ.data?.ruleIDs === 'object') &&
+          ruleSetQ.data.ruleIDs.map((rule) => {
+            if (typeof rule === 'object' && rule.description) {
+              return (<Typography key={rule._id}>
+                - {rule.description}
+              </Typography>);
+            }
+          })}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseDialog}>OK</Button>
+      </DialogActions>
+    </ S.ConfirmAdd>)
+
 };

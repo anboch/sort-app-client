@@ -21,6 +21,7 @@ export const useCreateBin = () => {
       onSuccess(newBin, variables, context) {
         const oldBins = context?.oldBins || [];
         client.setQueryData<IBin[]>([queryKeys.bins], [newBin, ...oldBins]);
+        client.invalidateQueries([queryKeys.user]);
       },
       onSettled: () => {
         client.invalidateQueries([queryKeys.bins]);
