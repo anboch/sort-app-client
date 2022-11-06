@@ -28,8 +28,8 @@ export const useDeleteUser = () => {
       await client.resetQueries([queryKeys.bins]);
     },
 
-    onSettled: () => {
-      client.invalidateQueries([queryKeys.user]);
-    },
+    // onSettled: () => {
+    //   client.invalidateQueries([queryKeys.user]);
+    // },
   });
 };
