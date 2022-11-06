@@ -18,6 +18,7 @@ export const apiRoutes = {
   deleteBin: "/api/bin",
   getTypeById: "/api/type/by-id/",
   getRuleSetById: "/api/rule-set/by-id/",
+  getRecyclePointsByIds: "/api/recycle-point/by-ids",
   refreshTokens: "/api/auth/refresh",
   logout: "/api/auth/logout",
 } as const;

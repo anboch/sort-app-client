@@ -7,9 +7,11 @@ import BinsPage from "./views/Bins/BinsPage";
 import ProfilePage from "./views/Profile/ProfilePage";
 import AboutPage from "./views/About/AboutPage";
 import "./App.css";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { CssBaseline } from '@mui/material';
 import { pageRoutes } from './routes';
 import { LoginFormProvider } from './context/LoginFormContext';
+import { RecyclePointsPage } from './views/RecyclePoints';
 // import { UserProvider } from './context/UserContext';
 
 interface IPage {
@@ -24,7 +26,11 @@ export const pages: IPage[] = [
   },
   {
     name: "My bins",
-    path: pageRoutes.myBins,
+    path: pageRoutes.bins,
+  },
+  {
+    name: "My Recycle Points",
+    path: pageRoutes.recyclePoints,
   },
   {
     name: "Profile",
@@ -63,7 +69,8 @@ export default function App(): JSX.Element {
           <BrowserRouter>
             <Routes>
               <Route path={pageRoutes.search} element={<SearchPage />} />
-              <Route path={pageRoutes.myBins} element={<BinsPage />} />
+              <Route path={pageRoutes.bins} element={<BinsPage />} />
+              <Route path={pageRoutes.recyclePoints} element={<RecyclePointsPage />} />
               <Route path={pageRoutes.profile} element={<ProfilePage />} />
               <Route path={pageRoutes.about} element={<AboutPage />} />
             </Routes>

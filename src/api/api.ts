@@ -69,6 +69,16 @@ export const api = Object.freeze({
     return (await $api.get<IRuleSet>(apiRoutes.getRuleSetById + id)).data;
   },
 
+  async fetchRecyclePointsByIds(
+    recyclePointIds: string[]
+  ): Promise<IRecyclePoint[]> {
+    return (
+      await $api.put<IRecyclePoint[]>(apiRoutes.getRecyclePointsByIds, {
+        recyclePointIds,
+      })
+    ).data;
+  },
+
   async logout(): Promise<AxiosResponse> {
     return $api.get(apiRoutes.logout);
   },

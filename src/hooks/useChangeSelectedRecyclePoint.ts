@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { IRecyclePoint, IRule, IRuleSet, IType } from "../api/api.interface";
-import { getId } from "../utils/utils";
+import { IRecyclePoint, IRuleSet, IType } from "../api/api.interface";
+import {
+  getAllRecyclePointsFromRuleSets,
+  getId,
+  makeUniqueById,
+} from "../utils/utils";
 
 export const useChangeSelectedRecyclePoint = (
   allTypes: (IType | undefined)[]
@@ -20,32 +24,47 @@ export const useChangeSelectedRecyclePoint = (
         return [...acc, ...(type.ruleSetIDs as IRuleSet[])];
       }, [] as IRuleSet[]);
 
-      const newAllRecyclePoints = newAllRuleSets.reduce((acc, rule) => {
-        // todo check that rule.recyclePointIDs is IRecyclePoint[]
-        return [...acc, ...(rule.recyclePointIDs as IRecyclePoint[])];
-      }, [] as IRecyclePoint[]);
-      setAllRuleSets(newAllRuleSets);
-      setAllRecyclePoints(newAllRecyclePoints);
+      const newAllUniqRuleSets = makeUniqueById(newAllRuleSets);
+
+      const newAllRecyclePoints =
+        getAllRecyclePointsFromRuleSets(newAllUniqRuleSets);
+
+      setAllRuleSets(newAllUniqRuleSets);
+      setAllRecyclePoints(makeUniqueById(newAllRecyclePoints));
     }
   }, [allTypes]);
 
   useEffect(() => {
     // todo to know why allTypes not narrowing by !allTypes.includes(undefined) and remove allTypes as IType[]
     if (selectedRecyclePoint && !allTypes.includes(undefined)) {
-      const newSelectedRuleSet = allRuleSets.find((ruleSet) =>
+      const newSelectedRuleSets = allRuleSets.filter((ruleSet) =>
         ruleSet.recyclePointIDs
           .map((RP) => getId(RP))
           .includes(getId(selectedRecyclePoint))
       );
-      setSelectedRuleSet(newSelectedRuleSet ?? null);
 
-      if (newSelectedRuleSet) {
-        const newSelectedType = (allTypes as IType[]).find((type) =>
+      const newSelectedSortedRuleSets = newSelectedRuleSets.sort((a, b) => {
+        return b.recyclePointIDs.length - a.recyclePointIDs.length;
+      });
+
+      setSelectedRuleSet(newSelectedSortedRuleSets[0] ?? null);
+
+      if (newSelectedSortedRuleSets[0]) {
+        const newSelectedTypes = (allTypes as IType[]).filter((type) =>
           type.ruleSetIDs
             .map((RS) => getId(RS))
-            .includes(getId(newSelectedRuleSet))
+            .includes(getId(newSelectedSortedRuleSets[0]))
         );
-        setSelectedType(newSelectedType ?? null);
+
+        const newSelectedSortedTypes = newSelectedTypes.sort((a, b) => {
+          return (
+            makeUniqueById(getAllRecyclePointsFromRuleSets(b.ruleSetIDs))
+              .length -
+            makeUniqueById(getAllRecyclePointsFromRuleSets(a.ruleSetIDs)).length
+          );
+        });
+
+        setSelectedType(newSelectedSortedTypes[0] ?? null);
       }
     }
   }, [selectedRecyclePoint]);

@@ -11,4 +11,5 @@ export const queryKeys = {
   bins: "bins",
   type: "type",
   ruleSet: "rule-set",
+  recyclePoints: "recycle-points",
 } as const;
