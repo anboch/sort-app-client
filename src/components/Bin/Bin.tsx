@@ -181,37 +181,63 @@ export const BinRecyclePoints = ({
     height: '100%',
   };
 
+  const handleChange = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
+  useEffect(() => {
+    setIsExpanded(isEditMode)
+  }, [isEditMode])
+
+  useEffect(() => {
+    if (isExpanded) {
+      setDownloadMap(true)
+    } else if (isEditMode && setIsEditMode) {
+      setIsEditMode(false)
+    }
+  }, [isExpanded])
+
+
+
   // todo add handle error if REACT_APP_MAPBOX_ACCESS_TOKEN is undefined
   return (
     <>
       <Typography variant="caption" >
         recycle points
       </Typography>
-      <MapGL
-        style={{ width: '100%', height: '400px' }}
-        // mapStyle='mapbox://styles/mapbox/light-v9'
-        mapStyle="mapbox://styles/mapbox/streets-v8"
-        accessToken={mapboxPublicAccessToken}
-        latitude={viewport.latitude}
-        longitude={viewport.longitude}
-        zoom={viewport.zoom}
-        onViewportChange={setViewport}
-      >
-        {allRecyclePoints.map(recyclePoint => {
-          if (isEditMode || isSelected(recyclePoint._id)) {
-            return (
-              <Marker
-                key={recyclePoint._id}
-                latitude={recyclePoint?.position?.coordinates.latitude ?? null}
-                longitude={recyclePoint?.position?.coordinates.longitude ?? null}
-                onClick={() => setSelectedRecyclePoint(recyclePoint)}
-              >
-                <div style={isSelected(recyclePoint._id) ? styleSelected : style}>!</div>
-              </Marker>
-            );
-          }
-        })}
-      </MapGL>
+      <Accordion expanded={isExpanded} onChange={handleChange}>
+        {!isCreateMode &&
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              Recycle points
+            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Click to see on map</Typography>
+          </AccordionSummary>}
+        <AccordionDetails>
+          {downloadMap &&
+            <Map >
+              {allRecyclePoints.map(recyclePoint => {
+                if (isEditMode || isSelected(recyclePoint._id)) {
+                  return (
+                    <Marker
+                      key={recyclePoint._id}
+                      latitude={recyclePoint?.position?.coordinates.latitude ?? null}
+                      longitude={recyclePoint?.position?.coordinates.longitude ?? null}
+                      onClick={() => setSelectedRecyclePoint(recyclePoint)}
+                    >
+                      {isSelected(recyclePoint._id) ? <PlaceIcon color='success' fontSize='large' /> : <EditLocationAltIcon color='error' />}
+                      {/* <div style={isSelected(recyclePoint._id) ? styleSelected : style}>!</div> */}
+                    </Marker>
+                  );
+                }
+              })}
+            </Map>}
+        </AccordionDetails>
+      </Accordion>
     </>
   );
 };
