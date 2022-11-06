@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const MaterialItem = styled.div`
-  /* border: 1px solid #cdd2d7;
   display: flex;
+  /* border: 1px solid #cdd2d7;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  padding: 10px 0;
   border-radius: 10px; */
+  justify-content: center;
+  padding: 10px 0;
+  width: 100%;
 `;
 
 export const MaterialPreview = styled.div`
