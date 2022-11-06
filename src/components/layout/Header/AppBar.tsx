@@ -1,4 +1,5 @@
 import * as React from "react";
+import { KeyboardEvent, useState } from 'react';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,9 +16,18 @@ import theme from "../../../styles/theme";
 import { pageRoutes } from '../../../routes';
 
 export const ResponsiveAppBar = (): JSX.Element => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(
     null
   );
+
+  const searchByEnterKey = (event: KeyboardEvent<HTMLLIElement>): void => {
+    if (event.key === 'Enter') {
+      const link = event.target?.firstElementChild as HTMLLinkElement | null
+      if (link) {
+        link.click()
+      }
+    }
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -109,37 +119,33 @@ export const ResponsiveAppBar = (): JSX.Element => {
                 vertical: "top",
                 horizontal: "left",
               }}
-              open={Boolean(anchorElNav)}
+              open={!!anchorElNav}
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", sm: "none" },
               }}
             >
               {pages.map(({ name, path }) => (
-                <Link
-                  to={path}
-                  key={name}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <MenuItem key={name} onClick={handleCloseNavMenu}>
-                    <Typography
-                      sx={{
-                        color: `${path === currentPath
-                          ? theme.palette.secondary.dark
-                          : theme.palette.text.primary
-                          }`,
-                      }}
-                      textAlign="center"
-                    >
-                      {name}
-                    </Typography>
-                  </MenuItem>
-                </Link>
+                <MenuItem sx={{ justifyContent: 'center' }} onKeyDown={searchByEnterKey} key={name} >
+                  <Link
+                    to={path}
+                    key={name}
+                    style={{
+                      textDecoration: "none",
+                      color: `${path === currentPath
+                        ? theme.palette.secondary.dark
+                        : theme.palette.text.primary
+                        }`,
+                    }}
+                  >
+                    {name}
+                  </Link>
+                </MenuItem>
               ))}
             </Menu>
           </Box>
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBar >
   );
 };
