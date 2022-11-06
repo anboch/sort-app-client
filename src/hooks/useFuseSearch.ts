@@ -10,10 +10,10 @@ export const fuseOptions = {
   // findAllMatches: false,
   minMatchCharLength: 2,
   // location: 0,
-  threshold: 0.4,
+  threshold: 0.35,
   // distance: 100,
   // useExtendedSearch: false,
-  // ignoreLocation: false,
+  ignoreLocation: true,
   // ignoreFieldNorm: false,
   // fieldNormWeight: 1,
 };
@@ -21,11 +21,41 @@ export const fuseOptions = {
 export const useFuseSearch = (
   unionSearchList: IUnionListItem[] | undefined
 ): {
+  searchQuery: string,
   searchResult: IUnionListItem[];
   search: (value: string) => void;
 } => {
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResult, setSearchResult] = useState<IUnionListItem[]>([]);
   const fuseSearchKeys: [keyof IUnionListItem] = ["title"];
+
+  const makeFuseResultsUniq = (
+    list: Fuse.FuseResult<IUnionListItem>[]
+  ): Fuse.FuseResult<IUnionListItem>[] => {
+    const uniqFuseResults: Fuse.FuseResult<IUnionListItem>[] = [];
+
+    list.forEach((result) => {
+      if (uniqFuseResults.find((i) => i.item._id === result.item._id)) {
+        return;
+      }
+
+      const sameItems = list.filter((i) => i.item._id === result.item._id);
+
+      if (sameItems.length === 1) {
+        uniqFuseResults.push(sameItems[0]);
+      } else {
+        const newScore = sameItems.reduce(
+          (acc, current) => acc * (current.score ?? 1),
+          1
+        );
+
+        sameItems[0].score = newScore;
+        uniqFuseResults.push(sameItems[0]);
+      }
+    });
+
+    return uniqFuseResults;
+  };
 
   const fuseSearch = (
     query: string,
@@ -45,15 +75,16 @@ export const useFuseSearch = (
       ...fuseOptions,
     });
 
-    const fuseResults: Fuse.FuseResult<IUnionListItem>[] = [];
-    [query, ...queryWords].forEach((word) => {
-      if (word.length > 1)
-        fuseResults.push(...fuseByUnionSearchList.search(word));
-    });
+    const fuseResults: Fuse.FuseResult<IUnionListItem>[] = [
+      ...new Set([query, ...queryWords]),
+    ]
+      .filter((word) => word.length >= fuseOptions.minMatchCharLength)
+      .flatMap((word) => fuseByUnionSearchList.search(word));
 
+    // todo to know why it (threshold) doesn't work in Fuse
     const fuseResultsWithRequiredScore = fuseResults.filter((i) => {
       if (i.score) {
-        return i.score < fuseOptions.threshold;
+        return i.score < fuseOptions.threshold * 1.6;
       } else {
         return true;
       }
@@ -78,39 +109,10 @@ export const useFuseSearch = (
       .map((i) => i.item);
   };
 
-  const makeFuseResultsUniq = (
-    list: Fuse.FuseResult<IUnionListItem>[]
-  ): Fuse.FuseResult<IUnionListItem>[] => {
-    const uniqFuseResults: Fuse.FuseResult<IUnionListItem>[] = [];
-
-    list.forEach((result) => {
-      if (
-        uniqFuseResults.filter((i) => i.item._id === result.item._id).length > 0
-      ) {
-        return;
-      }
-
-      const sameItems = list.filter((i) => i.item._id === result.item._id);
-
-      if (sameItems.length === 1) {
-        uniqFuseResults.push(sameItems[0]);
-      } else {
-        const newScore = sameItems.reduce(
-          (acc, current) => acc * (current.score ?? 1),
-          1
-        );
-
-        sameItems[0].score = newScore;
-        uniqFuseResults.push(sameItems[0]);
-      }
-    });
-
-    return uniqFuseResults;
-  };
-
   const search = (value: string): void => {
     setSearchResult(fuseSearch(value, unionSearchList));
+    setSearchQuery(value);
   };
 
-  return { searchResult, search };
+  return { searchQuery, searchResult, search };
 };
