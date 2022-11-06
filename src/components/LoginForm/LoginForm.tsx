@@ -55,19 +55,12 @@ export const LoginForm = (): JSX.Element => {
 
   useEffect(() => {
     setIsWrongFormat(false);
-  }, [inputEmailValue]);
+  }, [inputEmailValue, isOpen]);
 
   useEffect(() => {
-    // todo add success sign
     if (confirmAndLoginQ.isSuccess) {
-      confirmAndLoginQ.remove();
-
-      (async (): Promise<void> => {
-        await userQ.refetch();
-      })();
       handleClose();
     }
-
   }, [confirmAndLoginQ.isSuccess]);
 
   useEffect(() => {
@@ -86,6 +79,7 @@ export const LoginForm = (): JSX.Element => {
         await confirmAndLoginQ.refetch();
       })();
     }
+    setIsWrongCode('');
   }, [inputCodeValue]);
 
 
@@ -97,9 +91,9 @@ export const LoginForm = (): JSX.Element => {
     }
   }, [confirmAndLoginQ.error?.response?.data.message]);
 
-  useEffect(() => {
-    setIsWrongCode('');
-  }, [inputCodeValue]);
+  // useEffect(() => {
+  //   setIsWrongCode('');
+  // }, [inputCodeValue]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -110,8 +104,9 @@ export const LoginForm = (): JSX.Element => {
     requestConfirmCodeQ.remove();
   };
 
+  // todo add enterKey functionality
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
+    <Dialog fullWidth open={isOpen} onClose={handleClose}>
       {/* <div>
         {data ? (
           <>
@@ -210,7 +205,7 @@ export const LoginForm = (): JSX.Element => {
               label="six digits"
               type='search'
               autoComplete='off'
-              // inputMode='numeric'
+              inputMode='numeric'
               fullWidth
               // variant="standard"
               disabled={confirmAndLoginQ.isFetching}
