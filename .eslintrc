@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "unused-imports"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -20,6 +20,7 @@
   "rules": {
     "@typescript-eslint/semi": ["warn"],
     "@typescript-eslint/explicit-function-return-type": ["warn"],
+    "unused-imports/no-unused-imports": ["error"],
     "@typescript-eslint/no-empty-interface": [
       "error",
       {
