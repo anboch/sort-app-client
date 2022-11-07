@@ -1,8 +1,6 @@
 /* Core */
-import React from 'react';
 
 import * as S from './BinListStyles';
-import { IBin } from '../../api/api.interface';
 import { Bin } from '../Bin/Bin';
 import { useGetBins } from '../../hooks/useGetBins';
 /* Components */

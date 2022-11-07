@@ -3,7 +3,6 @@ import * as S from './MaterialListStyles';
 import { useGetUser } from '../../hooks';
 import { MaterialItem } from '../MaterialItem';
 import { useGetBins } from '../../hooks/useGetBins';
-import { useEffect } from 'react';
 
 export interface MaterialListProps {
   materials: IMaterial[];

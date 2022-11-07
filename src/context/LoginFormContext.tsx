@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  Dispatch,
-  FC,
-  PropsWithChildren,
-  SetStateAction,
-  useState,
-} from 'react';
+import { createContext, Dispatch, FC, PropsWithChildren, SetStateAction, useState } from 'react';
 import { LoginForm } from '../components/LoginForm/LoginForm';
 
 interface ILoginFormContext {

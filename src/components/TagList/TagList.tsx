@@ -1,5 +1,4 @@
 import { Chip, Typography } from '@mui/material';
-import React from 'react';
 import { ITag } from '../../api/api.interface';
 import { ChipList, StyledTagList } from './TagListStyles';
 import AddCircleIcon from '@mui/icons-material/AddCircle';

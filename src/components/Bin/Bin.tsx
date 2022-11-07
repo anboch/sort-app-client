@@ -1,25 +1,12 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import SettingsIcon from '@mui/icons-material/Settings';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Button,
-  Checkbox,
-  Collapse,
   DialogActions,
   Divider,
-  IconButton,
   Link,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
   Typography,
 } from '@mui/material';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
@@ -31,7 +18,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { Map } from '../../components/Map/Map';
 import * as S from './BinStyles';
-import { IBin, IMaterial, IRecyclePoint, IRule, IRuleSet } from '../../api/api.interface';
+import { IBin, IMaterial, IRecyclePoint, IRuleSet } from '../../api/api.interface';
 import { useState } from 'react';
 import { useUpdateBin } from '../../hooks/useUpdateBin';
 import { useGetType } from '../../hooks/useGetType';

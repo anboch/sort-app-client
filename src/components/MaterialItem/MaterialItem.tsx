@@ -1,27 +1,17 @@
 import {
   Chip,
   ListItemText,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Typography,
   Button,
-  Avatar,
   Card,
   CardActions,
   CardContent,
-  CardHeader,
-  CardMedia,
   Collapse,
-  IconButton,
-  IconButtonProps,
   Dialog,
 } from '@mui/material';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IBin, IMaterial, IUser } from '../../api/api.interface';
 import * as S from './MaterialItemStyles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import AddIcon from '@mui/icons-material/Add';
 import { AddToBinForm } from '../AddToBinForm/AddToBinForm';

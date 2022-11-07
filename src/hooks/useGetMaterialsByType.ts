@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { api } from '../api';
 import { queryKeys } from '../api/api.constants';
-import { IMaterial, IType } from '../api/api.interface';
+import { IMaterial } from '../api/api.interface';
 
 // todo switch to useGetTypes
 export const useGetMaterialsByType = (

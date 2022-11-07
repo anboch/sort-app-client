@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from '@mui/material';
-import React, { SyntheticEvent } from 'react';
-import { ITag, IUnionListItem } from '../../api/api.interface';
+import { SyntheticEvent } from 'react';
+import { ITag } from '../../api/api.interface';
 import { StyledFilter } from './FilterStyles';
 
 export interface IFiltersProps {

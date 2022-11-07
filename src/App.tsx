@@ -6,8 +6,6 @@ import SearchPage from './views/Search/SearchPage';
 import BinsPage from './views/Bins/BinsPage';
 import ProfilePage from './views/Profile/ProfilePage';
 import AboutPage from './views/About/AboutPage';
-import './App.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import { CssBaseline } from '@mui/material';
 import { pageRoutes } from './routes';
 import { LoginFormProvider } from './context/LoginFormContext';
@@ -62,7 +60,6 @@ export default function App(): JSX.Element {
     <>
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
-        {/* <UserProvider> */}
         <LoginFormProvider>
           <BrowserRouter>
             <Routes>
@@ -74,7 +71,6 @@ export default function App(): JSX.Element {
             </Routes>
           </BrowserRouter>
         </LoginFormProvider>
-        {/* </UserProvider> */}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>

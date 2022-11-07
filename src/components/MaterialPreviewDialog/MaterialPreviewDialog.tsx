@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Dialog } from '@mui/material';
-import { MaterialItem } from '../MaterialItem';
 import { IMaterial } from '../../api/api.interface';
 import { MaterialItemInfo, MaterialItemTitles } from '../MaterialItem/MaterialItem';
 

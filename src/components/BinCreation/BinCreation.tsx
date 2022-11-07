@@ -1,9 +1,8 @@
 import { Button, DialogActions, DialogTitle, Divider, TextField } from '@mui/material';
-import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 
 import * as S from './BinCreationStyles';
 import { IType, IUser } from '../../api/api.interface';
-import { useState } from 'react';
 import { useCreateBin } from '../../hooks/useCreateBin';
 import { BinRecyclePoints, BinRules } from '../Bin/Bin';
 import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecyclePoint';

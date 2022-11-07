@@ -1,4 +1,4 @@
-import { AppBar, Container, Toolbar, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 import { FooterProps } from './Footer.props';

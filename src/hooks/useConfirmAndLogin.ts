@@ -4,7 +4,6 @@ import { api } from '../api';
 import { IConfirmDto, IJWTs } from '../api/api.interface';
 import { apiRoutes } from '../routes';
 import { queryKeys, responseErrorMessages } from '../api/api.constants';
-import { useEffect } from 'react';
 
 interface IErrorResponseData {
   error: string;

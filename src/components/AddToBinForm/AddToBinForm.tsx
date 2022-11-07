@@ -1,19 +1,14 @@
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as S from './AddToBinFormStyles';
-import { Box, CircularProgress, Typography } from '@mui/material';
-import { useGetBins } from '../../hooks/useGetBins';
-import { BinCreation } from '../BinCreation/BinCreation';
+import { Typography } from '@mui/material';
 import { getId } from '../../utils/utils';
-import { useGetTypes } from '../../hooks/useGetTypes';
-import { Dispatch, useEffect, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { IBin, IMaterial } from '../../api/api.interface';
 import { useGetRuleSet } from '../../hooks/useGetRuleSet';
-import { BinType } from '../Bin/Bin';
 
 interface IAddToBinFormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;

@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-import React from 'react';
 import { IUser } from '../../api/api.interface';
 import { useUpdateUser } from '../../hooks/useUpdateUser';
 import { EditableValue } from '../common/EditableValue';

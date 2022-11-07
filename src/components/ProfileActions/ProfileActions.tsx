@@ -1,5 +1,5 @@
-import { Button, Link, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import { useState } from 'react';
 import { IUser } from '../../api/api.interface';
 import { useLogout } from '../../hooks';
 import { useDeleteUser } from '../../hooks/useDeleteUser';
