@@ -145,12 +145,9 @@ export const LoginForm = (): JSX.Element => {
         !requestConfirmCodeQ.isFetching &&
         !requestConfirmCodeQ.isError && (
           <S.RequestForm>
-            <DialogTitle>Sign in by email</DialogTitle>
+            <DialogTitle>Войти/зарегистрироваться с помощью email</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                We will send you an email with a code. You can use it to login or register an
-                account
-              </DialogContentText>
+              <DialogContentText>Мы отправим код для входа или регистрации</DialogContentText>
               {/* {timeDelta && <div>
                 <p>{timeDelta.minutes}</p>
                 <p>{timeDelta.seconds}</p>
@@ -169,8 +166,8 @@ export const LoginForm = (): JSX.Element => {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={validateAndSetEmail}>Get the code</Button>
+              <Button onClick={handleClose}>Отмена</Button>
+              <Button onClick={validateAndSetEmail}>Получить код</Button>
             </DialogActions>
           </S.RequestForm>
         )}
@@ -179,10 +176,10 @@ export const LoginForm = (): JSX.Element => {
         !requestConfirmCodeQ.isFetching &&
         !requestConfirmCodeQ.isError && (
           <S.ConfirmForm>
-            <DialogTitle>Enter the code</DialogTitle>
+            <DialogTitle>Введите код</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                We&apos;ve sent a verification code to the email {confirmFor}
+                Код был отправлен по адресу {confirmFor}
                 <Link
                   href="#"
                   variant="inherit"
@@ -194,7 +191,7 @@ export const LoginForm = (): JSX.Element => {
                     requestConfirmCodeQ.remove();
                   }}
                 >
-                  Edit
+                  Редактировать
                 </Link>
               </DialogContentText>
               {/* {timeDelta && <div>
@@ -224,12 +221,12 @@ export const LoginForm = (): JSX.Element => {
               />
               {countdown && countdown.raw !== 0 && (
                 <DialogContentText>
-                  You can get a new code in {countdown.minutes}:{countdown.seconds}
+                  Получить новый код можно через {countdown.minutes}:{countdown.seconds}
                 </DialogContentText>
               )}
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleClose}>Отмена</Button>
               {/* {countdown?.raw === 0 &&
               <Button
                 size='small'

@@ -20,23 +20,23 @@ interface IPage {
 
 export const pages: IPage[] = [
   {
-    name: 'Search',
+    name: 'Поиск',
     path: pageRoutes.search,
   },
   {
-    name: 'My bins',
+    name: 'Мои корзины',
     path: pageRoutes.bins,
   },
   {
-    name: 'My Recycle Points',
+    name: 'Мои пункты приёма',
     path: pageRoutes.recyclePoints,
   },
   {
-    name: 'Profile',
+    name: 'Профиль',
     path: pageRoutes.profile,
   },
   {
-    name: 'About',
+    name: 'О проекте',
     path: pageRoutes.about,
   },
 ];

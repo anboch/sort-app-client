@@ -18,7 +18,7 @@ export const BinList = (): JSX.Element => {
     return <>Error or loading</>;
   }
   if (binsQ.data.length === 0) {
-    return <>You have no bins yet</>;
+    return <>У вас пока нет корзин</>;
   }
   return (
     <S.BinList>

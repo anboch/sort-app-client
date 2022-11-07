@@ -51,7 +51,7 @@ const BinTitle = ({ _id, title = '' }: Pick<IBin, '_id' | 'title'>) => {
 
   return (
     <S.BinTitle>
-      <EditableValue mutationFunc={mutationFunc} value={title} title={'title'} />
+      <EditableValue mutationFunc={mutationFunc} value={title} title={'название'} />
     </S.BinTitle>
   );
 };
@@ -68,7 +68,7 @@ export const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
   // todo change Loading...
   return (
     <>
-      <Typography variant="caption">type</Typography>
+      <Typography variant="caption">тип</Typography>
       <Accordion expanded={isExpanded} onChange={handleChange}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -123,9 +123,9 @@ export const BinRules = ({
   // todo change 'Loading..'
   return (
     <>
-      <Typography variant="caption">rules</Typography>
+      <Typography variant="caption">правила</Typography>
       {isEditMode && allRuleSets && selectedRuleIds.length === 0 ? (
-        <Typography variant="subtitle1">Choose a recycling point to see rules</Typography>
+        <Typography variant="subtitle1">Выберите пункт приема чтобы увидеть правила</Typography>
       ) : allRuleSets && selectedRuleIds.length > 0 ? (
         uniqRulesSortedByQuantity.map((rule) => {
           if (typeof rule === 'object' && rule.description) {
@@ -209,7 +209,7 @@ export const BinRecyclePoints = ({
   // todo add handle error if REACT_APP_MAPBOX_ACCESS_TOKEN is undefined
   return (
     <>
-      <Typography variant="caption">recycle points</Typography>
+      <Typography variant="caption">пункты приёма</Typography>
       <Accordion expanded={isExpanded} onChange={handleChange}>
         {!isCreateMode && (
           <AccordionSummary
@@ -217,8 +217,8 @@ export const BinRecyclePoints = ({
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>Recycle points</Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Click to see on map</Typography>
+            <Typography sx={{ width: '33%', flexShrink: 0 }}>Пункты приёма</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Посмотреть на карте</Typography>
           </AccordionSummary>
         )}
         <AccordionDetails>
@@ -286,14 +286,14 @@ const BinActions = ({
       <DialogActions>
         {isEditMode ? (
           <>
-            <Button onClick={handleSaveClick}>Save</Button>
-            <Button onClick={() => setIsEditMode(false)}>Cancel</Button>
+            <Button onClick={handleSaveClick}>Сохранить</Button>
+            <Button onClick={() => setIsEditMode(false)}>Отмена</Button>
           </>
         ) : (
           <>
-            <Button onClick={handleDeleteClick}>Delete</Button>
+            <Button onClick={handleDeleteClick}>Удалить</Button>
             <Button disabled={allRuleSets?.length === 1} onClick={handleEditClick}>
-              Edit
+              Редактировать
             </Button>
           </>
         )}

@@ -14,7 +14,7 @@ export const TagList = ({ tags, addFilter }: TagListProps): JSX.Element => {
   return (
     <StyledTagList>
       <Typography variant="caption" gutterBottom>
-        Add filter:
+        Добавить фильтр:
       </Typography>
       <ChipList>
         {tags?.map(({ _id, titles }) => (

@@ -150,7 +150,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         onClose={() => setIsAddToBinFormOpen(false)}
       >
         {isAddToBinFormOpen && suitableBin && (
-          <AddToBinForm setIsOpen={setIsAddToBinFormOpen} bin={suitableBin} />
+          <AddToBinForm setIsOpen={setIsAddToBinFormOpen} material={material} bin={suitableBin} />
         )}
         {isAddToBinFormOpen && !suitableBin && (
           <BinCreation
@@ -187,7 +187,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
                 variant="contained"
                 endIcon={<PlaylistAddIcon />}
               >
-                For recycling
+                В переработку
               </Button>
             )}
             {hasTypes && userQ.data && !suitableBin && (
@@ -197,7 +197,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
                 variant="contained"
                 endIcon={<AddIcon />}
               >
-                Create new bin
+                Создать новую корзину
               </Button>
             )}
             {hasTypes && suitableBin && (
@@ -207,7 +207,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
                 variant="contained"
                 endIcon={<PlaylistAddIcon />}
               >
-                Add to bin
+                Добавить в корзину
               </Button>
             )}
           </>
@@ -218,7 +218,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
             aria-label="show more"
             // endIcon={<PlaylistAddIcon />}
           >
-            {isExpanded ? 'Hide' : 'Info'}
+            {isExpanded ? 'Скрыть' : 'Инфо'}
           </Button>
           {/* </S.Buttons> */}
           {/* <ExpandMore

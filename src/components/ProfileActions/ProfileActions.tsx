@@ -15,7 +15,7 @@ export const ProfileActions = ({ userData }: IProfileActionsProps): JSX.Element 
   const { logout } = useLogout();
   const deleteUserM = useDeleteUser();
   const deleteAccount = () => deleteUserM.mutate(userData._id);
-  const deleteAlertMessage = 'Do you want to delete the account?';
+  const deleteAlertMessage = 'Вы действительно хотите удалить аккаунт?';
 
   const handleDeleteClick = () => {
     setIsAlertOpen(true);
@@ -26,8 +26,8 @@ export const ProfileActions = ({ userData }: IProfileActionsProps): JSX.Element 
     <S.ProfileActions>
       ProfileActions
       <div>
-        <Button onClick={async () => await logout()}>logout</Button>
-        <Button onClick={handleDeleteClick}>Delete account</Button>
+        <Button onClick={async () => await logout()}>Выйти</Button>
+        <Button onClick={handleDeleteClick}>Удалить аккаунт</Button>
       </div>
       <AlertDialog
         isOpen={isAlertOpen}

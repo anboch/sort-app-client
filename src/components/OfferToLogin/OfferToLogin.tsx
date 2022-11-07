@@ -7,13 +7,13 @@ export const OfferToLogin = (): JSX.Element => {
 
   return (
     <>
-      You need to
+      Необходимо
       <Button
         onClick={() => {
           setIsOpen(true);
         }}
       >
-        register
+        войти/зарегистрироваться
       </Button>
     </>
   );

@@ -63,6 +63,11 @@ export const SearchBar = ({
             }
           }}
           sx={{
+            // todo to know why ellipsis don't work
+            // '&:placeholderShown': {
+            //   textOverflow: 'ellipsis',
+            // },
+            overflow: 'hidden',
             width: searchBarWidth,
             color: `${theme.palette.text.secondary}`,
             fontSize: '1.1rem',
@@ -78,7 +83,7 @@ export const SearchBar = ({
           size="small"
           sx={{ margin: '0 10px' }}
         >
-          Find
+          Найти
         </Button>
       </SearchInput>
       {isInputInFocus && hints.searchResult.length > 0 && (
@@ -107,7 +112,7 @@ export const SearchBar = ({
                     variant="contained"
                     size="small"
                   >
-                    Add filter
+                    Добавить фильтр
                   </Button>
                 )}
               </ListItem>

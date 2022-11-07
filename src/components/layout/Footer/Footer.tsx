@@ -6,7 +6,9 @@ import { FooterProps } from './Footer.props';
 const Footer = ({ className }: FooterProps): JSX.Element => {
   return (
     <div className={className}>
-      <Typography variant={'subtitle2'}>Recycle Bin © 2021 - {new Date().getFullYear()}</Typography>
+      <Typography variant={'subtitle2'}>
+        В-переработку © 2021 - {new Date().getFullYear()}
+      </Typography>
     </div>
   );
 };

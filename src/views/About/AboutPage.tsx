@@ -1,7 +1,7 @@
 import { withLayout } from '../../components/layout/Layout';
 
 const About = (): JSX.Element => {
-  return <>About</>;
+  return <>О проекте</>;
 };
 
 export default withLayout(About);

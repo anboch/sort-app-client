@@ -29,7 +29,7 @@ export const ProfileInfo = ({ userData }: IProfileInfoProps): JSX.Element => {
   const nameMutationFunc = (inputValue: string) => userM.mutate({ name: inputValue });
   return (
     <S.ProfileInfo>
-      <EditableValue value={userData.name} mutationFunc={nameMutationFunc} title={'name'} />
+      <EditableValue value={userData.name} mutationFunc={nameMutationFunc} title={'имя'} />
       {userData.email && <ProfileInfoItem property={userData.email} />}
     </S.ProfileInfo>
   );

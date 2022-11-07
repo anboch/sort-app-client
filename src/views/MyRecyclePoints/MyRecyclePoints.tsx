@@ -18,11 +18,11 @@ const RecyclePointInfo = ({
     <>
       {recyclePoint && (
         <>
-          <Typography variant="caption">title</Typography>
+          <Typography variant="caption">название</Typography>
           <Typography variant="h6">{recyclePoint?.title}</Typography>
-          <Typography variant="caption">description</Typography>
+          <Typography variant="caption">описание</Typography>
           <Typography variant="h6">{recyclePoint?.description}</Typography>
-          <Typography variant="caption">contacts</Typography>
+          <Typography variant="caption">контакты</Typography>
           <Link
             display="block"
             target="_blank"
@@ -41,7 +41,7 @@ const RecyclePointInfo = ({
 const SuitableBinList = ({ bins }: { bins: IBin[] | null }): JSX.Element => {
   return (
     <>
-      <Typography variant="caption">bins</Typography>
+      <Typography variant="caption">корзины</Typography>
       {bins &&
         bins.map((bin) => {
           return <ListItemText key={bin._id} secondary={`- ${bin.title}`} />;
@@ -95,9 +95,9 @@ export const MyRecyclePoints = (): JSX.Element => {
                 <div style={style}>
                   {recyclePoint._id !== selectedRecyclePoint?._id ? (
                     <Typography>
-                      {`${binsForRecyclePoints[recyclePoint._id].length} from ${
+                      {`${binsForRecyclePoints[recyclePoint._id].length} из ${
                         binsQ.data.length
-                      } bins`}
+                      } корзин`}
                     </Typography>
                   ) : (
                     <>

@@ -38,7 +38,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
   const currentPath = useLocation().pathname;
 
   return (
-    <AppBar sx={{ borderRadius: '10px' }} position="static">
+    <AppBar enableColorOnDark sx={{ borderRadius: '10px' }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link
@@ -59,14 +59,14 @@ export const ResponsiveAppBar = (): JSX.Element => {
                 textDecoration: 'none',
               }}
             >
-              For-Recycling
+              В-переработку
             </Typography>
           </Link>
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: 'none', sm: 'flex' },
-              justifyContent: { sm: 'flex-end' },
+              display: { xs: 'none', sm: 'none', md: 'flex' },
+              justifyContent: { xs: 'flex-end', sm: 'flex-end' },
             }}
           >
             {pages.map(({ name, path }) => (
@@ -92,8 +92,8 @@ export const ResponsiveAppBar = (): JSX.Element => {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: 'flex', sm: 'none' },
-              justifyContent: { xs: 'flex-end' },
+              display: { xs: 'flex', sm: 'flex', md: 'none' },
+              justifyContent: { xs: 'flex-end', sm: 'flex-end' },
             }}
           >
             <IconButton
@@ -121,7 +121,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
               open={!!anchorElNav}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', sm: 'none' },
+                display: { xs: 'flex', sm: 'flex', md: 'none' },
               }}
             >
               {pages.map(({ name, path }) => (

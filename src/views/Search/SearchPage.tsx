@@ -83,7 +83,7 @@ const Search = (): JSX.Element => {
       <SearchBar
         searchInputValue={searchInputValue}
         setSearchInputValue={setSearchInputValue}
-        placeholder="Search by name or type"
+        placeholder="Поиск по названию или тегу"
         addFilter={addFilter}
         searchBarWidth="60vw"
         exactSearch={search}

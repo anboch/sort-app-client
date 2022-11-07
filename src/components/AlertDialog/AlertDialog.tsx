@@ -31,9 +31,9 @@ export const AlertDialog = ({
           </DialogContentText>
         </DialogContent> */}
       <DialogActions>
-        <Button onClick={handleClose}>No</Button>
+        <Button onClick={handleClose}>Нет</Button>
         <Button onClick={action} autoFocus>
-          Yes
+          Да
         </Button>
       </DialogActions>
     </Dialog>

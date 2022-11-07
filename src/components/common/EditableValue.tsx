@@ -39,7 +39,7 @@ export const EditableValue = ({ mutationFunc, value = '', title }: IEditableValu
               <Typography variant="h6">{value}</Typography>
             ) : (
               <Typography onClick={() => setIsEditMode(true)} variant="subtitle1">
-                Enter a value...
+                Введите {title}...
               </Typography>
             )}
           </div>

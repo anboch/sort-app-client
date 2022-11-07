@@ -61,7 +61,7 @@ export const BinCreation = ({
   // todo add hint to Save button when it's disabled
   return (
     <S.BinCreation>
-      <DialogTitle>Create a bin</DialogTitle>
+      <DialogTitle>Создание корзины</DialogTitle>
       <TextField
         value={titleValue}
         onChange={(e): void => setTitleValue(e.target.value)}
@@ -80,9 +80,9 @@ export const BinCreation = ({
         setSelectedRecyclePoint={setSelectedRecyclePoint}
       />
       <DialogActions>
-        <Button onClick={() => setIsOpen(false)}>Cancel</Button>
+        <Button onClick={() => setIsOpen(false)}>Отмена</Button>
         <Button disabled={!selectedType && !selectedRuleSet} onClick={saveBin}>
-          Save
+          Сохранить
         </Button>
       </DialogActions>
     </S.BinCreation>
