@@ -5,6 +5,7 @@ import { IConfirmDto, IJWTs } from '../api/api.interface';
 import { apiRoutes } from '../routes';
 import { queryKeys, responseErrorMessages } from '../api/api.constants';
 import { ValueOf } from '../components/common/types';
+import { localStorageKeys } from '../components/common/constants';
 
 interface IErrorResponseData {
   error: string;
@@ -27,8 +28,7 @@ export const useConfirmAndLogin = (
     cacheTime: 0,
     onSuccess: async ({ data }) => {
       if (data?.access_token) {
-        // todo localStorage names to var
-        localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem(localStorageKeys.accessToken, data.access_token);
       }
       await client.invalidateQueries([queryKeys.user]);
       await client.invalidateQueries([queryKeys.bins]);

@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { localStorageKeys } from '../components/common/constants';
 import { apiRoutes } from '../routes';
 import { IJWTs } from './api.interface';
 
@@ -16,8 +17,7 @@ export const $api = axios.create(axiosConfig);
 
 $api.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
   if (config.headers) {
-    // todo localStorage names to var
-    config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
+    config.headers.Authorization = `Bearer ${localStorage.getItem(localStorageKeys.accessToken)}`;
   }
   return config;
 });
@@ -43,8 +43,7 @@ $api.interceptors.response.use(
       );
       // todo redo to try catch (https://www.youtube.com/watch?v=fN25fMQZ2v0&t=1337s)
       if (response.status === 200) {
-        // todo localStorage names to var
-        localStorage.setItem('access_token', response.data.access_token);
+        localStorage.setItem(localStorageKeys.accessToken, response.data.access_token);
         return $api.request(originalRequest);
       }
     }

@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/api';
 import { queryKeys } from '../api/api.constants';
 import { IUser } from '../api/api.interface';
+import { localStorageKeys } from '../components/common/constants';
 
 export const useDeleteUser = () => {
   const client = useQueryClient();
@@ -22,8 +23,7 @@ export const useDeleteUser = () => {
     },
 
     onSuccess: async () => {
-      // todo localStorage names to var
-      localStorage.removeItem('access_token');
+      localStorage.removeItem(localStorageKeys.accessToken);
       await client.resetQueries([queryKeys.user]);
       await client.resetQueries([queryKeys.bins]);
     },

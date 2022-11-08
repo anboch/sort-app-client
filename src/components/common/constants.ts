@@ -5,3 +5,8 @@ export const feedbackTypes = {
 export const sessionStorageKeys = {
   materialSuggestions: 'material-suggestions',
 } as const;
+
+export const localStorageKeys = {
+  accessToken: 'access_token',
+  themeMode: 'theme_mode',
+} as const;
