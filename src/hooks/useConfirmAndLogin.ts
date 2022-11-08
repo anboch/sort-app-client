@@ -4,10 +4,11 @@ import { api } from '../api';
 import { IConfirmDto, IJWTs } from '../api/api.interface';
 import { apiRoutes } from '../routes';
 import { queryKeys, responseErrorMessages } from '../api/api.constants';
+import { ValueOf } from '../components/common/types';
 
 interface IErrorResponseData {
   error: string;
-  message: typeof responseErrorMessages[keyof typeof responseErrorMessages];
+  message: ValueOf<typeof responseErrorMessages>;
   statusCode: number;
 }
 

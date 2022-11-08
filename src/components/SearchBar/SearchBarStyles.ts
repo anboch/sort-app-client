@@ -30,7 +30,7 @@ export const HintsList = styled.div`
   z-index: 2;
   overflow-y: auto;
   width: 100%;
-  background-color: #fff;
+  background-color: ${({ theme }): string => theme.palette.background.paper};
   /* font-size: 16px; */
   max-height: 260px;
 `;

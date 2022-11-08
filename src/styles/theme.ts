@@ -1,12 +1,10 @@
-import { createTheme } from '@mui/material/styles';
-
 enum gridAreasEnum {
   body = 'body',
   header = 'header',
   footer = 'footer',
 }
 
-export interface CustomTheme {
+export interface ICustomTheme {
   bg: {
     main: string;
     light: string;
@@ -16,7 +14,7 @@ export interface CustomTheme {
   };
 }
 
-const theme = createTheme({
+export const theme = {
   bg: {
     main: '#fff',
     light: '#F4F5F7',
@@ -26,9 +24,7 @@ const theme = createTheme({
     header: gridAreasEnum.header,
     footer: gridAreasEnum.footer,
   },
-});
-
-export default theme;
+};
 
 // export const theme = {
 //   colors: {

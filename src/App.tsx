@@ -6,10 +6,10 @@ import SearchPage from './views/Search/SearchPage';
 import BinsPage from './views/Bins/BinsPage';
 import ProfilePage from './views/Profile/ProfilePage';
 import AboutPage from './views/About/AboutPage';
-import { CssBaseline } from '@mui/material';
 import { pageRoutes } from './routes';
 import { LoginFormProvider } from './context/LoginFormContext';
 import { RecyclePointsPage } from './views/RecyclePoints';
+import { ThemeProvider } from './context/ThemeContex/ThemeContext';
 
 interface IPage {
   name: string;
@@ -54,25 +54,23 @@ const queryClient = new QueryClient({
 
 export default function App(): JSX.Element {
   return (
-    // <ThemeProvider theme={theme}>
-    //   <Button variant="contained">Hello World</Button>
-    // </ThemeProvider>
     <>
-      <CssBaseline />
-      <QueryClientProvider client={queryClient}>
-        <LoginFormProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path={pageRoutes.search} element={<SearchPage />} />
-              <Route path={pageRoutes.bins} element={<BinsPage />} />
-              <Route path={pageRoutes.recyclePoints} element={<RecyclePointsPage />} />
-              <Route path={pageRoutes.profile} element={<ProfilePage />} />
-              <Route path={pageRoutes.about} element={<AboutPage />} />
-            </Routes>
-          </BrowserRouter>
-        </LoginFormProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <LoginFormProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path={pageRoutes.search} element={<SearchPage />} />
+                <Route path={pageRoutes.bins} element={<BinsPage />} />
+                <Route path={pageRoutes.recyclePoints} element={<RecyclePointsPage />} />
+                <Route path={pageRoutes.profile} element={<ProfilePage />} />
+                <Route path={pageRoutes.about} element={<AboutPage />} />
+              </Routes>
+            </BrowserRouter>
+          </LoginFormProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </ThemeProvider>
     </>
   );
 }

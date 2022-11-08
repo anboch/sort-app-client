@@ -4,7 +4,6 @@ import { KeyboardEvent, useEffect, useState } from 'react';
 
 import * as hooks from '../../hooks';
 import { SearchItemKind } from '../../api/api.interface';
-import theme from '../../styles/theme';
 import { StyledSearchBar, SearchInput, HintsList } from './SearchBarStyles';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 
@@ -46,7 +45,7 @@ export const SearchBar = ({
   return (
     <StyledSearchBar ref={ref}>
       <SearchInput withHints={isInputInFocus && hints.searchResult.length > 0}>
-        <SearchIcon sx={{ margin: '0 14px', color: `${theme.palette.primary.main}` }} />
+        <SearchIcon sx={{ margin: '0 14px', color: 'primary.main' }} />
         <Input
           onFocus={() => {
             setIsInputInFocus(true);
@@ -69,7 +68,7 @@ export const SearchBar = ({
             // },
             overflow: 'hidden',
             width: searchBarWidth,
-            color: `${theme.palette.text.secondary}`,
+            color: 'text.secondary',
             fontSize: '1.1rem',
           }}
           disableUnderline

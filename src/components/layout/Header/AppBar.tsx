@@ -12,11 +12,12 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { pages } from '../../../App';
 import { Link, useLocation } from 'react-router-dom';
-import theme from '../../../styles/theme';
 import { pageRoutes } from '../../../routes';
+import { useTheme } from '@mui/material';
 
 export const ResponsiveAppBar = (): JSX.Element => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const theme = useTheme();
 
   const searchByEnterKey = (event: KeyboardEvent<HTMLLIElement>): void => {
     if (event.key === 'Enter') {
@@ -38,7 +39,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
   const currentPath = useLocation().pathname;
 
   return (
-    <AppBar enableColorOnDark sx={{ borderRadius: '10px' }} position="static">
+    <AppBar enableColorOnDark sx={{ borderRadius: '10px', minHeight: {} }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link
@@ -76,11 +77,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
-                    color: `${
-                      path === currentPath
-                        ? theme.palette.secondary.light
-                        : theme.palette.primary.contrastText
-                    }`,
+                    color: `${path === currentPath ? 'secondary.light' : 'primary.contrastText'}`,
                     display: 'block',
                   }}
                 >

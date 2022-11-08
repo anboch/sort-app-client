@@ -5,6 +5,7 @@
 // }
 
 import { feedbackTypes } from '../components/common/constants';
+import { ValueOf } from '../components/common/types';
 
 // Request
 export interface IConfirmDto {
@@ -165,6 +166,6 @@ export interface IConfirmRequestInfo {
 
 export interface IFeedback {
   _id?: string;
-  type: typeof feedbackTypes[keyof typeof feedbackTypes];
+  type: ValueOf<typeof feedbackTypes>;
   description: string;
 }
