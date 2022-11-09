@@ -1,11 +1,12 @@
-import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { api } from '../api';
 import { IConfirmDto, IJWTs } from '../api/api.interface';
 import { apiRoutes } from '../routes';
-import { queryKeys, responseErrorMessages } from '../api/api.constants';
+import { responseErrorMessages } from '../api/api.constants';
 import { ValueOf } from '../components/common/types';
 import { localStorageKeys } from '../components/common/constants';
+import { useGetUser } from './useGetUser';
 
 interface IErrorResponseData {
   error: string;
@@ -17,7 +18,7 @@ export const useConfirmAndLogin = (
   // todo change on Mutation
   confirmDto: IConfirmDto
 ): UseQueryResult<AxiosResponse<Pick<IJWTs, 'access_token'>>, AxiosError<IErrorResponseData>> => {
-  const client = useQueryClient();
+  const userQ = useGetUser();
 
   return useQuery<AxiosResponse<Pick<IJWTs, 'access_token'>>, AxiosError<IErrorResponseData>>({
     queryKey: [apiRoutes.confirmAndLogin, confirmDto],
@@ -29,9 +30,8 @@ export const useConfirmAndLogin = (
     onSuccess: async ({ data }) => {
       if (data?.access_token) {
         localStorage.setItem(localStorageKeys.accessToken, data.access_token);
+        await userQ.refetch();
       }
-      await client.invalidateQueries([queryKeys.user]);
-      await client.invalidateQueries([queryKeys.bins]);
     },
   });
 };
