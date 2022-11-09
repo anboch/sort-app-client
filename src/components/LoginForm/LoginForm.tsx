@@ -4,13 +4,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, KeyboardEvent } from 'react';
 import { LoginFormContext } from '../../context/LoginFormContext';
 import { api } from '../../api';
 import * as S from './LoginFormStyles';
 import { useQuery } from '@tanstack/react-query';
 import { Box, CircularProgress, Link, Dialog } from '@mui/material';
-import { useCountdown, useConfirmAndLogin, useGetUser } from '../../hooks';
+import { useCountdown, useConfirmAndLogin } from '../../hooks';
 import { responseErrorMessages } from '../../api/api.constants';
 
 export const LoginForm = (): JSX.Element => {
@@ -48,6 +48,12 @@ export const LoginForm = (): JSX.Element => {
       setConfirmFor(inputEmailValue);
     } else {
       setIsWrongFormat(true);
+    }
+  };
+
+  const runByEnterKey = (event: KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+      validateAndSetEmail();
     }
   };
 
@@ -155,6 +161,7 @@ export const LoginForm = (): JSX.Element => {
               <TextField
                 value={inputEmailValue}
                 onChange={(e): void => setInputEmailValue(e.target.value)}
+                onKeyDown={runByEnterKey}
                 autoFocus
                 margin="dense"
                 label="Email Address"
