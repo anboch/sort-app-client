@@ -6,10 +6,7 @@ interface ILoginFormContext {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const LoginFormContext = createContext<ILoginFormContext>({
-  isOpen: false,
-  setIsOpen: () => false,
-});
+export const LoginFormContext = createContext<ILoginFormContext>({} as ILoginFormContext);
 
 export const LoginFormProvider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);

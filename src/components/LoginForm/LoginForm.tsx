@@ -15,7 +15,6 @@ import { responseErrorMessages } from '../../api/api.constants';
 
 export const LoginForm = (): JSX.Element => {
   const { isOpen, setIsOpen } = useContext(LoginFormContext);
-  const userQ = useGetUser();
   const [inputEmailValue, setInputEmailValue] = useState('');
   const [inputCodeValue, setInputCodeValue] = useState('');
   const [confirmFor, setConfirmFor] = useState<string>('');
