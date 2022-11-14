@@ -1,16 +1,18 @@
+import { Paper } from '@mui/material';
 import styled from 'styled-components';
 
-export const ProfileInfo = styled.div`
+export const ProfileInfo = styled(Paper)`
   display: flex;
   align-items: left;
   justify-content: center;
   flex-direction: column;
   width: 95%;
   // todo from theme
-  background-color: #eeefb0;
+  /* background-color: #eeefb0; */
+  padding: ${({ theme }) => theme.spacing(1)};
   border-radius: 10px;
   & > *:not(:last-child) {
-    margin-bottom: 20px;
+    margin-bottom: ${({ theme }): string => theme.spacing(2)};
   }
 `;
 
