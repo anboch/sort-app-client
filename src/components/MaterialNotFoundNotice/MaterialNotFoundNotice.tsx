@@ -1,25 +1,27 @@
-import { Button, Link, Typography } from '@mui/material';
+import { Link, Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { fuseOptions } from '../../hooks';
 import { useSendFeedback } from '../../hooks/useSendFeedback';
+import * as S from './MaterialNotFoundNoticeStyles';
 
 export const MaterialNotFoundNotice = ({
+  searchInputValueLength,
   selectedTagsLength,
   searchResultLength,
   materialListLength,
   searchQuery,
   clearSelectedTags,
-  clearSearch,
 }: {
+  searchInputValueLength: number;
   selectedTagsLength: number;
   searchResultLength: number;
   materialListLength: number;
   searchQuery: string;
   clearSelectedTags: () => void;
-  clearSearch: () => void;
 }): JSX.Element | null => {
   const [failedRequestValue, setFailedRequestValue] = useState<string | null>(null);
   const { sentMaterialSuggestion } = useSendFeedback();
+  const theme = useTheme();
 
   const requestValueExists = searchQuery.length >= fuseOptions.minMatchCharLength;
   const sentAndInform = async (value: string) => {
@@ -44,14 +46,14 @@ export const MaterialNotFoundNotice = ({
 
   if (failedRequestValue) {
     return (
-      <>
-        <Typography variant="h6">Эх...</Typography>
+      <S.MaterialNotFoundNotice>
         <Typography variant="body1">
-          Мы сожалеем, что по запросу<span> {`"${failedRequestValue}"`} </span>ничего подходящего не
-          нашлось. <br /> Но всё не напрасно! Мы уже передали информацию о вашей “редкости” и
-          возможно скоро она здесь появится.
+          Эх... Мы сожалеем, что по запросу
+          <span style={{ fontWeight: 'bold' }}> {`"${failedRequestValue}"`} </span>
+          ничего подходящего не нашлось. <br /> Но всё не напрасно! Мы уже передали информацию о
+          вашей “редкости” и возможно скоро она здесь появится.
         </Typography>
-      </>
+      </S.MaterialNotFoundNotice>
     );
   }
 
@@ -61,30 +63,46 @@ export const MaterialNotFoundNotice = ({
     materialListLength <= searchResultLength
   ) {
     return (
-      <>
-        Не нашли то, что искали? <br />
-        Попробуйте изменить или{' '}
-        <Link onClick={clearSelectedTags} component="button">
-          сбросьте
-        </Link>{' '}
-        фильтры
-      </>
+      <S.MaterialNotFoundNotice>
+        <Typography variant="subtitle1">
+          Не нашли то, что искали? <br />
+          Попробуйте изменить или{' '}
+        </Typography>
+        <Link
+          onClick={clearSelectedTags}
+          variant="subtitle1"
+          color={theme.palette.primary.dark}
+          component="button"
+        >
+          сбросьте фильтры
+        </Link>
+      </S.MaterialNotFoundNotice>
     );
   }
 
   if (requestValueExists === !!searchResultLength && materialListLength && searchQuery) {
     return (
-      <>
-        Не нашли то, что искали?
-        <Button onClick={async () => await sentAndInform(searchQuery)}>
-          пожалуйста, нажмите здесь!
-        </Button>
-      </>
+      <S.MaterialNotFoundNotice>
+        <Typography variant="subtitle1">Не нашли то, что искали?</Typography>
+
+        <Typography
+          component={Link}
+          style={{ cursor: 'pointer' }}
+          // color="info"
+          onClick={async () => await sentAndInform(searchQuery)}
+        >
+          нажмите здесь
+        </Typography>
+      </S.MaterialNotFoundNotice>
     );
   }
 
-  if (!searchQuery && !searchResultLength && !selectedTagsLength) {
-    return <>Введите ваш запрос</>;
+  if (!searchQuery && !searchResultLength && !selectedTagsLength && !searchInputValueLength) {
+    return (
+      <S.MaterialNotFoundNotice>
+        <Typography variant="subtitle1">Введите запрос</Typography>
+      </S.MaterialNotFoundNotice>
+    );
   }
 
   return null;
