@@ -22,8 +22,11 @@ export const EditableValue = ({ mutationFunc, value = '', title }: IEditableValu
     if (value !== inputValue) {
       mutationFunc(inputValue);
     }
-    setIsEditMode(false);
   };
+
+  useEffect(() => {
+    setIsEditMode(false);
+  }, [value]);
 
   useEffect(() => {
     setInputValue(value);
@@ -31,47 +34,57 @@ export const EditableValue = ({ mutationFunc, value = '', title }: IEditableValu
 
   return (
     <>
-      {!isEditMode && (
-        <S.ValuePreview>
-          <div>
-            <Typography variant="caption">{title}</Typography>
+      <S.EditableValue ref={ref}>
+        <S.TitleAndActions>
+          <Typography display="block" variant="caption">
+            {title}
+          </Typography>
+          {!isEditMode ? (
+            <div>
+              <IconButton onClick={() => setIsEditMode(true)}>
+                <EditIcon fontSize="inherit" />
+              </IconButton>
+            </div>
+          ) : (
+            <div>
+              {value !== inputValue && (
+                <IconButton
+                  // add listener on enter button and run closeInputWithSave
+                  onClick={() => closeInputWithSave()}
+                  // size="small"
+                >
+                  <SaveIcon fontSize="inherit" />
+                </IconButton>
+              )}
+              <IconButton onClick={() => setIsEditMode(false)}>
+                <CancelIcon fontSize="inherit" />
+              </IconButton>
+            </div>
+          )}
+        </S.TitleAndActions>
+        {!isEditMode ? (
+          <S.Value>
             {value ? (
               <Typography variant="h6">{value}</Typography>
             ) : (
-              <Typography onClick={() => setIsEditMode(true)} variant="subtitle1">
+              <Typography display="inline" onClick={() => setIsEditMode(true)} variant="subtitle1">
                 Введите {title}...
               </Typography>
             )}
-          </div>
-          <IconButton onClick={() => setIsEditMode(true)} size="small">
-            <EditIcon fontSize="inherit" />
-          </IconButton>
-        </S.ValuePreview>
-      )}
-      {isEditMode && (
-        <S.ValueEdit>
-          <div ref={ref}>
+          </S.Value>
+        ) : (
+          <S.Value>
             <TextField
               value={inputValue}
               onChange={(e): void => setInputValue(e.target.value)}
               id="filled-basic"
-              label="Bin title"
-              variant="filled"
+              // label={title}
+              variant="standard"
               size="small"
             />
-            <IconButton
-              // add listener on enter button and run closeInputWithSave
-              onClick={() => closeInputWithSave()}
-              size="small"
-            >
-              <SaveIcon fontSize="inherit" />
-            </IconButton>
-          </div>
-          <IconButton onClick={() => setIsEditMode(false)} size="small">
-            <CancelIcon fontSize="inherit" />
-          </IconButton>
-        </S.ValueEdit>
-      )}
+          </S.Value>
+        )}
+      </S.EditableValue>
     </>
   );
 };
