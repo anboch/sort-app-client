@@ -52,7 +52,7 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
       <S.SimilarMaterialAndDescription>
         {similarMaterialIDs.length > 0 && (
           <S.SimilarMaterial>
-            <Typography variant={'subtitle2'}>Often confused with:</Typography>
+            <Typography variant={'caption'}>Часто путают с:</Typography>
             {similarMaterialIDs.map((material) => (
               <ListItemText key={material._id} secondary={`- ${material.titles.join(', ')}`} />
               // <Link
@@ -76,21 +76,24 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
       {sortedRules && (
         <S.MaterialRules>
           {sortedRules.generalRules.length > 0 && (
-            <Typography variant={'subtitle2'}>General rules:</Typography>
+            <Typography variant={'caption'}>Общие правила:</Typography>
           )}
           {sortedRules.generalRules.map((rule) => (
-            <ListItemText key={rule._id} secondary={`- ${rule.description}`} />
+            <ListItemText key={rule._id} primary={`- ${rule.description}`} />
           ))}
           {sortedRules.localRules.length > 0 && (
-            <Typography variant={'subtitle2'}>Rules for some recycle points:</Typography>
+            <Typography variant={'caption'}>Правила для некоторых пунктов приема:</Typography>
           )}
           {sortedRules.localRules.map((rule) => (
-            <ListItemText key={rule._id} secondary={`- ${rule.description}`} />
+            <ListItemText key={rule._id} primary={`- ${rule.description}`} />
           ))}
         </S.MaterialRules>
       )}
       <S.Tags>
-        <Typography variant={'subtitle2'}>Tags:</Typography>
+        {/* todo add filter on tag click */}
+        <Typography display="block" variant={'caption'}>
+          Тэги:
+        </Typography>
         {tagIDs.map((tag) => (
           <Chip key={tag.titles[0]} label={tag.titles.join(', ')} variant="outlined" size="small" />
         ))}

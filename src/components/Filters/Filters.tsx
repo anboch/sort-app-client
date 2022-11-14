@@ -22,7 +22,7 @@ export const Filters = ({ tagList, selectedTags, onTagChange }: IFiltersProps): 
         getOptionLabel={(item): string => item.titles.join(', ')}
         sx={{ width: 300 }}
         renderInput={(params): JSX.Element => (
-          <TextField {...params} variant="standard" label="Filters" />
+          <TextField {...params} variant="standard" label="Фильтры" />
         )}
       />
     </StyledFilter>
