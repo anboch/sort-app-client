@@ -1,7 +1,6 @@
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+
 import DialogTitle from '@mui/material/DialogTitle';
 import * as S from './AddToBinFormStyles';
 import { Typography } from '@mui/material';
@@ -23,35 +22,50 @@ export const AddToBinForm = ({ setIsOpen, material, bin }: IAddToBinFormProps): 
   };
 
   return (
-    <S.ConfirmAdd>
+    <>
       <DialogTitle>Отлично</DialogTitle>
       {/* todo add info about the bin */}
-      <DialogContent>
-        <DialogContentText display="inline">
-          Положите материал: {material.titles[0]} в корзину с названием
-          <span style={{ display: 'inline-block' }}>{bin?.title}</span>
-        </DialogContentText>
-        {/* <Typography display="inline" variant="h6">
-          {` ${bin?.title}`}
-        </Typography> */}
-        <Typography display="block" variant="caption">
-          тип корзины
-        </Typography>
-        {typeof bin.typeID === 'object' && <Typography>{bin.typeID?.title}</Typography>}
-        <Typography display="block" variant="caption">
-          правила
-        </Typography>
-        {ruleSetQ.data &&
-          typeof ruleSetQ.data?.ruleIDs === 'object' &&
-          ruleSetQ.data.ruleIDs.map((rule) => {
-            if (typeof rule === 'object' && rule.description) {
-              return <Typography key={rule._id}>- {rule.description}</Typography>;
-            }
-          })}
-      </DialogContent>
+      <S.AddToBinContent>
+        <div>
+          <Typography variant="body1" display="inline">
+            {'Положите материал '}
+          </Typography>
+          <S.CustomChip>{material.titles[0]}</S.CustomChip>
+          {/* <Typography variant="body1" display="inline">
+            {`"${material.titles[0]}"`}
+          </Typography> */}
+          <div>
+            <Typography variant="body1" display="inline">
+              {'в корзину c названием '}
+            </Typography>
+            <S.CustomChip>{bin?.title}</S.CustomChip>
+          </div>
+          {/* <Typography variant="h6" display="inline">
+            {bin?.title}
+          </Typography> */}
+        </div>
+        {/* <div>
+          <Typography display="block" variant="caption">
+            тип корзины
+          </Typography>
+          {typeof bin.typeID === 'object' && <Typography>{bin.typeID?.title}</Typography>}
+        </div> */}
+        <div>
+          <Typography display="block" variant="caption">
+            правила
+          </Typography>
+          {ruleSetQ.data &&
+            typeof ruleSetQ.data?.ruleIDs === 'object' &&
+            ruleSetQ.data.ruleIDs.map((rule) => {
+              if (typeof rule === 'object' && rule.description) {
+                return <Typography key={rule._id}>- {rule.description}</Typography>;
+              }
+            })}
+        </div>
+      </S.AddToBinContent>
       <DialogActions>
         <Button onClick={handleCloseDialog}>OK</Button>
       </DialogActions>
-    </S.ConfirmAdd>
+    </>
   );
 };
