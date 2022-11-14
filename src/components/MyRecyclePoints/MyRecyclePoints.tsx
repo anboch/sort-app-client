@@ -7,9 +7,9 @@ import { Link, ListItemText, Typography } from '@mui/material';
 import { useGetRecyclePoints } from '../../hooks/useGetRecyclePoints';
 import { useFindBinsForRecyclePoints } from '../../hooks/useFindBinsForRecyclePoints';
 import * as S from './MyRecyclePointsStyles';
-import { Map } from '../../components/Map/Map';
+import { Map } from '../Map/Map';
 
-const RecyclePointInfo = ({
+export const RecyclePointInfo = ({
   recyclePoint,
 }: {
   recyclePoint: IRecyclePoint | null;
@@ -17,22 +17,21 @@ const RecyclePointInfo = ({
   return (
     <>
       {recyclePoint && (
-        <>
+        <div>
           <Typography variant="caption">название</Typography>
-          <Typography variant="h6">{recyclePoint?.title}</Typography>
+          <Typography>{recyclePoint?.title}</Typography>
           <Typography variant="caption">описание</Typography>
-          <Typography variant="h6">{recyclePoint?.description}</Typography>
+          <Typography>{recyclePoint?.description}</Typography>
           <Typography variant="caption">контакты</Typography>
           <Link
             display="block"
             target="_blank"
             href={recyclePoint?.contacts?.site}
             rel="noopener noreferrer"
-            variant="h6"
           >
             {recyclePoint?.contacts?.site}
           </Link>
-        </>
+        </div>
       )}
     </>
   );

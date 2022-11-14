@@ -1,7 +1,7 @@
 import { withLayout } from '../../components/layout/Layout';
 import { OfferToLogin } from '../../components/OfferToLogin/OfferToLogin';
 import { useGetUser } from '../../hooks';
-import { MyRecyclePoints } from '../MyRecyclePoints';
+import { MyRecyclePoints } from '../../components/MyRecyclePoints';
 
 const RecyclePointsPage = (): JSX.Element => {
   const userQ = useGetUser();
