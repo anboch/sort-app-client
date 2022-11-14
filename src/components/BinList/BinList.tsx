@@ -3,6 +3,9 @@
 import * as S from './BinListStyles';
 import { Bin } from '../Bin/Bin';
 import { useGetBins } from '../../hooks/useGetBins';
+import { Typography, Link } from '@mui/material';
+import { pageRoutes } from '../../routes';
+import { Link as RouterLink } from 'react-router-dom';
 /* Components */
 
 /* Instruments */
@@ -16,7 +19,24 @@ export const BinList = (): JSX.Element => {
     return <>Error or loading</>;
   }
   if (binsQ.data.length === 0) {
-    return <>У вас пока нет корзин</>;
+    return (
+      <S.BinList>
+        <S.NoBinNotice>
+          <Typography display="block" variant="h6" align="center">
+            У вас пока нет корзин
+          </Typography>
+          <S.NoBinNoticeExplanation>
+            <Typography variant="subtitle1">{'Воспользуйтесь '}</Typography>
+            <Link component={RouterLink} to={pageRoutes.search}>
+              поиском по материалам
+            </Link>
+            <Typography variant="subtitle1">
+              {' и в зависимости от удобного пункта приёма создайте подходящую'}
+            </Typography>
+          </S.NoBinNoticeExplanation>
+        </S.NoBinNotice>
+      </S.BinList>
+    );
   }
   return (
     <S.BinList>
