@@ -100,12 +100,12 @@ const Search = (): JSX.Element => {
       {tagList.length > 0 && <TagList tags={tagList} addFilter={addFilter} />}
       <MaterialList materials={materialList} />
       <MaterialNotFoundNotice
+        searchInputValueLength={searchInputValue.length}
         selectedTagsLength={selectedTags.length}
         searchQuery={searchQuery}
         searchResultLength={searchResult.length}
         materialListLength={materialList.length}
         clearSelectedTags={() => setSelectedTag([])}
-        clearSearch={() => search('')}
       />
     </StyledSearchPage>
   );

@@ -6,9 +6,9 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { ValueOf } from '../../components/common/types';
-import { theme } from '../../styles/theme';
 import { ThemeProvider as SCThemeProvider } from 'styled-components';
 import { localStorageKeys } from '../../components/common/constants';
+import { customPaletteForTheme, customVarsForTheme } from '../../styles/theme';
 
 export const themeModeTypes = { AUTO: 'auto', LIGHT: 'light', DARK: 'dark' } as const;
 
@@ -33,16 +33,17 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }): JSX.Element 
     setThemeMode(newMode);
   };
 
-  const themeWithMode = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: themeMode === themeModeTypes.AUTO ? userPrefersMode : themeMode,
-        },
-        ...theme,
-      }),
-    [userPrefersMode, themeMode]
-  );
+  const themeWithMode = useMemo(() => {
+    const mode = themeMode === themeModeTypes.AUTO ? userPrefersMode : themeMode;
+    return createTheme({
+      palette: {
+        mode,
+        ...customPaletteForTheme.common,
+        ...customPaletteForTheme[mode],
+      },
+      ...customVarsForTheme,
+    });
+  }, [userPrefersMode, themeMode]);
 
   return (
     <ThemeContext.Provider value={{ themeMode, toggleThemeMode }}>

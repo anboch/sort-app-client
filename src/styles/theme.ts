@@ -4,37 +4,35 @@ enum gridAreasEnum {
   footer = 'footer',
 }
 
-export interface ICustomTheme {
-  bg: {
-    main: string;
-    light: string;
-  };
-  gridAreas: {
-    [key in gridAreasEnum]: string;
-  };
-}
-
-export const theme = {
-  bg: {
-    main: '#fff',
-    light: '#F4F5F7',
+export const customPaletteForTheme = {
+  common: {
+    primary: {
+      main: '#94c2e0',
+    },
+    secondary: {
+      main: '#e0b294',
+    },
   },
+  light: {},
+  dark: {
+    background: {
+      default: '#303030',
+      paper: '#424242',
+    },
+  },
+};
+
+export const customVarsForTheme = {
   gridAreas: {
     body: gridAreasEnum.body,
     header: gridAreasEnum.header,
     footer: gridAreasEnum.footer,
   },
+  shape: {
+    borderRadius: 10,
+  },
 };
 
-// export const theme = {
-//   colors: {
-//     primary: "",
-//     secondary: "",
-//   },
-//   media: {
-//     desktopSmall: "max-width: 1200px",
-//     tabletBig: "max-width: 992px",
-//     tabletSmall: "max-width: 768px",
-//     phoneBig: "max-width: 576px",
-//   },
-// };
+export type ICustomVarsForTheme = {
+  [Key in keyof typeof customVarsForTheme]: typeof customVarsForTheme[Key];
+};
