@@ -54,7 +54,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
                 mr: 2,
                 display: 'flex',
                 fontFamily: 'monospace',
-                fontWeight: 700,
+                fontWeight: 'bolder',
                 letterSpacing: '.2rem',
                 color: 'inherit',
                 textDecoration: 'none',
@@ -77,7 +77,8 @@ export const ResponsiveAppBar = (): JSX.Element => {
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
-                    color: `${path === currentPath ? 'secondary.light' : 'primary.contrastText'}`,
+                    fontWeight: `${path === currentPath ? 'bold' : 'normal'}`,
+                    color: 'primary.contrastText',
                     display: 'block',
                   }}
                 >
@@ -128,11 +129,8 @@ export const ResponsiveAppBar = (): JSX.Element => {
                     key={name}
                     style={{
                       textDecoration: 'none',
-                      color: `${
-                        path === currentPath
-                          ? theme.palette.secondary.dark
-                          : theme.palette.text.primary
-                      }`,
+                      fontWeight: `${path === currentPath ? 'bold' : 'normal'}`,
+                      color: theme.palette.text.primary,
                     }}
                   >
                     {name}
