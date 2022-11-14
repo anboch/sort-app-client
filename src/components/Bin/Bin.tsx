@@ -1,22 +1,21 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Button,
+  Collapse,
   DialogActions,
   Divider,
-  Link,
+  IconButton,
   Typography,
+  useTheme,
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
+import MapIcon from '@mui/icons-material/Map';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
-import PlaceIcon from '@mui/icons-material/Place';
-import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
 
-import { Marker } from '@urbica/react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { Map } from '../../components/Map/Map';
 import * as S from './BinStyles';
 import { IBin, IMaterial, IRecyclePoint, IRuleSet } from '../../api/api.interface';
 import { useState } from 'react';
@@ -27,19 +26,20 @@ import { getId, getIDs } from '../../utils/utils';
 import { useGetRuleSet } from '../../hooks/useGetRuleSet';
 import { EditableValue } from '../common/EditableValue';
 import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecyclePoint';
-import { useDeleteBin } from '../../hooks/useDeleteBin';
 import { AlertDialog } from '../AlertDialog/AlertDialog';
 import { useGetMaterialsByType } from '../../hooks/useGetMaterialsByType';
 import { MaterialPreviewDialog } from '../MaterialPreviewDialog/MaterialPreviewDialog';
+import { RecyclePointsOfBinOnMap } from '../RecyclePointsOfBinOnMap/RecyclePointsOfBinOnMap';
+import { useDeleteBin } from '../../hooks/useDeleteBin';
 
 const BinTitle = ({ _id, title = '' }: Pick<IBin, '_id' | 'title'>) => {
   const binM = useUpdateBin();
   const mutationFunc = (inputValue: string) => binM.mutate({ _id, title: inputValue });
 
   return (
-    <S.BinTitle>
+    <>
       <EditableValue mutationFunc={mutationFunc} value={title} title={'название'} />
-    </S.BinTitle>
+    </>
   );
 };
 
@@ -48,47 +48,54 @@ export const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
   const [materialForPreview, setMaterialForPreview] = useState<IMaterial | null>(null);
   const materialsQ = useGetMaterialsByType(getId(typeID), isExpanded);
 
-  const handleChange = () => {
+  const handleExpandClick = () => {
     setIsExpanded((prev) => !prev);
   };
 
   // todo change Loading...
   return (
-    <>
-      <Typography variant="caption">тип</Typography>
-      <Accordion expanded={isExpanded} onChange={handleChange}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
+    <S.BinType>
+      <S.BinTypeSummary>
+        <Typography variant="caption">тип</Typography>
+        <S.TypeTitle>
           {typeof typeID === 'object' && <Typography>{typeID?.title}</Typography>}
-        </AccordionSummary>
-        <AccordionDetails>
-          <>
-            {materialsQ.data &&
-              materialsQ.data.map((material) => {
-                return (
-                  <Link
-                    key={material._id}
-                    sx={{ padding: '3px' }}
-                    component="button"
-                    variant="body2"
-                    underline="hover"
-                    onClick={() => setMaterialForPreview(material)}
-                    // todo , to pseudo element
-                  >
-                    {material.titles[0]},
-                  </Link>
-                );
-              })}
-            {materialsQ.isError && <Typography>Error...</Typography>}
-            {materialsQ.isLoading && <span>Loading...</span>}
-          </>
-        </AccordionDetails>
-      </Accordion>
+        </S.TypeTitle>
+        <S.BinTypeActions>
+          <div>
+            <S.ExpandMore
+              expand={isExpanded}
+              onClick={handleExpandClick}
+              aria-expanded={isExpanded}
+              aria-label="подходящие материалы"
+            >
+              <ExpandMoreIcon />
+            </S.ExpandMore>
+          </div>
+        </S.BinTypeActions>
+      </S.BinTypeSummary>
+      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+        <div>
+          {materialsQ.data ? (
+            materialsQ.data.map((material) => {
+              return (
+                <S.BinTypeMaterialItem
+                  key={material._id}
+                  variant="body2"
+                  onClick={() => setMaterialForPreview(material)}
+                >
+                  {material.titles[0]}
+                </S.BinTypeMaterialItem>
+              );
+            })
+          ) : materialsQ.isError ? (
+            <Typography>Error...</Typography>
+          ) : materialsQ.isLoading ? (
+            <span>Loading...</span>
+          ) : null}
+        </div>
+      </Collapse>
       <MaterialPreviewDialog material={materialForPreview} setMaterial={setMaterialForPreview} />
-    </>
+    </S.BinType>
   );
 };
 
@@ -101,6 +108,7 @@ export const BinRules = ({
   allRuleSets: IRuleSet[] | null;
   isEditMode?: boolean;
 }) => {
+  const theme = useTheme();
   const uniqRulesSortedByQuantity = useGetUniqRulesSortedByQuantity(
     isEditMode ? allRuleSets || [] : selectedRuleSet ? [selectedRuleSet] : []
   );
@@ -108,11 +116,16 @@ export const BinRules = ({
   const isSelected = (ruleId: string) => (isEditMode ? selectedRuleIds?.includes(ruleId) : true);
 
   // todo change 'Loading..'
+  // todo fixed hight of rules before choose RP
   return (
-    <>
-      <Typography variant="caption">правила</Typography>
+    <S.BinRules>
+      <Typography display="block" variant="caption">
+        правила
+      </Typography>
       {isEditMode && allRuleSets && selectedRuleIds.length === 0 ? (
-        <Typography variant="subtitle1">Выберите пункт приема чтобы увидеть правила</Typography>
+        <Typography color={theme.palette.info.main} variant="subtitle1">
+          Выберите пункт приема на карте, чтобы увидеть правила
+        </Typography>
       ) : allRuleSets && selectedRuleIds.length > 0 ? (
         uniqRulesSortedByQuantity.map((rule) => {
           if (typeof rule === 'object' && rule.description) {
@@ -126,56 +139,35 @@ export const BinRules = ({
       ) : (
         <Typography>Loading...</Typography>
       )}
-    </>
+    </S.BinRules>
   );
 };
 
 interface IBinRecyclePointsProps {
-  // selectedRecyclePoint: IRecyclePoint | null,
-  isEditMode?: boolean;
-  isCreateMode?: boolean;
+  isEditMode: boolean;
+  ruleSetOfBin: IRuleSet | null;
+  selectedRecyclePoint: IRecyclePoint | null;
   allRecyclePoints: IRecyclePoint[];
   selectedRuleSet: IRuleSet | null;
-  setIsEditMode?: Dispatch<SetStateAction<boolean>>;
+  setIsEditMode: Dispatch<SetStateAction<boolean>>;
   setSelectedRecyclePoint: Dispatch<SetStateAction<IRecyclePoint | null>>;
 }
 
-export const BinRecyclePoints = ({
-  isEditMode = true,
-  isCreateMode = false,
-  // selectedRecyclePoint,
+export const RecyclePointsOfBin = ({
+  isEditMode,
+  ruleSetOfBin,
+  selectedRecyclePoint,
   allRecyclePoints,
   selectedRuleSet,
   setIsEditMode,
   setSelectedRecyclePoint,
-}: IBinRecyclePointsProps) => {
+}: IBinRecyclePointsProps): JSX.Element => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [downloadMap, setDownloadMap] = useState<boolean>(false);
-
-  const isSelected = (recyclePointId: string) =>
-    getIDs(selectedRuleSet?.recyclePointIDs ?? []).includes(recyclePointId);
-
-  // todo to styles
-  const styleSelected = {
-    padding: '10px',
-    color: '#fff',
-    cursor: 'pointer',
-    background: '#19c850',
-    borderRadius: '6px',
-  };
-
-  const style = {
-    padding: '5px',
-    color: '#fff',
-    cursor: 'pointer',
-    background: '#5d6972',
-    borderRadius: '6px',
-  };
-
-  const style2 = {
-    width: '100%',
-    height: '100%',
-  };
+  const infoAboutSelectedAndAllRecyclePoints =
+    ruleSetOfBin?.recyclePointIDs.length === allRecyclePoints.length
+      ? allRecyclePoints.length
+      : `${ruleSetOfBin?.recyclePointIDs.length} из ${allRecyclePoints.length}`;
 
   const handleChange = () => {
     setIsExpanded((prev) => !prev);
@@ -188,78 +180,49 @@ export const BinRecyclePoints = ({
   useEffect(() => {
     if (isExpanded) {
       setDownloadMap(true);
-    } else if (isEditMode && setIsEditMode) {
+    } else if (isEditMode) {
       setIsEditMode(false);
     }
   }, [isExpanded]);
 
-  // todo add handle error if REACT_APP_MAPBOX_ACCESS_TOKEN is undefined
   return (
-    <>
+    <div>
       <Typography variant="caption">пункты приёма</Typography>
-      <Accordion expanded={isExpanded} onChange={handleChange}>
-        {!isCreateMode && (
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>Пункты приёма</Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Посмотреть на карте</Typography>
-          </AccordionSummary>
+      <S.RecyclePointsOfBinSummary>
+        {ruleSetOfBin && allRecyclePoints && (
+          <Typography>
+            По выбранным правилам{' '}
+            <Typography display="inline" style={{ whiteSpace: 'nowrap' }}>
+              {`принимают: ${infoAboutSelectedAndAllRecyclePoints}`}
+            </Typography>
+          </Typography>
         )}
-        <AccordionDetails>
-          {downloadMap && (
-            <Map>
-              {allRecyclePoints.map((recyclePoint) => {
-                if (isEditMode || isSelected(recyclePoint._id)) {
-                  return (
-                    <Marker
-                      key={recyclePoint._id}
-                      latitude={recyclePoint?.position?.coordinates.latitude ?? null}
-                      longitude={recyclePoint?.position?.coordinates.longitude ?? null}
-                      onClick={() => setSelectedRecyclePoint(recyclePoint)}
-                    >
-                      {isSelected(recyclePoint._id) ? (
-                        <PlaceIcon color="success" fontSize="large" />
-                      ) : (
-                        <EditLocationAltIcon color="error" />
-                      )}
-                      {/* <div style={isSelected(recyclePoint._id) ? styleSelected : style}>!</div> */}
-                    </Marker>
-                  );
-                }
-              })}
-            </Map>
-          )}
-        </AccordionDetails>
-      </Accordion>
-    </>
+        <IconButton onClick={handleChange}>
+          <MapIcon />
+        </IconButton>
+      </S.RecyclePointsOfBinSummary>
+      <Collapse in={isExpanded} timeout="auto">
+        {downloadMap && (
+          <RecyclePointsOfBinOnMap
+            selectedRecyclePoint={selectedRecyclePoint}
+            isEditMode={isEditMode}
+            allRecyclePoints={allRecyclePoints}
+            selectedRuleSet={selectedRuleSet}
+            setSelectedRecyclePoint={setSelectedRecyclePoint}
+          />
+        )}
+      </Collapse>
+    </div>
   );
 };
 
-const BinActions = ({
-  allRuleSets,
-  isEditMode,
-  setCurrentRecyclePointAsSelected,
-  setIsEditMode,
-  deleteBin,
-  handleSaveClick,
-}: {
-  allRuleSets: IRuleSet[] | null;
-  isEditMode: boolean;
-  setCurrentRecyclePointAsSelected: () => void;
-  deleteBin: () => void;
-  setIsEditMode: Dispatch<SetStateAction<boolean>>;
-  handleSaveClick: () => void;
-}) => {
+const BinActions = ({ bin }: { bin: IBin }): JSX.Element => {
+  const deleteBinM = useDeleteBin();
+  const deleteBin = () => deleteBinM.mutate(bin._id);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const deleteAlertMessage = 'Do you want to delete the bin?';
-
-  const handleEditClick = () => {
-    setCurrentRecyclePointAsSelected();
-    setIsEditMode(true);
-  };
+  const deleteAlertMessage = bin.title
+    ? `Вы действительно хотите удалить корзину с названием: ${bin.title} ?`
+    : 'Вы действительно хотите удалить корзину?';
 
   const handleDeleteClick = () => {
     setIsAlertOpen(true);
@@ -271,19 +234,7 @@ const BinActions = ({
   return (
     <S.BinActions>
       <DialogActions>
-        {isEditMode ? (
-          <>
-            <Button onClick={handleSaveClick}>Сохранить</Button>
-            <Button onClick={() => setIsEditMode(false)}>Отмена</Button>
-          </>
-        ) : (
-          <>
-            <Button onClick={handleDeleteClick}>Удалить</Button>
-            <Button disabled={allRuleSets?.length === 1} onClick={handleEditClick}>
-              Редактировать
-            </Button>
-          </>
-        )}
+        <Button onClick={handleDeleteClick}>Удалить</Button>
       </DialogActions>
       <AlertDialog
         isOpen={isAlertOpen}
@@ -300,7 +251,7 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
   const ruleSetQ = useGetRuleSet(getId(bin.ruleSetID));
   const typeQ = useGetType(getId(bin.typeID));
   const binM = useUpdateBin();
-  const deleteBinM = useDeleteBin();
+
   const {
     allRuleSets,
     allRecyclePoints,
@@ -310,17 +261,8 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
     setSelectedRecyclePoint,
   } = useChangeSelectedRecyclePoint(useMemo(() => [typeQ.data], [typeQ.data]));
 
-  const setCurrentRecyclePointAsSelected = () =>
-    setSelectedRecyclePoint(
-      typeof ruleSetQ.data?.recyclePointIDs[0] === 'object'
-        ? ruleSetQ.data?.recyclePointIDs[0]
-        : null
-    );
-
-  const deleteBin = () => deleteBinM.mutate(bin._id);
-
   const saveUpdatedBin = () => {
-    if (selectedRuleSet && selectedRuleSet?._id !== getId(bin.ruleSetID)) {
+    if (selectedRuleSet?._id !== getId(bin.ruleSetID)) {
       binM.mutate(
         { _id: bin._id, ruleSetID: selectedRuleSet?._id },
         {
@@ -336,34 +278,79 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
     // todo handle selectedRuleSet === null
   };
 
+  const setRecyclePointFromRuleSetOfBinAsSelected = () =>
+    setSelectedRecyclePoint(
+      typeof ruleSetQ.data?.recyclePointIDs[0] === 'object'
+        ? ruleSetQ.data.recyclePointIDs[0]
+        : null
+    );
+
+  const handleEditClick = () => {
+    setRecyclePointFromRuleSetOfBinAsSelected();
+    setIsEditMode(true);
+  };
+
   // todo add spinner while loading ruleSetQ
   return (
     <S.Bin>
-      <BinActions
-        isEditMode={isEditMode}
-        allRuleSets={allRuleSets}
-        setCurrentRecyclePointAsSelected={setCurrentRecyclePointAsSelected}
-        setIsEditMode={setIsEditMode}
-        deleteBin={deleteBin}
-        handleSaveClick={saveUpdatedBin}
-      />
-      <BinTitle _id={bin._id} title={bin.title} />
-      <BinType typeID={bin.typeID} />
-      <Divider variant="middle" />
-      <BinRules
-        isEditMode={isEditMode}
-        // todo create constant
-        selectedRuleSet={isEditMode ? selectedRuleSet : ruleSetQ.data ?? null}
-        allRuleSets={allRuleSets}
-      />
-      <BinRecyclePoints
-        isEditMode={isEditMode}
-        // todo create constant
-        selectedRuleSet={isEditMode ? selectedRuleSet : ruleSetQ.data ?? null}
-        allRecyclePoints={allRecyclePoints}
-        setIsEditMode={setIsEditMode}
-        setSelectedRecyclePoint={setSelectedRecyclePoint}
-      />
+      <S.BinPropertyContainer>
+        <BinTitle _id={bin._id} title={bin.title} />
+      </S.BinPropertyContainer>
+      <S.BinPropertyContainer>
+        <BinType typeID={bin.typeID} />
+      </S.BinPropertyContainer>
+      <S.BinPropertyContainer>
+        <S.RulesAndEditRuleSet>
+          <BinRules
+            isEditMode={isEditMode}
+            // todo create constant
+            selectedRuleSet={isEditMode ? selectedRuleSet : ruleSetQ.data ?? null}
+            allRuleSets={allRuleSets}
+          />
+          <S.EditRuleSetOfBin>
+            {!isEditMode ? (
+              allRuleSets &&
+              allRuleSets?.length > 1 && (
+                <div>
+                  <IconButton onClick={handleEditClick}>
+                    <EditIcon fontSize="inherit" />
+                  </IconButton>
+                </div>
+              )
+            ) : (
+              <>
+                <div>
+                  <IconButton onClick={() => setIsEditMode(false)}>
+                    <CancelIcon fontSize="inherit" />
+                  </IconButton>
+                </div>
+                <div
+                  style={{
+                    visibility:
+                      selectedRuleSet?._id === getId(bin.ruleSetID) ? 'hidden' : 'visible',
+                  }}
+                >
+                  <IconButton onClick={saveUpdatedBin}>
+                    <SaveIcon fontSize="inherit" />
+                  </IconButton>
+                </div>
+              </>
+            )}
+          </S.EditRuleSetOfBin>
+        </S.RulesAndEditRuleSet>
+        <Divider variant="middle" />
+        <RecyclePointsOfBin
+          isEditMode={isEditMode}
+          ruleSetOfBin={ruleSetQ.data ?? null}
+          selectedRecyclePoint={selectedRecyclePoint}
+          // todo create constant
+          selectedRuleSet={isEditMode ? selectedRuleSet : ruleSetQ.data ?? null}
+          allRecyclePoints={allRecyclePoints}
+          setIsEditMode={setIsEditMode}
+          setSelectedRecyclePoint={setSelectedRecyclePoint}
+        />
+      </S.BinPropertyContainer>
+      <BinActions bin={bin} />
     </S.Bin>
   );
 };
