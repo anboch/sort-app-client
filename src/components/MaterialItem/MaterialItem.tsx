@@ -47,6 +47,7 @@ export const MaterialItemTitles = ({ titles }: Pick<IMaterial, 'titles'>): JSX.E
 
 export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Element => {
   const { similarMaterialIDs, description, sortedRules, tagIDs } = material;
+  // todo add links to often confused materials
   return (
     <S.MaterialInfo>
       <S.SimilarMaterialAndDescription>
@@ -54,7 +55,7 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
           <S.SimilarMaterial>
             <Typography variant={'caption'}>Часто путают с:</Typography>
             {similarMaterialIDs.map((material) => (
-              <ListItemText key={material._id} secondary={`- ${material.titles.join(', ')}`} />
+              <ListItemText key={material._id} primary={`- ${material.titles.join(', ')}`} />
               // <Link
               //       key={material._id}
               //       sx={{ padding: '3px' }}
@@ -70,7 +71,8 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
           </S.SimilarMaterial>
         )}
         <S.MaterialDescription>
-          <Typography variant={'body2'}>{description}</Typography>
+          {description.length && <Typography variant={'caption'}>Описание:</Typography>}
+          <Typography variant={'body1'}>{description}</Typography>
         </S.MaterialDescription>
       </S.SimilarMaterialAndDescription>
       {sortedRules && (
@@ -121,13 +123,13 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
   const hasTypes = material.typeIDs.length > 0;
   const typeQs = useGetTypes(getIDs(material.typeIDs), isAddToBinFormOpen);
 
-  const handleAddToBin = (): void => {
-    // if (!userQ.data) {
-    //   setIsLoginFormOpen(true);
-    // } else {
-    setIsAddToBinFormOpen(true);
-    // }
-  };
+  // const handleAddToBin = (): void => {
+  // if (!userQ.data) {
+  //   setIsLoginFormOpen(true);
+  // } else {
+  //   setIsAddToBinFormOpen(true);
+  // }
+  // };
 
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
@@ -154,10 +156,11 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         )}
       </Dialog>
       <Card
+        variant="outlined"
         sx={{
           width: '95%',
           maxWidth: '800px',
-          border: hasTypes ? '1px solid #91d191' : '1px solid #d1ce91',
+          borderColor: hasTypes ? 'success.light' : 'warning.light',
         }}
       >
         <CardContent>
@@ -173,9 +176,9 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         <CardActions sx={{ justifyContent: 'flex-end' }}>
           {/* <S.Buttons> */}
           <>
-            {hasTypes && !userQ.data && (
+            {hasTypes && !userQ.data && !userQ.isFetching && (
               <Button
-                onClick={() => handleAddToBin()}
+                onClick={() => setIsAddToBinFormOpen(true)}
                 size="small"
                 variant="contained"
                 endIcon={<PlaylistAddIcon />}
@@ -185,7 +188,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
             )}
             {hasTypes && userQ.data && !suitableBin && (
               <Button
-                onClick={() => handleAddToBin()}
+                onClick={() => setIsAddToBinFormOpen(true)}
                 size="small"
                 variant="contained"
                 endIcon={<AddIcon />}
@@ -193,9 +196,9 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
                 Создать новую корзину
               </Button>
             )}
-            {hasTypes && suitableBin && (
+            {hasTypes && userQ.data && suitableBin && (
               <Button
-                onClick={() => handleAddToBin()}
+                onClick={() => setIsAddToBinFormOpen(true)}
                 size="small"
                 variant="contained"
                 endIcon={<PlaylistAddIcon />}
@@ -207,8 +210,9 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
           <Button
             onClick={handleExpandClick}
             size="small"
-            variant="outlined"
+            variant={isExpanded ? 'outlined' : 'contained'}
             aria-label="show more"
+            color="secondary"
             // endIcon={<PlaylistAddIcon />}
           >
             {isExpanded ? 'Скрыть' : 'Инфо'}
