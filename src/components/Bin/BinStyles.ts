@@ -4,12 +4,14 @@ import styled from 'styled-components';
 export const BinActions = styled.div`
   display: flex;
   justify-content: end;
+  margin-top: auto;
 `;
 
 export const Bin = styled(Paper)`
+  display: flex;
+  flex-direction: column;
   border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
   width: 90%;
-  height: 100%;
   min-width: 280px;
   max-width: 500px;
   margin: ${({ theme }) => theme.spacing(2, 3)};
