@@ -152,6 +152,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
             setIsOpen={setIsAddToBinFormOpen}
             materialTypes={typeQs.map((typeQ) => typeQ.data)}
             userQ={userQ}
+            userBins={binsQ.data}
           />
         )}
       </Dialog>

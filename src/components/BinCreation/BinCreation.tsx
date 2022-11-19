@@ -2,7 +2,7 @@ import { Button, DialogActions, DialogTitle, TextField, useTheme } from '@mui/ma
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 
 import * as S from './BinCreationStyles';
-import { IType, IUser } from '../../api/api.interface';
+import { IBin, IType, IUser } from '../../api/api.interface';
 import { useCreateBin } from '../../hooks/useCreateBin';
 import { BinRules } from '../Bin/Bin';
 import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecyclePoint';
@@ -14,15 +14,18 @@ interface IBinCreationProps {
   materialTypes: (IType | undefined)[];
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   userQ: UseQueryResult<IUser, unknown>;
+  userBins: IBin[] | undefined;
 }
 
 export const BinCreation = ({
   materialTypes,
   setIsOpen,
   userQ,
+  userBins,
 }: IBinCreationProps): JSX.Element => {
   const theme = useTheme();
   const [titleValue, setTitleValue] = useState<string>(`№ ${userQ.data?.binCounter ?? 1}`);
+  const [isDuplicateTitle, setIsDuplicateTitle] = useState(false);
   const { setIsOpen: setIsLoginFormOpen } = useContext(LoginFormContext);
   const createBinM = useCreateBin();
   const {
@@ -39,12 +42,22 @@ export const BinCreation = ({
       setIsLoginFormOpen(true);
     } else if (selectedType && selectedRuleSet) {
       createBinM.mutate({
-        title: titleValue,
+        title: titleValue.trim(),
         typeID: selectedType._id,
         ruleSetID: selectedRuleSet._id,
       });
     }
   };
+
+  useEffect(() => {
+    if (titleValue) {
+      setIsDuplicateTitle(
+        !!userBins && userBins?.map((bin) => bin.title).includes(titleValue.trim())
+      );
+    } else {
+      setIsDuplicateTitle(false);
+    }
+  }, [titleValue]);
 
   useEffect(() => {
     if (createBinM.isSuccess) {
@@ -78,6 +91,8 @@ export const BinCreation = ({
           label="Название корзины"
           variant="outlined"
           size="small"
+          error={isDuplicateTitle}
+          helperText={isDuplicateTitle ? 'Корзина с таким названием уже существует' : null}
         />
         {/* <BinType typeID={bin.typeID} /> */}
         <BinRules isEditMode={true} selectedRuleSet={selectedRuleSet} allRuleSets={allRuleSets} />
@@ -90,8 +105,8 @@ export const BinCreation = ({
       />
       <DialogActions>
         <Button onClick={() => setIsOpen(false)}>Отмена</Button>
-        <Button disabled={!selectedType && !selectedRuleSet} onClick={saveBin}>
-          Сохранить
+        <Button disabled={!selectedType || !selectedRuleSet || isDuplicateTitle} onClick={saveBin}>
+          Создать
         </Button>
       </DialogActions>
     </>

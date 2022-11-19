@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,27 +9,36 @@ import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 interface IEditableValueProps {
   mutationFunc: (inputValue: string) => void;
-  value: string | undefined;
+  currentValue: string | undefined;
+  inputValue: string;
+  setInputValue: Dispatch<SetStateAction<string>>;
   title: string;
+  errorMessage?: string | null | undefined;
 }
 
-export const EditableValue = ({ mutationFunc, value = '', title }: IEditableValueProps) => {
+export const EditableValue = ({
+  mutationFunc,
+  currentValue = '',
+  inputValue,
+  setInputValue,
+  title,
+  errorMessage,
+}: IEditableValueProps): JSX.Element => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [inputValue, setInputValue] = useState(value);
   const ref = useOutsideClick(() => setIsEditMode(false));
 
   const closeInputWithSave = () => {
-    if (value !== inputValue) {
+    if (currentValue !== inputValue) {
       mutationFunc(inputValue);
     }
   };
 
   useEffect(() => {
     setIsEditMode(false);
-  }, [value]);
+  }, [currentValue]);
 
   useEffect(() => {
-    setInputValue(value);
+    setInputValue(currentValue);
   }, [isEditMode]);
 
   return (
@@ -47,7 +56,7 @@ export const EditableValue = ({ mutationFunc, value = '', title }: IEditableValu
             </div>
           ) : (
             <div>
-              {value !== inputValue && (
+              {currentValue !== inputValue && !errorMessage && (
                 <IconButton
                   // add listener on enter button and run closeInputWithSave
                   onClick={() => closeInputWithSave()}
@@ -64,8 +73,8 @@ export const EditableValue = ({ mutationFunc, value = '', title }: IEditableValu
         </S.TitleAndActions>
         {!isEditMode ? (
           <S.Value>
-            {value ? (
-              <Typography variant="h6">{value}</Typography>
+            {currentValue ? (
+              <Typography variant="h6">{currentValue}</Typography>
             ) : (
               <Typography display="inline" onClick={() => setIsEditMode(true)} variant="subtitle1">
                 Введите {title}...
@@ -75,12 +84,15 @@ export const EditableValue = ({ mutationFunc, value = '', title }: IEditableValu
         ) : (
           <S.Value>
             <TextField
+              autoFocus
               value={inputValue}
               onChange={(e): void => setInputValue(e.target.value)}
               id="filled-basic"
               // label={title}
               variant="standard"
               size="small"
+              error={!!errorMessage}
+              helperText={errorMessage ? errorMessage : null}
             />
           </S.Value>
         )}
