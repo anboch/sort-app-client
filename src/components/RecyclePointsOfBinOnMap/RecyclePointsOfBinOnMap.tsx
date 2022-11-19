@@ -2,12 +2,10 @@ import { RecyclePointOfBinMarker } from '../RecyclePointOfBinMarker/RecyclePoint
 import { Map } from '../Map/Map';
 import { getIDs } from '../../utils/utils';
 import { Dispatch, SetStateAction, useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
 import { IRecyclePoint, IRuleSet } from '../../api/api.interface';
-import { Popper, IconButton } from '@mui/material';
 import { RecyclePointInfo } from '../MyRecyclePoints/MyRecyclePoints';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
-import * as S from './RecyclePointsOfBinOnMapStyles';
+import { PopperContainer } from '../PopperContainer/PopperContainer';
 
 interface IBinRecyclePointsOnMapProps {
   isEditMode?: boolean;
@@ -32,21 +30,13 @@ export const RecyclePointsOfBinOnMap = ({
   return (
     <>
       <Map>
-        <Popper
-          disablePortal
-          anchorEl={withOpenedInfo}
-          ref={refOutsideClick}
-          open={!!withOpenedInfo && !!selectedRecyclePoint}
+        <PopperContainer
+          withOpenedInfo={withOpenedInfo}
+          selectedRecyclePoint={selectedRecyclePoint}
+          setWithOpenedInfo={setWithOpenedInfo}
         >
-          <S.Info>
-            <RecyclePointInfo recyclePoint={selectedRecyclePoint} />
-            <div style={{ marginLeft: 'auto' }}>
-              <IconButton size="small" sx={{ padding: 0 }} onClick={() => setWithOpenedInfo(null)}>
-                <CloseIcon />
-              </IconButton>
-            </div>
-          </S.Info>
-        </Popper>
+          <RecyclePointInfo recyclePoint={selectedRecyclePoint} />
+        </PopperContainer>
         {allRecyclePoints.map((recyclePoint) => {
           if (isEditMode || isInSelectedRuleSet(recyclePoint._id)) {
             return (

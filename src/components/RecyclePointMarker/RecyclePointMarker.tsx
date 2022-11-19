@@ -1,21 +1,21 @@
 import { Marker } from '@urbica/react-map-gl';
-import WhereToVoteRoundedIcon from '@mui/icons-material/WhereToVoteRounded';
-import AddLocationRoundedIcon from '@mui/icons-material/AddLocationRounded';
 import { Dispatch, SetStateAction, MouseEvent } from 'react';
 import { IRecyclePoint } from '../../api/api.interface';
+import { Typography } from '@mui/material';
+import * as S from './RecyclePointMarkerStyles';
 
 interface IRecyclePointMarkerProps {
   recyclePoint: IRecyclePoint;
-  isInSelectedRuleSet: boolean;
-  isSelectedWithOpenedInfo: boolean;
+  numberOfUserBins: number;
+  numberOfSuitableBins: number;
   setWithOpenedInfo: Dispatch<SetStateAction<HTMLElement | null>>;
   setSelectedRecyclePoint: Dispatch<SetStateAction<IRecyclePoint | null>>;
 }
 
-export const RecyclePointOfBinMarker = ({
+export const RecyclePointMarker = ({
   recyclePoint,
-  isSelectedWithOpenedInfo,
-  isInSelectedRuleSet,
+  numberOfUserBins,
+  numberOfSuitableBins,
   setWithOpenedInfo,
   setSelectedRecyclePoint,
 }: IRecyclePointMarkerProps): JSX.Element => {
@@ -29,16 +29,12 @@ export const RecyclePointOfBinMarker = ({
       latitude={recyclePoint?.position?.coordinates.latitude ?? null}
       longitude={recyclePoint?.position?.coordinates.longitude ?? null}
     >
-      <div style={{ cursor: 'pointer' }} onClick={(e) => handleMarkerClick(e)}>
-        {isInSelectedRuleSet ? (
-          <WhereToVoteRoundedIcon
-            color="success"
-            fontSize={isSelectedWithOpenedInfo ? 'large' : 'medium'}
-          />
-        ) : (
-          <AddLocationRoundedIcon color="info" />
-        )}
-      </div>
+      <S.Sign
+        isAllAccept={numberOfSuitableBins === numberOfUserBins}
+        onClick={(e) => handleMarkerClick(e)}
+      >
+        <Typography>{`${numberOfSuitableBins}/${numberOfUserBins}`}</Typography>
+      </S.Sign>
     </Marker>
   );
 };
