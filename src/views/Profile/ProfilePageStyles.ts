@@ -5,9 +5,14 @@ export const ProfilePage = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  & > * {
+    width: 100%;
+    min-width: 280px;
+    max-width: 400px;
+    height: 100%;
+    margin: ${({ theme }): string => theme.spacing(0, 1)};
+  }
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }): string => theme.spacing(1)};
   }
-  /* color: #fff; */
 `;
