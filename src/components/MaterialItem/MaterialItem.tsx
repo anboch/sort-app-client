@@ -194,7 +194,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
                 variant="contained"
                 endIcon={<AddIcon />}
               >
-                Создать новую корзину
+                Создать корзину
               </Button>
             )}
             {hasTypes && userQ.data && suitableBin && (

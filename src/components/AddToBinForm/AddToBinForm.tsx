@@ -36,9 +36,9 @@ export const AddToBinForm = ({ setIsOpen, material, bin }: IAddToBinFormProps): 
           </Typography> */}
           <div>
             <Typography variant="body1" display="inline">
-              {'в корзину c названием '}
+              {bin?.title ? 'в корзину c названием ' : 'в корзину'}
             </Typography>
-            <S.CustomChip>{bin?.title}</S.CustomChip>
+            {bin?.title && <S.CustomChip>{bin?.title}</S.CustomChip>}
           </div>
           {/* <Typography variant="h6" display="inline">
             {bin?.title}
