@@ -46,22 +46,22 @@ export const MaterialInfo = styled.div`
     width: 30%;
     min-width: 250px;
   }
-  /* padding: 0 10px; */
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }) => theme.spacing(1)};
+  }
 `;
 
 export const SimilarMaterialAndDescription = styled.div`
-  /* width: 30%;
-  min-width: 300px; */
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }) => theme.spacing(1)};
+  }
 `;
 
 export const MaterialDescription = styled.div``;
 
 export const SimilarMaterial = styled.div``;
 
-export const MaterialRules = styled.div`
-  /* width: 30%;
-  min-width: 300px; */
-`;
+export const MaterialRules = styled.div``;
 export const MaterialImages = styled.div`
   /* width: 30%;
   min-width: 300px; */
