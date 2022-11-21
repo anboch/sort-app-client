@@ -74,7 +74,7 @@ export const EditableValue = ({
         {!isEditMode ? (
           <S.Value>
             {currentValue ? (
-              <Typography variant="h6">{currentValue}</Typography>
+              <Typography variant="subtitle1">{currentValue}</Typography>
             ) : (
               <Typography display="inline" onClick={() => setIsEditMode(true)} variant="subtitle1">
                 Введите {title}...
