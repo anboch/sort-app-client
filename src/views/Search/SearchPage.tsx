@@ -85,7 +85,6 @@ const Search = (): JSX.Element => {
         setSearchInputValue={setSearchInputValue}
         placeholder="Поиск по названию или тегу"
         addFilter={addFilter}
-        searchBarWidth="60vw"
         exactSearch={search}
       />
       {selectedTags.length > 0 && (

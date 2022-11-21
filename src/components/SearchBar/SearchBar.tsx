@@ -13,7 +13,6 @@ interface ISearchBarProps {
   placeholder?: string;
   addFilter: (tagID: string) => void;
   exactSearch: (query: string) => void;
-  searchBarWidth: string;
 }
 
 export const SearchBar = ({
@@ -21,7 +20,6 @@ export const SearchBar = ({
   setSearchInputValue,
   placeholder,
   addFilter,
-  searchBarWidth,
   exactSearch,
 }: ISearchBarProps): JSX.Element => {
   const fetchSearchListQ = hooks.useFetchSearchList();
@@ -67,7 +65,7 @@ export const SearchBar = ({
             //   textOverflow: 'ellipsis',
             // },
             overflow: 'hidden',
-            width: searchBarWidth,
+            width: '50vw',
             color: 'text.secondary',
             fontSize: '1.1rem',
           }}
