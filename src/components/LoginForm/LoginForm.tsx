@@ -1,7 +1,6 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useContext, useEffect, useState, KeyboardEvent } from 'react';
@@ -9,7 +8,7 @@ import { LoginFormContext } from '../../context/LoginFormContext';
 import { api } from '../../api';
 import * as S from './LoginFormStyles';
 import { useQuery } from '@tanstack/react-query';
-import { Box, CircularProgress, Link, Dialog } from '@mui/material';
+import { Box, CircularProgress, Link, Dialog, Typography } from '@mui/material';
 import { useCountdown, useConfirmAndLogin } from '../../hooks';
 import { responseErrorMessages } from '../../api/api.constants';
 
@@ -105,10 +104,6 @@ export const LoginForm = (): JSX.Element => {
     }
   }, [confirmAndLoginQ.error?.response?.data.message]);
 
-  // useEffect(() => {
-  //   setIsWrongCode('');
-  // }, [inputCodeValue]);
-
   const handleClose = () => {
     setIsOpen(false);
     setInputEmailValue('');
@@ -151,26 +146,22 @@ export const LoginForm = (): JSX.Element => {
         !requestConfirmCodeQ.isError && (
           <S.RequestForm>
             <DialogTitle>Войти/зарегистрироваться с помощью email</DialogTitle>
-            <DialogContent>
+            <S.FormContent>
               <DialogContentText>Мы отправим код для входа или регистрации</DialogContentText>
-              {/* {timeDelta && <div>
-                <p>{timeDelta.minutes}</p>
-                <p>{timeDelta.seconds}</p>
-              </div>} */}
               <TextField
                 value={inputEmailValue}
                 onChange={(e): void => setInputEmailValue(e.target.value)}
                 onKeyDown={runByEnterKey}
                 autoFocus
                 margin="dense"
-                label="Email Address"
+                label="Email адрес"
                 type="email"
                 fullWidth
                 variant="standard"
                 error={isWrongFormat}
-                helperText={isWrongFormat ? 'Wrong format' : null}
+                helperText={isWrongFormat ? 'Неверный формат' : null}
               />
-            </DialogContent>
+            </S.FormContent>
             <DialogActions>
               <Button onClick={handleClose}>Отмена</Button>
               <Button onClick={validateAndSetEmail}>Получить код</Button>
@@ -181,29 +172,29 @@ export const LoginForm = (): JSX.Element => {
         // todo redo to  visibility: hidden;
         !requestConfirmCodeQ.isFetching &&
         !requestConfirmCodeQ.isError && (
-          <S.ConfirmForm>
+          <div>
             <DialogTitle>Введите код</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Код был отправлен по адресу {confirmFor}
-                <Link
-                  href="#"
-                  variant="inherit"
-                  underline="none"
-                  onClick={() => {
-                    setConfirmFor('');
-                    setInputCodeValue('');
-                    setCountdown(null);
-                    requestConfirmCodeQ.remove();
-                  }}
-                >
-                  Редактировать
-                </Link>
-              </DialogContentText>
-              {/* {timeDelta && <div>
-                <p>{timeDelta.minutes}</p>
-                <p>{timeDelta.seconds}</p>
-              </div>} */}
+            <S.FormContent>
+              {/* <DialogContentText> */}
+              <Typography> Код был отправлен по адресу:</Typography>
+              <Typography variant="h6">{confirmFor}</Typography>
+
+              <Link
+                href="#"
+                display="block"
+                variant="inherit"
+                underline="none"
+                sx={{ marginBottom: 'theme.spacing(1)' }}
+                onClick={() => {
+                  setConfirmFor('');
+                  setInputCodeValue('');
+                  setCountdown(null);
+                  requestConfirmCodeQ.remove();
+                }}
+              >
+                Редактировать
+              </Link>
+              {/* </DialogContentText> */}
               <TextField
                 // todo center input text
                 value={inputCodeValue}
@@ -227,10 +218,12 @@ export const LoginForm = (): JSX.Element => {
               />
               {countdown && countdown.raw !== 0 && (
                 <DialogContentText>
-                  Получить новый код можно через {countdown.minutes}:{countdown.seconds}
+                  <Typography variant="subtitle1">
+                    Получить новый код можно через {countdown.minutes}:{countdown.seconds}
+                  </Typography>
                 </DialogContentText>
               )}
-            </DialogContent>
+            </S.FormContent>
             <DialogActions>
               <Button onClick={handleClose}>Отмена</Button>
               {/* {countdown?.raw === 0 &&
@@ -243,7 +236,7 @@ export const LoginForm = (): JSX.Element => {
                 Get a new code
               </Button>} */}
             </DialogActions>
-          </S.ConfirmForm>
+          </div>
         )}
     </Dialog>
   );
