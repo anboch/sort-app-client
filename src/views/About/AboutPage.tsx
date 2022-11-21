@@ -1,10 +1,16 @@
-import { Link, Typography, Divider } from '@mui/material';
+import { Link, Typography, Divider, IconButton, Tooltip } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { withLayout } from '../../components/layout/Layout';
 import { pageRoutes } from '../../routes';
 import * as S from './AboutPageStyles';
 
 const AboutPage = (): JSX.Element => {
+  // todo links to env
+  const contactAddresses = {
+    email: 'v-pererabotku@mail.ru',
+    telegramBot: 'https://t.me/v_pererabotku_bot',
+  };
   return (
     <S.AboutPage>
       <S.AboutProject>
@@ -31,9 +37,9 @@ const AboutPage = (): JSX.Element => {
         <Divider variant="middle" />
         <Typography>
           После того как нужный материал найден, для него можно создать корзину. Корзина - это любая
-          удобная ёмкость или пакет. Её стоит подписать в соответствии с названием. В дальнейшем
-          приложение само подскажет куда положить нужный материал или предложит создать новую
-          корзину.
+          удобная ёмкость или пакет, которые стоит подписать в соответствии с названием в
+          приложении. В дальнейшем приложение подскажет в какую корзину положить нужный материал или
+          предложит создать новую.
         </Typography>
         <Divider variant="middle" />
         <Typography>
@@ -46,6 +52,34 @@ const AboutPage = (): JSX.Element => {
       </S.Instructions>
       <S.Contacts>
         <Typography>Вопросы, пожелания и отзывы пожалуйста присылайте удобным способом:</Typography>
+        <Link
+          display="block"
+          // todo outside link component
+          rel="noopener noreferrer"
+          target="_blank"
+          href={contactAddresses.telegramBot}
+        >
+          telegram
+        </Link>
+        <S.EmailLinkWithCopyButton>
+          <Link
+            sx={{ cursor: 'pointer' }}
+            // todo outside link component
+            rel="noopener noreferrer"
+            target="_blank"
+            href={`mailto:${contactAddresses.email}`}
+          >
+            {contactAddresses.email}
+          </Link>
+          <Tooltip title="Скопировать email">
+            <IconButton
+              size="small"
+              onClick={() => navigator.clipboard.writeText(contactAddresses.email)}
+            >
+              <ContentCopyIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </S.EmailLinkWithCopyButton>
       </S.Contacts>
     </S.AboutPage>
   );
