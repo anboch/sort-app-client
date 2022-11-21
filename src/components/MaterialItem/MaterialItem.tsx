@@ -177,34 +177,14 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         <CardActions sx={{ justifyContent: 'flex-end' }}>
           {/* <S.Buttons> */}
           <>
-            {hasTypes && !userQ.data && !userQ.isFetching && (
+            {hasTypes && (
               <Button
                 onClick={() => setIsAddToBinFormOpen(true)}
                 size="small"
                 variant="contained"
-                endIcon={<PlaylistAddIcon />}
+                endIcon={suitableBin ? <PlaylistAddIcon /> : <AddIcon />}
               >
                 В переработку
-              </Button>
-            )}
-            {hasTypes && userQ.data && !suitableBin && (
-              <Button
-                onClick={() => setIsAddToBinFormOpen(true)}
-                size="small"
-                variant="contained"
-                endIcon={<AddIcon />}
-              >
-                Создать корзину
-              </Button>
-            )}
-            {hasTypes && userQ.data && suitableBin && (
-              <Button
-                onClick={() => setIsAddToBinFormOpen(true)}
-                size="small"
-                variant="contained"
-                endIcon={<PlaylistAddIcon />}
-              >
-                Добавить в корзину
               </Button>
             )}
           </>
