@@ -28,8 +28,8 @@ export const EditableValue = ({
   const ref = useOutsideClick(() => setIsEditMode(false));
 
   const closeInputWithSave = () => {
-    if (currentValue !== inputValue) {
-      mutationFunc(inputValue);
+    if (currentValue !== inputValue.trim()) {
+      mutationFunc(inputValue.trim());
     }
   };
 
@@ -56,9 +56,9 @@ export const EditableValue = ({
             </div>
           ) : (
             <div>
-              {currentValue !== inputValue && !errorMessage && (
+              {currentValue !== inputValue.trim() && !errorMessage && (
                 <IconButton
-                  // add listener on enter button and run closeInputWithSave
+                  // todo add listener on enter button and run closeInputWithSave
                   onClick={() => closeInputWithSave()}
                   // size="small"
                 >
