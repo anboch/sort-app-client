@@ -60,7 +60,7 @@ export const MyRecyclePoints = (): JSX.Element => {
   const { allRecyclePointsIds, binsForRecyclePoints } = useFindBinsForRecyclePoints(binsQ.data);
   const recyclePointsQ = useGetRecyclePoints(allRecyclePointsIds);
 
-  if (recyclePointsQ.data?.length === 0) {
+  if (binsQ.data?.length === 0) {
     return (
       <S.MyRecyclePoints>
         <S.NoRecyclePointsNotice>
