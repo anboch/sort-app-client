@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { StyledBody } from './Body/Body';
-import { StyledFooter } from './Footer/Footer';
+import { Footer } from './Footer/Footer';
 import { StyledHeader } from './Header/Header';
 import { LayoutProps } from './Layout.props';
 
@@ -10,7 +10,7 @@ export const Layout = ({ children, className }: LayoutProps): JSX.Element => {
     <div className={className}>
       <StyledHeader />
       <StyledBody>{children}</StyledBody>
-      <StyledFooter />
+      <Footer />
     </div>
   );
 };

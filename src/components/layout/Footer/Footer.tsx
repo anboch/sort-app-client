@@ -1,21 +1,26 @@
-import { Typography } from '@mui/material';
-import styled from 'styled-components';
-import { FooterProps } from './Footer.props';
+import { Divider, Typography, Link } from '@mui/material';
+import { useState } from 'react';
+import { ValueOf } from '../../common/types';
+import { DocumentsForm, documentTypes } from '../../DocumentsForm/DocumentsForm';
+import * as S from './FooterStyles';
 
-const Footer = ({ className }: FooterProps): JSX.Element => {
+export const Footer = (): JSX.Element => {
+  const [openedDocument, setOpenedDocument] = useState<ValueOf<typeof documentTypes> | null>(null);
   return (
-    <div className={className}>
+    <S.Footer>
+      <DocumentsForm openedDocument={openedDocument} setOpenedDocument={setOpenedDocument} />
       <Typography variant={'subtitle2'}>
         В-переработку © 2021 - {new Date().getFullYear()}
       </Typography>
-    </div>
+      <Divider />
+      <S.Documents>
+        <Link component="button" onClick={() => setOpenedDocument(documentTypes.UA)}>
+          Пользовательское соглашение
+        </Link>
+        <Link component="button" onClick={() => setOpenedDocument(documentTypes.CONF)}>
+          Политика конфиденциальности
+        </Link>
+      </S.Documents>
+    </S.Footer>
   );
 };
-
-export const StyledFooter = styled(Footer)`
-  grid-area: ${({ theme }): string => theme.gridAreas.footer};
-  display: flex;
-  justify-content: center;
-  background-color: ${({ theme }): string => theme.palette.primary.dark};
-  padding: 10px 0;
-`;
