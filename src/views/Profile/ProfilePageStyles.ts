@@ -13,6 +13,6 @@ export const ProfilePage = styled.div`
     margin: ${({ theme }): string => theme.spacing(0, 1)};
   }
   & > *:not(:last-child) {
-    margin-bottom: ${({ theme }): string => theme.spacing(1)};
+    margin-bottom: ${({ theme }): string => theme.spacing(2)};
   }
 `;

@@ -13,13 +13,10 @@ const ProfilePage = (): JSX.Element => {
   const currentPath = useLocation().pathname;
   const pageName = pages.find((page) => page.path === currentPath)?.name;
 
-  if (!userQ.data) {
-    return <OfferToLogin sectionTitle={pageName} />;
-  }
   return (
     <S.ProfilePage>
       <AppSettings />
-      <Profile userData={userQ.data} />
+      {!userQ.data ? <OfferToLogin sectionTitle={pageName} /> : <Profile userData={userQ.data} />}
     </S.ProfilePage>
   );
 };
