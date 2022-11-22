@@ -177,7 +177,9 @@ export const LoginForm = (): JSX.Element => {
             <S.FormContent>
               {/* <DialogContentText> */}
               <Typography> Код был отправлен по адресу:</Typography>
-              <Typography variant="h6">{confirmFor}</Typography>
+              <Typography variant="h6" component="span">
+                {confirmFor}
+              </Typography>
 
               <Link
                 href="#"
@@ -218,7 +220,7 @@ export const LoginForm = (): JSX.Element => {
               />
               {countdown && countdown.raw !== 0 && (
                 <DialogContentText>
-                  <Typography variant="subtitle1">
+                  <Typography component="span" variant="subtitle1">
                     Получить новый код можно через {countdown.minutes}:{countdown.seconds}
                   </Typography>
                 </DialogContentText>

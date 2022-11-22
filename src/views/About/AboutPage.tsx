@@ -26,13 +26,11 @@ const AboutPage = (): JSX.Element => {
       <S.Instructions>
         <Typography variant="subtitle1">Инструкция</Typography>
         <Typography>
-          <Typography>
-            Всё начинается с{' '}
-            <Link component={RouterLink} to={pageRoutes.search}>
-              поискa
-            </Link>
-            .<br /> Ищите по названию сырья, типу материала или бытовому названию.
-          </Typography>
+          Всё начинается с{' '}
+          <Link component={RouterLink} to={pageRoutes.search}>
+            поискa
+          </Link>
+          .<br /> Ищите по названию сырья, типу материала или бытовому названию.
         </Typography>
         <Divider variant="middle" />
         <Typography>
