@@ -45,6 +45,7 @@ export const MaterialInfo = styled.div`
   & > * {
     width: 30%;
     min-width: 250px;
+    padding: ${({ theme }) => theme.spacing(1)};
   }
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing(1)};
