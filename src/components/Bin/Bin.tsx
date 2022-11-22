@@ -85,7 +85,7 @@ export const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
       <S.BinTypeSummary>
         <Typography variant="caption">тип</Typography>
         <S.TypeTitle>
-          {typeof typeID === 'object' && <Typography>{typeID?.title}</Typography>}
+          {typeof typeID === 'object' && <Typography component="span">{typeID?.title}</Typography>}
         </S.TypeTitle>
         <S.BinTypeActions>
           <div>
@@ -219,7 +219,7 @@ export const RecyclePointsOfBin = ({
         {ruleSetOfBin && allRecyclePoints && (
           <Typography>
             По выбранным правилам{' '}
-            <Typography display="inline" style={{ whiteSpace: 'nowrap' }}>
+            <Typography component="span" style={{ whiteSpace: 'nowrap' }}>
               {`принимают: ${infoAboutSelectedAndAllRecyclePoints}`}
             </Typography>
           </Typography>
