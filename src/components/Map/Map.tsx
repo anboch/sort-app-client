@@ -28,7 +28,7 @@ export const Map = ({ children }: { children: ReactNode }): JSX.Element => {
     <>
       <MapGL
         scrollZoom={false}
-        style={{ width: '100%', height: '60vh' }}
+        style={{ width: '100%', height: '80vh' }}
         mapStyle={
           themeMode === themeModeTypes.LIGHT
             ? 'mapbox://styles/anboch/cla096w1a00ab15s2lllm4o89'
