@@ -12,7 +12,7 @@ export const useGetRecyclePoints = (
     () => api.fetchRecyclePointsByIds(recyclePointIds),
     {
       // retry: false,
-      // enabled,
+      enabled: !!recyclePointIds.length,
       // ToDO think about staleTime(access_token time !?) and cacheTime(refresh_token time !?)
       // staleTime: Infinity,
       // cacheTime: Infinity,
