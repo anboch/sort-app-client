@@ -101,7 +101,7 @@ interface IOpeningHours {
 }
 
 interface IDailySchedule {
-  day: Weekdays;
+  days: Weekdays[];
   periods: [{ start: string; end: string }];
 }
 interface IContacts {

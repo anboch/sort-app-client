@@ -1,4 +1,3 @@
-import { Paper } from '@mui/material';
 import styled from 'styled-components';
 
 export const MyRecyclePoints = styled.div`
@@ -9,6 +8,16 @@ export const MyRecyclePoints = styled.div`
   width: 95%;
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   overflow: hidden;
+`;
+
+export const RecyclePointInfo = styled.div`
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }): string => theme.spacing(1)};
+  }
+`;
+
+export const SuitableBinList = styled.div`
+  padding-bottom: ${({ theme }): string => theme.spacing(1)};
 `;
 
 export const NoRecyclePointsNotice = styled.div`
@@ -25,18 +34,5 @@ export const NoRecyclePointsNoticeExplanation = styled.div`
   text-align: center;
   & > * {
     display: inline;
-  }
-`;
-
-export const Bin = styled(Paper)`
-  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
-  width: 90%;
-  height: 100%;
-  min-width: 280px;
-  max-width: 500px;
-  margin: ${({ theme }) => theme.spacing(2, 3)};
-  padding: ${({ theme }) => theme.spacing(1)};
-  & > *:not(:last-child) {
-    margin-bottom: ${({ theme }) => theme.spacing(1)};
   }
 `;

@@ -12,45 +12,57 @@ import { Map } from '../Map/Map';
 import { pageRoutes } from '../../routes';
 import { RecyclePointMarker } from '../RecyclePointMarker/RecyclePointMarker';
 import { PopperContainer } from '../PopperContainer/PopperContainer';
+import { OpeningHours } from '../OpeningHours/OpeningHours';
 
 export const RecyclePointInfo = ({
   recyclePoint,
 }: {
   recyclePoint: IRecyclePoint | null;
-}): JSX.Element => {
-  return (
-    <>
-      {recyclePoint && (
+}): JSX.Element | null => {
+  if (recyclePoint) {
+    return (
+      <S.RecyclePointInfo>
         <div>
           <Typography variant="caption">название пункта</Typography>
-          <Typography>{recyclePoint?.title}</Typography>
-          <Typography variant="caption">описание</Typography>
-          <Typography>{recyclePoint?.description}</Typography>
-          <Typography variant="caption">контакты</Typography>
-          <Link
-            display="block"
-            target="_blank"
-            href={recyclePoint?.contacts?.site}
-            rel="noopener noreferrer"
-          >
-            {recyclePoint?.contacts?.site}
-          </Link>
+          <Typography variant="subtitle1">{recyclePoint?.title}</Typography>
         </div>
-      )}
-    </>
-  );
+        <div>
+          <Typography variant="caption">режим работы</Typography>
+          <OpeningHours openingHours={recyclePoint.openingHours} />
+        </div>
+        <Typography variant="caption">контакты</Typography>
+        <Link
+          // todo outsideLink component
+          display="block"
+          target="_blank"
+          href={recyclePoint?.contacts?.site}
+          rel="noopener noreferrer"
+        >
+          {recyclePoint?.contacts?.site}
+        </Link>
+        <div>
+          <Typography variant="caption">описание</Typography>
+          <Typography variant="subtitle1">{recyclePoint?.description}</Typography>
+        </div>
+      </S.RecyclePointInfo>
+    );
+  }
+  return null;
 };
 
-const SuitableBinList = ({ bins }: { bins: IBin[] | null }): JSX.Element => {
-  return (
-    <>
-      <Typography variant="caption">принимаемые корзины</Typography>
-      {bins &&
-        bins.map((bin) => {
-          return <ListItemText key={bin._id} primary={`- ${bin.title}`} />;
-        })}
-    </>
-  );
+const SuitableBinList = ({ bins }: { bins: IBin[] | null }): JSX.Element | null => {
+  if (bins && bins.length) {
+    return (
+      <S.SuitableBinList>
+        <Typography variant="caption">принимаемые корзины</Typography>
+        {bins &&
+          bins.map((bin) => {
+            return <ListItemText key={bin._id} primary={`- ${bin.title}`} />;
+          })}
+      </S.SuitableBinList>
+    );
+  }
+  return null;
 };
 
 export const MyRecyclePoints = (): JSX.Element => {
