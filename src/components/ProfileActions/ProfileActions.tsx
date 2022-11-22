@@ -25,10 +25,8 @@ export const ProfileActions = ({ userData }: IProfileActionsProps): JSX.Element 
 
   return (
     <S.ProfileActions>
-      <div>
-        <Button onClick={async () => await logout()}>Выйти</Button>
-        <Button onClick={handleDeleteClick}>Удалить аккаунт</Button>
-      </div>
+      <Button onClick={handleDeleteClick}>Удалить аккаунт</Button>
+      <Button onClick={async () => await logout()}>Выйти</Button>
       <AlertDialog
         isOpen={isAlertOpen}
         setIsOpen={setIsAlertOpen}
