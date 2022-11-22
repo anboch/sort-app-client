@@ -10,6 +10,9 @@ import { IMaterial, ITag, SearchItemKind } from '../../api/api.interface';
 import { TagList } from '../../components/TagList';
 import { getIDs } from '../../utils/utils';
 import { MaterialNotFoundNotice } from '../../components/MaterialNotFoundNotice/MaterialNotFoundNotice';
+import { localStorageKeys } from '../../components/common/constants';
+import { useNavigate } from 'react-router-dom';
+import { pageRoutes } from '../../routes';
 
 export type OnChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
@@ -25,6 +28,14 @@ const Search = (): JSX.Element => {
   const allMaterials = useMemo(() => Object.values(allMaterialsObj ?? {}), [allMaterialsObj]);
 
   const { searchQuery, searchResult, search } = hooks.useFuseSearch(fetchSearchListQ.data?.union);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem(localStorageKeys.viewedAboutPage)) {
+      navigate(pageRoutes.about);
+    }
+  }, []);
 
   // todo filters to a hook
   const addFilter = (tagID: string): void => {
@@ -77,6 +88,8 @@ const Search = (): JSX.Element => {
     setMaterialList(newMaterialList);
     setTagList(newTagList);
   }, [allMaterialsObj, allMaterials, searchResult, selectedTags, allTags]);
+
+  // {shouldRedirect && <Navigate replace to="/home" />}
 
   return (
     <StyledSearchPage>

@@ -4,8 +4,15 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { withLayout } from '../../components/layout/Layout';
 import { pageRoutes } from '../../routes';
 import * as S from './AboutPageStyles';
+import { localStorageKeys } from '../../components/common/constants';
+import { useEffect } from 'react';
 
 const AboutPage = (): JSX.Element => {
+  useEffect(() => {
+    if (!localStorage.getItem(localStorageKeys.viewedAboutPage)) {
+      localStorage.setItem(localStorageKeys.viewedAboutPage, 'true');
+    }
+  }, []);
   // todo links to env
   const contactAddresses = {
     email: 'v-pererabotku@mail.ru',

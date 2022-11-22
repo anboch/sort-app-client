@@ -9,4 +9,5 @@ export const sessionStorageKeys = {
 export const localStorageKeys = {
   accessToken: 'access_token',
   themeMode: 'theme_mode',
+  viewedAboutPage: 'viewed_about_page',
 } as const;
