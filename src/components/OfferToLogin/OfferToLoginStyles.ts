@@ -8,4 +8,7 @@ export const OfferToLogin = styled.div`
   & > p {
     text-align: center;
   }
+  span {
+    font-weight: bold;
+  }
 `;

@@ -3,12 +3,15 @@ import { useContext } from 'react';
 import * as S from './OfferToLoginStyles';
 import { LoginFormContext } from '../../context/LoginFormContext';
 
-export const OfferToLogin = (): JSX.Element => {
+export const OfferToLogin = ({ sectionTitle = '' }: { sectionTitle?: string }): JSX.Element => {
   const { setIsOpen } = useContext(LoginFormContext);
 
   return (
     <S.OfferToLogin>
-      <Typography>Для просмотра данного раздела необходимо</Typography>
+      <Typography>
+        Для просмотра {sectionTitle ? '' : ' данного '} раздела <span> {sectionTitle} </span>{' '}
+        необходимо
+      </Typography>
       <Button
         onClick={() => {
           setIsOpen(true);
