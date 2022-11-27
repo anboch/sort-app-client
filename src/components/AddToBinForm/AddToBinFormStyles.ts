@@ -12,6 +12,7 @@ export const AddToBinContent = styled(DialogContent)`
   }
 `;
 
+// todo reduplicate CustomChip
 export const CustomChip = styled.span`
   display: inline-block;
   margin: ${({ theme }): string => theme.spacing(1, 0)};

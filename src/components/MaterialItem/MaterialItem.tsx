@@ -147,6 +147,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         )}
         {isAddToBinFormOpen && !suitableBin && (
           <BinCreation
+            materialTitles={material.titles}
             setIsOpen={setIsAddToBinFormOpen}
             materialTypes={typeQs.map((typeQ) => typeQ.data)}
             userQ={userQ}

@@ -1,4 +1,4 @@
-import { Button, DialogActions, DialogTitle, TextField, useTheme } from '@mui/material';
+import { Button, DialogActions, DialogTitle, TextField, Typography, useTheme } from '@mui/material';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 
 import * as S from './BinCreationStyles';
@@ -11,6 +11,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { RecyclePointsOfBinOnMap } from '../RecyclePointsOfBinOnMap/RecyclePointsOfBinOnMap';
 
 interface IBinCreationProps {
+  materialTitles: string[];
   materialTypes: (IType | undefined)[];
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   userQ: UseQueryResult<IUser, unknown>;
@@ -18,6 +19,7 @@ interface IBinCreationProps {
 }
 
 export const BinCreation = ({
+  materialTitles,
   materialTypes,
   setIsOpen,
   userQ,
@@ -83,6 +85,12 @@ export const BinCreation = ({
     <>
       <DialogTitle>Создание корзины</DialogTitle>
       <S.BinCreationContent>
+        <div>
+          <Typography variant="body1" display="inline">
+            {'для материала '}
+          </Typography>
+          <S.CustomChip>{materialTitles.join(', ')}</S.CustomChip>
+        </div>
         <TextField
           sx={{ marginTop: theme.spacing(1) }}
           value={titleValue}
