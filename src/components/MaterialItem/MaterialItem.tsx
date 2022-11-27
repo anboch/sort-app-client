@@ -51,7 +51,7 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
   return (
     <S.MaterialInfo>
       <S.SimilarMaterialAndDescription>
-        {similarMaterialIDs.length > 0 && (
+        {similarMaterialIDs?.length > 0 && (
           <S.SimilarMaterial>
             <Typography variant={'caption'}>Часто путают с:</Typography>
             {similarMaterialIDs.map((material) => (
@@ -71,7 +71,7 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
           </S.SimilarMaterial>
         )}
         <S.MaterialDescription>
-          {description.length && <Typography variant={'caption'}>Описание:</Typography>}
+          {description?.length && <Typography variant={'caption'}>Описание:</Typography>}
           <Typography variant={'body1'}>{description}</Typography>
         </S.MaterialDescription>
       </S.SimilarMaterialAndDescription>
