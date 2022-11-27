@@ -22,11 +22,11 @@ export const pages: IPage[] = [
     path: pageRoutes.search,
   },
   {
-    name: 'Мои корзины',
+    name: 'Корзины',
     path: pageRoutes.bins,
   },
   {
-    name: 'Мои пункты приёма',
+    name: 'Пункты приёма',
     path: pageRoutes.recyclePoints,
   },
   {
