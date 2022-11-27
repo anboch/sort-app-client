@@ -4,7 +4,6 @@ import { getIDs } from '../../utils/utils';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IRecyclePoint, IRuleSet } from '../../api/api.interface';
 import { RecyclePointInfo } from '../MyRecyclePoints/MyRecyclePoints';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { PopperContainer } from '../PopperContainer/PopperContainer';
 
 interface IBinRecyclePointsOnMapProps {
@@ -23,13 +22,12 @@ export const RecyclePointsOfBinOnMap = ({
   setSelectedRecyclePoint,
 }: IBinRecyclePointsOnMapProps): JSX.Element => {
   const [withOpenedInfo, setWithOpenedInfo] = useState<HTMLElement | null>(null);
-  const refOutsideClick = useOutsideClick(() => setWithOpenedInfo(null));
   const isInSelectedRuleSet = (recyclePointId: string): boolean =>
     getIDs(selectedRuleSet?.recyclePointIDs ?? []).includes(recyclePointId);
 
   return (
     <>
-      <Map>
+      <Map mapHight={'60vh'}>
         <PopperContainer
           withOpenedInfo={withOpenedInfo}
           selectedRecyclePoint={selectedRecyclePoint}

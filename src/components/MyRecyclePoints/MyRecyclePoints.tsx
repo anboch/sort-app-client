@@ -93,7 +93,7 @@ export const MyRecyclePoints = (): JSX.Element => {
 
   return (
     <S.MyRecyclePoints>
-      <Map>
+      <Map mapHight={'80vh'}>
         <PopperContainer
           withOpenedInfo={withOpenedInfo}
           selectedRecyclePoint={selectedRecyclePoint}

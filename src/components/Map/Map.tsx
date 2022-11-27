@@ -20,7 +20,13 @@ const mapCommonSettings = {
 } as const;
 
 // todo add handle error if REACT_APP_MAPBOX_ACCESS_TOKEN is undefined
-export const Map = ({ children }: { children: ReactNode }): JSX.Element => {
+export const Map = ({
+  children,
+  mapHight,
+}: {
+  children: ReactNode;
+  mapHight: string;
+}): JSX.Element => {
   const { themeMode } = useContext(ThemeContext);
   const [viewport, setViewport] = useState<IViewportSettings>(mapCommonSettings.defaultViewport);
 
@@ -28,7 +34,7 @@ export const Map = ({ children }: { children: ReactNode }): JSX.Element => {
     <>
       <MapGL
         scrollZoom={false}
-        style={{ width: '100%', height: '80vh' }}
+        style={{ width: '100%', height: mapHight }}
         mapStyle={
           themeMode === themeModeTypes.LIGHT
             ? 'mapbox://styles/anboch/cla096w1a00ab15s2lllm4o89'
