@@ -149,11 +149,11 @@ export const BinRules = ({
       <Typography display="block" variant="caption">
         правила
       </Typography>
-      {isEditMode && allRuleSets && selectedRuleIds.length === 0 ? (
+      {isEditMode && allRuleSets && !selectedRuleSet ? (
         <Typography color={theme.palette.info.main} variant="subtitle1">
           Выберите пункт приема на карте, чтобы увидеть правила
         </Typography>
-      ) : allRuleSets && selectedRuleIds.length > 0 ? (
+      ) : allRuleSets ? (
         uniqRulesSortedByQuantity.map((rule) => {
           if (typeof rule === 'object' && rule.description) {
             return (
@@ -194,7 +194,11 @@ export const RecyclePointsOfBin = ({
   const infoAboutSelectedAndAllRecyclePoints =
     ruleSetOfBin?.recyclePointIDs.length === allRecyclePoints.length
       ? allRecyclePoints.length
-      : `${ruleSetOfBin?.recyclePointIDs.length} из ${allRecyclePoints.length}`;
+      : `${
+          isEditMode
+            ? selectedRuleSet?.recyclePointIDs.length
+            : ruleSetOfBin?.recyclePointIDs.length
+        } из ${allRecyclePoints.length}`;
 
   const handleChange = () => {
     setIsExpanded((prev) => !prev);
