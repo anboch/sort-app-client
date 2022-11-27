@@ -87,7 +87,7 @@ const Search = (): JSX.Element => {
 
     setMaterialList(newMaterialList);
     setTagList(newTagList);
-  }, [allMaterialsObj, allMaterials, searchResult, selectedTags, allTags]);
+  }, [allMaterialsObj, allMaterials, searchResult, selectedTags, allTags, searchQuery]);
 
   // {shouldRedirect && <Navigate replace to="/home" />}
 
