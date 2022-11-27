@@ -58,17 +58,15 @@ const AboutPage = (): JSX.Element => {
       <S.Contacts>
         <Typography>Вопросы, пожелания и отзывы пожалуйста присылайте удобным способом:</Typography>
         <Link
-          display="block"
           // todo outside link component
           rel="noopener noreferrer"
           target="_blank"
           href={contactAddresses.telegramBot}
         >
-          telegram
+          Telegram
         </Link>
         <S.EmailLinkWithCopyButton>
           <Link
-            sx={{ cursor: 'pointer' }}
             // todo outside link component
             rel="noopener noreferrer"
             target="_blank"

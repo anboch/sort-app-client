@@ -32,7 +32,10 @@ export const Instructions = styled(Paper)`
 
 export const Contacts = styled(Paper)`
   text-align: center;
-  & > *:not(:last-child) {
+  & a {
+    display: inline-block;
+  }
+  && > * {
     margin-bottom: ${({ theme }): string => theme.spacing(1)};
   }
 `;
