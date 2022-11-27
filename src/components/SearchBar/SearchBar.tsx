@@ -96,11 +96,11 @@ export const SearchBar = ({
                   }}
                 >
                   <SearchIcon sx={{ marginRight: '10px' }} />
-                  <ListItemText primary={hint.title} />
+                  <ListItemText sx={{ wordWrap: 'break-word' }} primary={hint.title} />
                 </ListItemButton>
                 {hint.kind === SearchItemKind.tag && (
                   <Button
-                    sx={{ margin: '0 10px' }}
+                    sx={{ margin: '8px', flex: '0 0 30%' }}
                     onClick={(): void => {
                       addFilter(hint._id);
                       setSearchInputValue('');
