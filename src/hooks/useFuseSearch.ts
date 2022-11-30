@@ -8,7 +8,7 @@ export const fuseOptions = {
   shouldSort: false,
   // includeMatches: true,
   // findAllMatches: false,
-  minMatchCharLength: 2,
+  minMatchCharLength: 1,
   // location: 0,
   threshold: 0.35,
   // distance: 100,
