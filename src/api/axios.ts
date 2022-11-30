@@ -33,20 +33,19 @@ $api.interceptors.response.use(
     return config;
   },
   async (error: AxiosError) => {
-    const originalRequest = error.config;
     // todo 401 status can be in different situation !?
-    if (error.response?.status === 401 && !originalRequest?._isRetry) {
-      originalRequest._isRetry = true;
+    if (error.response?.status === 401) {
       const response = await axios.get<Pick<IJWTs, 'access_token'>>(
         apiRoutes.refreshTokens,
         axiosConfig
       );
-      // todo redo to try catch (https://www.youtube.com/watch?v=fN25fMQZ2v0&t=1337s)
+
       if (response.status === 200) {
         localStorage.setItem(localStorageKeys.accessToken, response.data.access_token);
-        return $api.request(originalRequest);
+        return $api.request(error.config);
       }
+      // todo redo to try catch (https://www.youtube.com/watch?v=fN25fMQZ2v0&t=6170s)
     }
-    return Promise.reject(error);
+    throw error;
   }
 );
