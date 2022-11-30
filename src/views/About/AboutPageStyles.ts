@@ -6,8 +6,10 @@ export const AboutPage = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 95%;
+  margin: 0 auto;
   & > * {
-    width: 95%;
+    width: 100%;
     min-width: 280px;
     max-width: 600px;
     padding: ${({ theme }): string => theme.spacing(1)};

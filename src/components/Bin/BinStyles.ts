@@ -11,7 +11,7 @@ export const Bin = styled(Paper)`
   display: flex;
   flex-direction: column;
   border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
-  width: 90%;
+  width: 100%;
   min-width: 280px;
   max-width: 500px;
   margin: ${({ theme }) => theme.spacing(2, 3)};
@@ -34,6 +34,7 @@ export const BinRule = styled(Typography)<{ selected: boolean }>`
   ${({ selected }) => !selected && `text-decoration-line: line-through;`};
 `;
 
+// todo fix Warning: Received `false` for a non-boolean attribute `expand`.
 export const ExpandMore = styled(IconButton)<{ expand: boolean }>(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
   marginLeft: 'auto',

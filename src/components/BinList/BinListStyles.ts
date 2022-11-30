@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BinList = styled.div`
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;

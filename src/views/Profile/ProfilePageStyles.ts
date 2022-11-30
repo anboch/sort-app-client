@@ -5,6 +5,8 @@ export const ProfilePage = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 95%;
+  margin: 0 auto;
   & > * {
     width: 100%;
     min-width: 280px;
