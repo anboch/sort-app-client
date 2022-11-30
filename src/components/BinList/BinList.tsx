@@ -23,7 +23,7 @@ export const BinList = (): JSX.Element => {
       <S.BinList>
         <S.NoBinNotice>
           <Typography display="block" variant="h6" align="center">
-            У вас пока нет корзин
+            У Вас пока нет корзин
           </Typography>
           <S.NoBinNoticeExplanation>
             <Typography variant="subtitle1">{'Воспользуйтесь '}</Typography>

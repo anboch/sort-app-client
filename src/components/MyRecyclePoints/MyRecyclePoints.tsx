@@ -77,7 +77,7 @@ export const MyRecyclePoints = (): JSX.Element => {
       <S.MyRecyclePoints>
         <S.NoRecyclePointsNotice>
           <Typography display="block" variant="h6" align="center">
-            У вас пока нет корзин и соответственно подходящих пунктов приёма
+            У Вас пока нет корзин и соответственно подходящих пунктов приёма
           </Typography>
           <S.NoRecyclePointsNoticeExplanation>
             <Typography variant="subtitle1">{'Воспользуйтесь '}</Typography>
