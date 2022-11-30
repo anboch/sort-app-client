@@ -30,11 +30,16 @@ export const MaterialAcceptInfo = styled.div`
   /* padding: 10px; */
 `;
 
-export const Tags = styled.div`
-  /* padding: 3px 0 0 0; */
-  & > * {
-    margin: 0 1px;
-  }
+export const Tags = styled.div``;
+
+export const Tag = styled.div`
+  display: inline-block;
+  text-align: center;
+  margin: ${({ theme }): string => theme.spacing(0.5)};
+  padding: ${({ theme }): string => theme.spacing(0, 1)};
+  background-color: ${({ theme }): string => theme.palette.grey[200]};
+  color: ${({ theme }) => theme.palette.getContrastText(theme.palette.grey[200])};
+  border-radius: 15px;
 `;
 
 export const MaterialInfo = styled.div`

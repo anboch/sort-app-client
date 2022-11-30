@@ -95,7 +95,9 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
         {/* todo add filter on tag click */}
         <Typography variant={'caption'}>Тэги:</Typography> <br />
         {tagIDs.map((tag) => (
-          <Chip key={tag.titles[0]} label={tag.titles.join(', ')} variant="outlined" size="small" />
+          <S.Tag key={tag.titles[0]}>
+            <Typography variant="subtitle2">{tag.titles.join(', ')}</Typography>
+          </S.Tag>
         ))}
       </S.Tags>
       {/* <S.MaterialImages>
