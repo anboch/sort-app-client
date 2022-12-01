@@ -100,7 +100,9 @@ export const MaterialNotFoundNotice = ({
   if (!searchQuery && !searchResultLength && !selectedTagsLength && !searchInputValueLength) {
     return (
       <S.MaterialNotFoundNotice>
-        <Typography variant="subtitle1">Введите запрос</Typography>
+        <Typography variant="subtitle1">
+          Поиск по названию сырья, типу материала или бытовому названию
+        </Typography>
       </S.MaterialNotFoundNotice>
     );
   }
