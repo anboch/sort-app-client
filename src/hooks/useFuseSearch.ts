@@ -69,7 +69,7 @@ export const useFuseSearch = (
     });
 
     const fuseResults: Fuse.FuseResult<IUnionListItem>[] = [...new Set([query, ...queryWords])]
-      .filter((word) => word.length >= fuseOptions.minMatchCharLength)
+      .filter((word) => word.length > 1 || !isNaN(+word))
       .flatMap((word) => fuseByUnionSearchList.search(word));
 
     // todo to know why it (threshold) doesn't work in Fuse
