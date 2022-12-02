@@ -13,6 +13,7 @@ import { customPaletteForTheme, customVarsForTheme } from '../../styles/theme';
 export const themeModeTypes = { AUTO: 'auto', LIGHT: 'light', DARK: 'dark' } as const;
 
 interface IThemeContext {
+  theme: typeof themeModeTypes['LIGHT' | 'DARK'];
   themeMode: ValueOf<typeof themeModeTypes>;
   toggleThemeMode: (newMode: ValueOf<typeof themeModeTypes>) => void;
 }
@@ -20,33 +21,37 @@ interface IThemeContext {
 export const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
 export const ThemeProvider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
-  const [themeMode, setThemeMode] = useState<ValueOf<typeof themeModeTypes>>(
-    (localStorage.getItem(localStorageKeys.themeMode) as ValueOf<typeof themeModeTypes> | null) ??
-      themeModeTypes.AUTO
-  );
   const userPrefersMode = useMediaQuery('(prefers-color-scheme: dark)')
     ? themeModeTypes.DARK
     : themeModeTypes.LIGHT;
 
+  const [themeMode, setThemeMode] = useState<ValueOf<typeof themeModeTypes>>(
+    (localStorage.getItem(localStorageKeys.themeMode) as ValueOf<typeof themeModeTypes> | null) ??
+      userPrefersMode
+  );
+  const [theme, setTheme] = useState<typeof themeModeTypes['LIGHT' | 'DARK']>(
+    themeMode === themeModeTypes.AUTO ? userPrefersMode : themeMode
+  );
+
   const toggleThemeMode = (newMode: ValueOf<typeof themeModeTypes>): void => {
     localStorage.setItem(localStorageKeys.themeMode, newMode);
     setThemeMode(newMode);
+    setTheme(newMode === themeModeTypes.AUTO ? userPrefersMode : newMode);
   };
 
   const themeWithMode = useMemo(() => {
-    const mode = themeMode === themeModeTypes.AUTO ? userPrefersMode : themeMode;
     return createTheme({
       palette: {
-        mode,
+        mode: theme,
         ...customPaletteForTheme.common,
-        ...customPaletteForTheme[mode],
+        ...customPaletteForTheme[theme],
       },
       ...customVarsForTheme,
     });
-  }, [userPrefersMode, themeMode]);
+  }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ themeMode, toggleThemeMode }}>
+    <ThemeContext.Provider value={{ theme, themeMode, toggleThemeMode }}>
       <SCThemeProvider theme={themeWithMode}>
         <MUIThemeProvider theme={themeWithMode}>
           <CssBaseline enableColorScheme />

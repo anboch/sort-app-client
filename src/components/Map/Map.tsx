@@ -27,7 +27,7 @@ export const Map = ({
   children: ReactNode;
   mapHight: string;
 }): JSX.Element => {
-  const { themeMode } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [viewport, setViewport] = useState<IViewportSettings>(mapCommonSettings.defaultViewport);
 
   return (
@@ -36,7 +36,7 @@ export const Map = ({
         scrollZoom={false}
         style={{ width: '100%', height: mapHight }}
         mapStyle={
-          themeMode === themeModeTypes.LIGHT
+          theme === themeModeTypes.LIGHT
             ? 'mapbox://styles/anboch/cla096w1a00ab15s2lllm4o89'
             : 'mapbox://styles/anboch/clamp54r4000714l86046tm8o'
         }
