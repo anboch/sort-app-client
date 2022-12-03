@@ -29,7 +29,7 @@ export const OpeningHours = ({
                 <S.Weekdays>
                   {daySchedule.days.map((day) => (
                     <Typography variant="subtitle1" key={day}>
-                      {weekDays.get(day)}
+                      {weekDays.get(+day)}
                     </Typography>
                   ))}
                 </S.Weekdays>
