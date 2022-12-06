@@ -122,6 +122,11 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
   );
   const hasTypes = material.typeIDs.length > 0;
   const typeQs = useGetTypes(getIDs(material.typeIDs), isAddToBinFormOpen);
+  const hasAdditionalInfo =
+    !!material?.description?.length ||
+    !!material?.sortedRules?.generalRules.length ||
+    !!material?.sortedRules?.localRules.length ||
+    !!material?.tagIDs.length;
 
   // const handleAddToBin = (): void => {
   // if (!userQ.data) {
@@ -189,16 +194,19 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
               </Button>
             )}
           </>
-          <Button
-            onClick={handleExpandClick}
-            size="small"
-            variant={isExpanded ? 'outlined' : 'contained'}
-            aria-label="show more"
-            color="secondary"
-            // endIcon={<PlaylistAddIcon />}
-          >
-            {isExpanded ? 'Скрыть' : 'Инфо'}
-          </Button>
+
+          {hasAdditionalInfo && (
+            <Button
+              onClick={handleExpandClick}
+              size="small"
+              variant={'contained'}
+              aria-label="show more"
+              color="secondary"
+              // endIcon={<PlaylistAddIcon />}
+            >
+              {isExpanded ? 'Скрыть' : 'Инфо'}
+            </Button>
+          )}
           {/* </S.Buttons> */}
           {/* <ExpandMore
             expand={isExpanded}
