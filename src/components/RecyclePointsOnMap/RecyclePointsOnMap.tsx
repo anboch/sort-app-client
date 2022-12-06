@@ -14,7 +14,7 @@ interface IBinRecyclePointsOnMapProps {
   setSelectedRecyclePoint: Dispatch<SetStateAction<IRecyclePoint | null>>;
 }
 
-export const RecyclePointsOfBinOnMap = ({
+export const RecyclePointsOnMap = ({
   isEditMode = true,
   selectedRecyclePoint,
   allRecyclePoints,

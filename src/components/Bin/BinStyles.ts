@@ -76,6 +76,11 @@ export const RecyclePointsOfBinSummary = styled.div`
   justify-content: space-between;
 `;
 
+export const RecyclePointsOfBinOnMap = styled.div`
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  overflow: hidden;
+`;
+
 export const EditRuleSetOfBin = styled.div`
   display: flex;
   flex-direction: column;

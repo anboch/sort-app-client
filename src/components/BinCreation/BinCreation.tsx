@@ -8,7 +8,7 @@ import { BinRules } from '../Bin/Bin';
 import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecyclePoint';
 import { LoginFormContext } from '../../context/LoginFormContext';
 import { UseQueryResult } from '@tanstack/react-query';
-import { RecyclePointsOfBinOnMap } from '../RecyclePointsOfBinOnMap/RecyclePointsOfBinOnMap';
+import { RecyclePointsOnMap } from '../RecyclePointsOnMap/RecyclePointsOnMap';
 
 interface IBinCreationProps {
   materialTitles: string[];
@@ -105,7 +105,7 @@ export const BinCreation = ({
         {/* <BinType typeID={bin.typeID} /> */}
         <BinRules isEditMode={true} selectedRuleSet={selectedRuleSet} allRuleSets={allRuleSets} />
       </S.BinCreationContent>
-      <RecyclePointsOfBinOnMap
+      <RecyclePointsOnMap
         selectedRecyclePoint={selectedRecyclePoint}
         allRecyclePoints={allRecyclePoints}
         selectedRuleSet={selectedRuleSet}

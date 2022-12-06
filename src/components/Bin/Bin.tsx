@@ -29,7 +29,7 @@ import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecy
 import { AlertDialog } from '../AlertDialog/AlertDialog';
 import { useGetMaterialsByType } from '../../hooks/useGetMaterialsByType';
 import { MaterialPreviewDialog } from '../MaterialPreviewDialog/MaterialPreviewDialog';
-import { RecyclePointsOfBinOnMap } from '../RecyclePointsOfBinOnMap/RecyclePointsOfBinOnMap';
+import { RecyclePointsOnMap } from '../RecyclePointsOnMap/RecyclePointsOnMap';
 import { useDeleteBin } from '../../hooks/useDeleteBin';
 import { useGetBins } from '../../hooks/useGetBins';
 
@@ -234,13 +234,15 @@ export const RecyclePointsOfBin = ({
       </S.RecyclePointsOfBinSummary>
       <Collapse in={isExpanded} timeout="auto">
         {downloadMap && (
-          <RecyclePointsOfBinOnMap
-            selectedRecyclePoint={selectedRecyclePoint}
-            isEditMode={isEditMode}
-            allRecyclePoints={allRecyclePoints}
-            selectedRuleSet={selectedRuleSet}
-            setSelectedRecyclePoint={setSelectedRecyclePoint}
-          />
+          <S.RecyclePointsOfBinOnMap>
+            <RecyclePointsOnMap
+              selectedRecyclePoint={selectedRecyclePoint}
+              isEditMode={isEditMode}
+              allRecyclePoints={allRecyclePoints}
+              selectedRuleSet={selectedRuleSet}
+              setSelectedRecyclePoint={setSelectedRecyclePoint}
+            />
+          </S.RecyclePointsOfBinOnMap>
         )}
       </Collapse>
     </div>
