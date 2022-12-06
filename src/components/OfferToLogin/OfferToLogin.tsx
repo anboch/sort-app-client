@@ -13,6 +13,7 @@ export const OfferToLogin = ({ sectionTitle = '' }: { sectionTitle?: string }): 
         необходимо
       </Typography>
       <Button
+        variant="outlined"
         onClick={() => {
           setIsOpen(true);
         }}
