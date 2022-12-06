@@ -21,7 +21,9 @@ export const RecyclePointOfBinMarker = ({
 }: IRecyclePointMarkerProps): JSX.Element => {
   const handleMarkerClick = (e: MouseEvent<HTMLElement>) => {
     setSelectedRecyclePoint(recyclePoint);
-    setWithOpenedInfo(e.currentTarget);
+    if (isInSelectedRuleSet) {
+      setWithOpenedInfo(e.currentTarget);
+    }
   };
 
   return (
