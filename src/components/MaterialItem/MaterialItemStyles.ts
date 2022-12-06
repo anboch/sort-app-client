@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import styled from 'styled-components';
 
 export const MaterialItem = styled.div`
@@ -55,6 +56,12 @@ export const MaterialInfo = styled.div`
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing(1)};
   }
+`;
+
+export const MaterialInfoItemTitle = styled(Typography).attrs({
+  variant: 'subtitle2',
+})`
+  color: ${({ theme }) => theme.palette.primary.light};
 `;
 
 export const SimilarMaterialAndDescription = styled.div`

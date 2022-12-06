@@ -52,7 +52,8 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
       <S.SimilarMaterialAndDescription>
         {similarMaterialIDs?.length > 0 && (
           <S.SimilarMaterial>
-            <Typography variant={'caption'}>Часто путают с:</Typography>
+            <S.MaterialInfoItemTitle>Часто путают с:</S.MaterialInfoItemTitle>
+
             {similarMaterialIDs.map((material) => (
               <ListItemText key={material._id} primary={`- ${material.titles.join(', ')}`} />
               // <Link
@@ -70,20 +71,20 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
           </S.SimilarMaterial>
         )}
         <S.MaterialDescription>
-          {description?.length && <Typography variant={'caption'}>Описание:</Typography>}
+          {!!description?.length && <S.MaterialInfoItemTitle>Описание:</S.MaterialInfoItemTitle>}
           <Typography variant={'body1'}>{description}</Typography>
         </S.MaterialDescription>
       </S.SimilarMaterialAndDescription>
       {sortedRules && (
         <S.MaterialRules>
           {sortedRules.generalRules.length > 0 && (
-            <Typography variant={'caption'}>Общие правила:</Typography>
+            <S.MaterialInfoItemTitle>Общие правила:</S.MaterialInfoItemTitle>
           )}
           {sortedRules.generalRules.map((rule) => (
             <ListItemText key={rule._id} primary={`- ${rule.description}`} />
           ))}
           {sortedRules.localRules.length > 0 && (
-            <Typography variant={'caption'}>Правила для некоторых пунктов приема:</Typography>
+            <S.MaterialInfoItemTitle>Правила для некоторых пунктов приема:</S.MaterialInfoItemTitle>
           )}
           {sortedRules.localRules.map((rule) => (
             <ListItemText key={rule._id} primary={`- ${rule.description}`} />
@@ -92,10 +93,10 @@ export const MaterialItemInfo = ({ material }: { material: IMaterial }): JSX.Ele
       )}
       <S.Tags>
         {/* todo add filter on tag click */}
-        <Typography variant={'caption'}>Тэги:</Typography> <br />
+        {!!tagIDs.length && <S.MaterialInfoItemTitle>Тэги:</S.MaterialInfoItemTitle>}
         {tagIDs.map((tag) => (
           <S.Tag key={tag.titles[0]}>
-            <Typography variant="subtitle2">{tag.titles.join(', ')}</Typography>
+            <Typography variant="body2">{tag.titles.join(', ')}</Typography>
           </S.Tag>
         ))}
       </S.Tags>
