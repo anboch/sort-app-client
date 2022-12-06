@@ -7,10 +7,10 @@ enum gridAreasEnum {
 export const customPaletteForTheme = {
   common: {
     primary: {
-      main: '#94c2e0',
+      main: '#90caf9',
     },
     secondary: {
-      main: '#e0b294',
+      main: '#ecc6ad',
     },
   },
   light: {},
