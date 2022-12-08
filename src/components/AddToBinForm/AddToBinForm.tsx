@@ -51,11 +51,10 @@ export const AddToBinForm = ({ setIsOpen, material, bin }: IAddToBinFormProps): 
           {typeof bin.typeID === 'object' && <Typography>{bin.typeID?.title}</Typography>}
         </div> */}
         <div>
-          <Typography display="block" variant="caption">
-            правила
-          </Typography>
           {ruleSetQ.data &&
-            typeof ruleSetQ.data?.ruleIDs === 'object' &&
+            typeof ruleSetQ.data?.ruleIDs === 'object' && (
+              <Typography variant="subtitle2">правила</Typography>
+            ) &&
             ruleSetQ.data.ruleIDs.map((rule) => {
               if (typeof rule === 'object' && rule.description) {
                 return <Typography key={rule._id}>- {rule.description}</Typography>;
