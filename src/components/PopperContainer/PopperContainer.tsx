@@ -34,7 +34,7 @@ export const PopperContainer = ({
 
   return (
     <Popper
-      style={{ maxWidth: '90%', maxHeight: '50%', overflow: 'auto' }}
+      style={{ maxWidth: '90%', maxHeight: '50%', overflow: 'auto', zIndex: 2 }}
       disablePortal
       popperOptions={popperOptions}
       anchorEl={withOpenedInfo}
