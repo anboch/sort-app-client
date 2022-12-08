@@ -15,8 +15,8 @@ const AboutPage = (): JSX.Element => {
   }, []);
   // todo links to env
   const contactAddresses = {
-    email: 'v-pererabotku@mail.ru',
-    telegramBot: 'https://t.me/v_pererabotku_bot',
+    email: 'sortirui.ru@mail.ru',
+    telegramBot: 'https://t.me/sortirui_bot',
   };
   return (
     <S.AboutPage>
