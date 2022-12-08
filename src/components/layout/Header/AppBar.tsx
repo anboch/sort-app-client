@@ -55,12 +55,12 @@ export const ResponsiveAppBar = (): JSX.Element => {
                 display: 'flex',
                 fontFamily: 'monospace',
                 fontWeight: 'bolder',
-                letterSpacing: '.2rem',
+                letterSpacing: '.1rem',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
             >
-              В-переработку
+              СОРТИРУЙ
             </Typography>
           </Link>
           <Box

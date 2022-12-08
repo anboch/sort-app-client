@@ -22,7 +22,7 @@ const AboutPage = (): JSX.Element => {
     <S.AboutPage>
       <S.AboutProject>
         <Typography variant="h6" display="inline">
-          В-переработку
+          Сортируй
         </Typography>
         <Typography variant="subtitle1" display="inline">
           {' '}

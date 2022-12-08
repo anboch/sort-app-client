@@ -10,8 +10,7 @@ export const Footer = (): JSX.Element => {
     <S.Footer>
       <DocumentsForm openedDocument={openedDocument} setOpenedDocument={setOpenedDocument} />
       <Typography variant={'subtitle2'}>
-        В-переработку © {new Date().getFullYear() !== 2022 ? '2022 -' : null}{' '}
-        {new Date().getFullYear()}
+        Сортируй © {new Date().getFullYear() !== 2022 ? '2022 -' : null} {new Date().getFullYear()}
       </Typography>
       <Divider />
       <S.Documents>
