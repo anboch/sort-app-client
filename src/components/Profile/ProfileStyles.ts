@@ -15,6 +15,17 @@ export const Profile = styled(Paper)`
   }
 `;
 
-export const ProfileItem = styled.div`
-  /* padding: 10px 20px;; */
+export const UserGeoLocation = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const UserGeoLocationExpand = styled.div<{ isExpanded: boolean }>`
+  padding-top: ${({ theme }): string => theme.spacing(1)};
+  align-self: ${({ isExpanded }): string => (isExpanded ? 'flex-end' : 'center')};
+`;
+
+export const UserGeoLocationMap = styled.div`
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  overflow: hidden;
 `;
