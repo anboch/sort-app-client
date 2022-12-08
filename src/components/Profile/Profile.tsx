@@ -12,7 +12,6 @@ import * as S from './ProfileStyles';
 import { useEffect, useState } from 'react';
 import { IViewportSettings, mapCommonSettings, MapGLWrap } from '../MapGLWrap/MapGLWrap';
 import { useGetUserLocation } from '../../hooks/useGetUserLocation';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 interface IProfileProps {
   userData: IUser;
@@ -39,7 +38,6 @@ const UserGeoLocation = (): JSX.Element => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [viewport, setViewport] = useState<IViewportSettings>(mapCommonSettings.defaultViewport);
   const [isCoordsChanged, setIsCoordsChanged] = useState<boolean>(false);
-  const ref = useOutsideClick(() => setIsExpanded(false));
   const { userCoordinates, coordinatesMutationFunc } = useGetUserLocation();
 
   const saveNewUserLocation = () => {
@@ -68,7 +66,7 @@ const UserGeoLocation = (): JSX.Element => {
   }, [isExpanded]);
 
   return (
-    <S.UserGeoLocation ref={ref}>
+    <S.UserGeoLocation>
       <Typography variant="caption">местоположение</Typography>
       <S.UserGeoLocationExpand isExpanded={isExpanded}>
         {!isExpanded ? (
