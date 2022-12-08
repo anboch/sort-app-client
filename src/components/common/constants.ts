@@ -10,4 +10,5 @@ export const localStorageKeys = {
   accessToken: 'access_token',
   themeMode: 'theme_mode',
   viewedAboutPage: 'viewed_about_page',
+  userCoordinates: 'user_coordinates',
 } as const;

@@ -108,7 +108,7 @@ interface IContacts {
   site: string;
 }
 
-interface ICoordinates {
+export interface ICoordinates {
   latitude: number;
   longitude: number;
 }
@@ -168,4 +168,15 @@ export interface IFeedback {
   _id?: string;
   type: ValueOf<typeof feedbackTypes>;
   description: string;
+}
+
+export interface IGeolocation {
+  country_code?: string | null;
+  country_name?: string | null;
+  city?: string | null;
+  postal?: number | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  IPv4?: string | null;
+  state?: string | null;
 }
