@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Accordion, AccordionDetails, Paper } from '@mui/material';
 import styled from 'styled-components';
 
 export const AboutPage = styled.div`
@@ -12,18 +12,30 @@ export const AboutPage = styled.div`
     width: 100%;
     min-width: 280px;
     max-width: 600px;
-    padding: ${({ theme }): string => theme.spacing(1)};
   }
   & > *:not(:last-child) {
-    margin-bottom: ${({ theme }): string => theme.spacing(1)};
+    margin-bottom: ${({ theme }): string => theme.spacing(2)};
   }
 `;
 
 export const AboutProject = styled(Paper)`
+  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+  padding: ${({ theme }): string => theme.spacing(1)};
   text-align: center;
 `;
 
-export const Instructions = styled(Paper)`
+export const Instructions = styled.div`
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }): string => theme.spacing(2)};
+  }
+`;
+
+export const Instruction = styled(Accordion).attrs({ square: true, disableGutters: true })`
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+`;
+
+export const Details = styled(AccordionDetails)`
   & > * {
     text-align: center;
   }
@@ -33,11 +45,13 @@ export const Instructions = styled(Paper)`
 `;
 
 export const Contacts = styled(Paper)`
+  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
   text-align: center;
+  padding: ${({ theme }): string => theme.spacing(1)};
   & a {
     display: inline-block;
   }
-  && > * {
+  && > *:not(:last-child) {
     margin-bottom: ${({ theme }): string => theme.spacing(1)};
   }
 `;
