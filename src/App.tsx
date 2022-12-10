@@ -10,6 +10,7 @@ import { pageRoutes } from './routes';
 import { LoginFormProvider } from './context/LoginFormContext';
 import { RecyclePointsPage } from './views/RecyclePoints';
 import { ThemeProvider } from './context/ThemeContex/ThemeContext';
+import { ScrollToTop } from './components/ScrollToTop/ScrollToTop';
 
 interface IPage {
   name: string;
@@ -59,6 +60,7 @@ export default function App(): JSX.Element {
         <QueryClientProvider client={queryClient}>
           <LoginFormProvider>
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path={pageRoutes.search} element={<SearchPage />} />
                 <Route path={pageRoutes.bins} element={<BinsPage />} />
