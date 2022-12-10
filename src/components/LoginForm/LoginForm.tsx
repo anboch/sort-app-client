@@ -176,7 +176,7 @@ export const LoginForm = (): JSX.Element => {
             <DialogTitle>Введите код</DialogTitle>
             <S.FormContent>
               {/* <DialogContentText> */}
-              <Typography> Код был отправлен по адресу:</Typography>
+              <Typography>Код был отправлен по адресу:</Typography>
               <Typography variant="h6" component="span">
                 {confirmFor}
               </Typography>
@@ -220,6 +220,7 @@ export const LoginForm = (): JSX.Element => {
               />
               {countdown && countdown.raw !== 0 && (
                 <DialogContentText>
+                  <Typography>Если не приходит, пожалуйста, проверьте папку СПАМ</Typography>
                   <Typography component="span" variant="subtitle1">
                     Получить новый код можно через {countdown.minutes}:{countdown.seconds}
                   </Typography>
