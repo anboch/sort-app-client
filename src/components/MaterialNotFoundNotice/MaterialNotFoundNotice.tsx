@@ -101,7 +101,7 @@ export const MaterialNotFoundNotice = ({
     return (
       <S.MaterialNotFoundNotice>
         <Typography variant="subtitle1">
-          Поиск по названию сырья, типу материала или бытовому названию
+          Поиск по названию материала, типу сырья или бытовому названию
         </Typography>
       </S.MaterialNotFoundNotice>
     );
