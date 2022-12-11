@@ -79,7 +79,7 @@ const UserGeoLocation = (): JSX.Element => {
             Показать на карте
           </Button>
         ) : (
-          <>
+          <S.SaveAndCloseButtons isCoordsChanged={isCoordsChanged}>
             {isCoordsChanged && (
               <IconButton onClick={saveNewUserLocation}>
                 <SaveIcon />
@@ -88,7 +88,7 @@ const UserGeoLocation = (): JSX.Element => {
             <IconButton onClick={() => setIsExpanded(false)}>
               <CloseIcon />
             </IconButton>
-          </>
+          </S.SaveAndCloseButtons>
         )}
       </S.UserGeoLocationExpand>
       {isExpanded && (

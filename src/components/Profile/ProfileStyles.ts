@@ -22,7 +22,15 @@ export const UserGeoLocation = styled.div`
 
 export const UserGeoLocationExpand = styled.div<{ isExpanded: boolean }>`
   padding-top: ${({ theme }): string => theme.spacing(1)};
-  align-self: ${({ isExpanded }): string => (isExpanded ? 'flex-end' : 'center')};
+  display: flex;
+  justify-content: center;
+`;
+
+export const SaveAndCloseButtons = styled.div<{ isCoordsChanged: boolean }>`
+  display: flex;
+  width: 100%;
+  justify-content: ${({ isCoordsChanged }): string =>
+    isCoordsChanged ? 'space-between' : 'right'};
 `;
 
 export const UserGeoLocationMap = styled.div`

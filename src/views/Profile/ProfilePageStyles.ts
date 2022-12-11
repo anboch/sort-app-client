@@ -12,6 +12,8 @@ export const ProfilePage = styled.div`
     min-width: 280px;
     max-width: 400px;
     height: 100%;
+    border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+
     margin: ${({ theme }): string => theme.spacing(0, 1)};
   }
   & > *:not(:last-child) {
