@@ -52,14 +52,17 @@ export const AddToBinForm = ({ setIsOpen, material, bin }: IAddToBinFormProps): 
         </div> */}
         <div>
           {ruleSetQ.data &&
-            typeof ruleSetQ.data?.ruleIDs === 'object' && (
-              <Typography variant="subtitle2">правила</Typography>
-            ) &&
-            ruleSetQ.data.ruleIDs.map((rule) => {
-              if (typeof rule === 'object' && rule.description) {
-                return <Typography key={rule._id}>- {rule.description}</Typography>;
-              }
-            })}
+            typeof ruleSetQ.data?.ruleIDs === 'object' &&
+            !!ruleSetQ.data.ruleIDs.length && (
+              <>
+                <Typography variant="subtitle2">правила</Typography>
+                {ruleSetQ.data.ruleIDs.map((rule) => {
+                  if (typeof rule === 'object' && rule.description) {
+                    return <Typography key={rule._id}>- {rule.description}</Typography>;
+                  }
+                })}
+              </>
+            )}
         </div>
       </S.AddToBinContent>
       <DialogActions>
