@@ -8,6 +8,7 @@ import { getId } from '../../utils/utils';
 import { Dispatch, SetStateAction } from 'react';
 import { IBin, IMaterial } from '../../api/api.interface';
 import { useGetRuleSet } from '../../hooks/useGetRuleSet';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 interface IAddToBinFormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -63,6 +64,7 @@ export const AddToBinForm = ({ setIsOpen, material, bin }: IAddToBinFormProps): 
                 })}
               </>
             )}
+          {ruleSetQ.isLoading && ruleSetQ.isFetching && <LoadingSpinner />}
         </div>
       </S.AddToBinContent>
       <DialogActions>
