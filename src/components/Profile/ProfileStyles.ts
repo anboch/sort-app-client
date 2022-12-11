@@ -7,6 +7,8 @@ export const Profile = styled(Paper)`
   justify-content: center;
   align-items: left;
   padding: ${({ theme }) => theme.spacing(1)};
+  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+
   & > *:not(:first-child) {
     padding: ${({ theme }): string => theme.spacing(0, 1)};
   }
