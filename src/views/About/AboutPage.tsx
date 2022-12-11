@@ -15,6 +15,7 @@ import { pageRoutes } from '../../routes';
 import * as S from './AboutPageStyles';
 import { localStorageKeys } from '../../components/common/constants';
 import { useEffect } from 'react';
+import { pages } from '../../App';
 
 const AboutPage = (): JSX.Element => {
   useEffect(() => {
@@ -127,7 +128,9 @@ const AboutPage = (): JSX.Element => {
             <Typography>
               Когда захотите сдать вторсырьё, заходите в раздел{' '}
               <Link component={RouterLink} to={pageRoutes.recyclePoints}>
-                пункты приема
+                {pages
+                  .find((page) => page.path === pageRoutes.recyclePoints)
+                  ?.name.toLocaleLowerCase()}
               </Link>{' '}
               и выбирайте самый оптимальный.
             </Typography>

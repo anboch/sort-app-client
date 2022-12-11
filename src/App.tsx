@@ -27,7 +27,7 @@ export const pages: IPage[] = [
     path: pageRoutes.bins,
   },
   {
-    name: 'Пункты приёма',
+    name: 'Мои пункты приёма',
     path: pageRoutes.recyclePoints,
   },
   {
