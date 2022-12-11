@@ -154,6 +154,8 @@ export const BinRules = ({
         <Typography color={theme.palette.info.main} variant="subtitle1">
           Выберите пункт приема на карте, чтобы увидеть правила
         </Typography>
+      ) : allRuleSets && !uniqRulesSortedByQuantity.length ? (
+        <Typography>- - -</Typography>
       ) : allRuleSets ? (
         uniqRulesSortedByQuantity.map((rule) => {
           if (typeof rule === 'object' && rule.description) {
