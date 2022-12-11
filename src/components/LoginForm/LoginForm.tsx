@@ -8,7 +8,7 @@ import { LoginFormContext } from '../../context/LoginFormContext';
 import { api } from '../../api';
 import * as S from './LoginFormStyles';
 import { useQuery } from '@tanstack/react-query';
-import { Box, CircularProgress, Link, Dialog, Typography } from '@mui/material';
+import { Link, Dialog, Typography } from '@mui/material';
 import { useCountdown, useConfirmAndLogin } from '../../hooks';
 import { responseErrorMessages } from '../../api/api.constants';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
@@ -218,10 +218,9 @@ export const LoginForm = (): JSX.Element => {
               />
               {countdown && countdown.raw !== 0 && (
                 <DialogContentText>
-                  <Typography>Если код не приходит, пожалуйста, проверьте папку СПАМ</Typography>
-                  <Typography component="span" variant="subtitle1">
-                    Получить новый код можно через {countdown.minutes}:{countdown.seconds}
-                  </Typography>
+                  Если код не приходит, пожалуйста, проверьте папку СПАМ
+                  <br />
+                  Получить новый код можно через {countdown.minutes}:{countdown.seconds}
                 </DialogContentText>
               )}
             </S.FormContent>
