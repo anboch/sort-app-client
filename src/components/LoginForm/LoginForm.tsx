@@ -220,7 +220,7 @@ export const LoginForm = (): JSX.Element => {
               />
               {countdown && countdown.raw !== 0 && (
                 <DialogContentText>
-                  <Typography>Если не приходит, пожалуйста, проверьте папку СПАМ</Typography>
+                  <Typography>Если код не приходит, пожалуйста, проверьте папку СПАМ</Typography>
                   <Typography component="span" variant="subtitle1">
                     Получить новый код можно через {countdown.minutes}:{countdown.seconds}
                   </Typography>
