@@ -136,10 +136,6 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
   // }
   // };
 
-  const handleExpandClick = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   // todo redo make green, red or yellow borders for cards
   return (
     <S.MaterialItem>
@@ -197,7 +193,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
 
           {hasAdditionalInfo && (
             <Button
-              onClick={handleExpandClick}
+              onClick={(): void => setIsExpanded((prev) => !prev)}
               size="small"
               variant={'contained'}
               aria-label="show more"

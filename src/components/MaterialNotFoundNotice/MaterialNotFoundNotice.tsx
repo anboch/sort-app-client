@@ -56,7 +56,7 @@ export const MaterialNotFoundNotice = ({
       <S.MaterialNotFoundNotice>
         <Typography variant="body1">
           Эх... Мы сожалеем, что по запросу
-          <span style={{ fontWeight: 'bold' }}> {`"${failedRequestValue}"`} </span>
+          <b> {`"${failedRequestValue}"`} </b>
           ничего подходящего не нашлось. <br /> Но всё не напрасно! Мы уже передали информацию о
           вашей “редкости” и возможно скоро она здесь появится.
         </Typography>

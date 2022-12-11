@@ -39,7 +39,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
   const currentPath = useLocation().pathname;
 
   return (
-    <AppBar enableColorOnDark sx={{ borderRadius: '10px', minHeight: {} }} position="static">
+    <AppBar enableColorOnDark sx={{ borderRadius: '10px' }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link

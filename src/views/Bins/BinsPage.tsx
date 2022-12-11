@@ -18,11 +18,7 @@ const BinsPage = (): JSX.Element => {
   if (!userQ.data) {
     return <OfferToLogin sectionTitle={pageName} />;
   }
-  return (
-    <>
-      <BinList />
-    </>
-  );
+  return <BinList />;
 };
 
 export default withLayout(BinsPage);

@@ -11,7 +11,4 @@ export const OfferToLogin = styled.div`
   & > button {
     margin: ${({ theme }) => theme.spacing(1, 0)};
   }
-  span {
-    font-weight: bold;
-  }
 `;

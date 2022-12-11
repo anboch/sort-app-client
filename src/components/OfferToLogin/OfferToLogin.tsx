@@ -9,8 +9,7 @@ export const OfferToLogin = ({ sectionTitle = '' }: { sectionTitle?: string }): 
   return (
     <S.OfferToLogin>
       <Typography>
-        Для просмотра {sectionTitle ? '' : ' данного '} раздела <span> {sectionTitle} </span>{' '}
-        необходимо
+        Для просмотра {sectionTitle ? '' : ' данного '} раздела <b> {sectionTitle} </b> необходимо
       </Typography>
       <Button
         variant="outlined"
