@@ -207,7 +207,7 @@ export const LoginForm = (): JSX.Element => {
                 autoFocus
                 margin="dense"
                 label="шесть цифр"
-                // type="search"
+                type="text"
                 autoComplete="off"
                 inputMode="numeric"
                 fullWidth
