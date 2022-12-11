@@ -6,6 +6,7 @@ import { useGetBins } from '../../hooks/useGetBins';
 import { Typography, Link } from '@mui/material';
 import { pageRoutes } from '../../routes';
 import { Link as RouterLink } from 'react-router-dom';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 /* Components */
 
 /* Instruments */
@@ -14,11 +15,14 @@ export const BinList = (): JSX.Element => {
   // todo. request by one bin to prevent rerender of all bins when edit one
   const binsQ = useGetBins();
 
-  if (!binsQ.data) {
-    // todo add spinner
-    return <>Error or loading</>;
+  if (binsQ.isError) {
+    // todo handle error
+    return <>Error</>;
   }
-  if (binsQ.data.length === 0) {
+  if (binsQ.isLoading && binsQ.isFetching) {
+    return <LoadingSpinner />;
+  }
+  if (binsQ.data?.length === 0) {
     return (
       <S.BinList>
         <S.NoBinNotice>
@@ -40,7 +44,7 @@ export const BinList = (): JSX.Element => {
   }
   return (
     <S.BinList>
-      {binsQ.data.map((bin) => (
+      {binsQ.data?.map((bin) => (
         <Bin key={bin._id} bin={bin} />
       ))}
     </S.BinList>

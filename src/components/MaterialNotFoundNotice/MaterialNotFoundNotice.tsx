@@ -2,6 +2,7 @@ import { Link, Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { fuseOptions } from '../../hooks';
 import { useSendFeedback } from '../../hooks/useSendFeedback';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import * as S from './MaterialNotFoundNoticeStyles';
 
 export const MaterialNotFoundNotice = ({
@@ -20,14 +21,16 @@ export const MaterialNotFoundNotice = ({
   clearSelectedTags: () => void;
 }): JSX.Element | null => {
   const [failedRequestValue, setFailedRequestValue] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { sentMaterialSuggestion } = useSendFeedback();
   const theme = useTheme();
 
   const requestValueExists = searchQuery.length >= fuseOptions.minMatchCharLength;
   const sentAndInform = async (value: string) => {
-    // todo add spinner
+    setIsLoading(true);
     await sentMaterialSuggestion(value);
     setFailedRequestValue(value);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -43,6 +46,10 @@ export const MaterialNotFoundNotice = ({
       setFailedRequestValue(null);
     }
   }, [searchQuery]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (failedRequestValue) {
     return (

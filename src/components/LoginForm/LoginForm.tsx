@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Box, CircularProgress, Link, Dialog, Typography } from '@mui/material';
 import { useCountdown, useConfirmAndLogin } from '../../hooks';
 import { responseErrorMessages } from '../../api/api.constants';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 export const LoginForm = (): JSX.Element => {
   const { isOpen, setIsOpen } = useContext(LoginFormContext);
@@ -135,11 +136,7 @@ export const LoginForm = (): JSX.Element => {
 
         <div>{isFetching ? 'Fetching...' : null}</div>
       </div> */}
-      {(requestConfirmCodeQ.isFetching || confirmAndLoginQ.isFetching) && (
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-          <CircularProgress />
-        </Box>
-      )}
+      {(requestConfirmCodeQ.isFetching || confirmAndLoginQ.isFetching) && <LoadingSpinner />}
       {!confirmFor &&
         // todo redo to  visibility: hidden;
         !requestConfirmCodeQ.isFetching &&
@@ -169,6 +166,7 @@ export const LoginForm = (): JSX.Element => {
           </S.RequestForm>
         )}
       {!!confirmFor &&
+        !confirmAndLoginQ.isFetching &&
         // todo redo to  visibility: hidden;
         !requestConfirmCodeQ.isFetching &&
         !requestConfirmCodeQ.isError && (

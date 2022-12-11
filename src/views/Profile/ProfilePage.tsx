@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { pages } from '../../App';
 import { AppSettings } from '../../components/AppSettings/AppSettings';
 import { withLayout } from '../../components/layout/Layout';
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
 import { OfferToLogin } from '../../components/OfferToLogin/OfferToLogin';
 import { Profile } from '../../components/Profile/Profile';
 
@@ -16,7 +17,13 @@ const ProfilePage = (): JSX.Element => {
   return (
     <S.ProfilePage>
       <AppSettings />
-      {!userQ.data ? <OfferToLogin sectionTitle={pageName} /> : <Profile userData={userQ.data} />}
+      {userQ.isLoading && userQ.isFetching ? (
+        <LoadingSpinner />
+      ) : !userQ.data ? (
+        <OfferToLogin sectionTitle={pageName} />
+      ) : (
+        <Profile userData={userQ.data} />
+      )}
     </S.ProfilePage>
   );
 };

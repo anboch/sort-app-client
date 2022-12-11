@@ -13,6 +13,7 @@ import { pageRoutes } from '../../routes';
 import { RecyclePointMarker } from '../RecyclePointMarker/RecyclePointMarker';
 import { PopperContainer } from '../PopperContainer/PopperContainer';
 import { OpeningHours } from '../OpeningHours/OpeningHours';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 export const RecyclePointInfo = ({
   recyclePoint,
@@ -71,6 +72,10 @@ export const MyRecyclePoints = (): JSX.Element => {
   const binsQ = useGetBins();
   const { allRecyclePointsIds, binsForRecyclePoints } = useFindBinsForRecyclePoints(binsQ.data);
   const recyclePointsQ = useGetRecyclePoints(allRecyclePointsIds);
+
+  if (binsQ.isLoading && binsQ.isFetching) {
+    return <LoadingSpinner />;
+  }
 
   if (binsQ.data?.length === 0) {
     return (

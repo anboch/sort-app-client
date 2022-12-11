@@ -14,7 +14,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import MapIcon from '@mui/icons-material/Map';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 
-import 'mapbox-gl/dist/mapbox-gl.css';
+// import 'mapbox-gl/dist/mapbox-gl.css';
 
 import * as S from './BinStyles';
 import { IBin, IMaterial, IRecyclePoint, IRuleSet } from '../../api/api.interface';
@@ -32,6 +32,7 @@ import { MaterialPreviewDialog } from '../MaterialPreviewDialog/MaterialPreviewD
 import { RecyclePointsOnMap } from '../RecyclePointsOnMap/RecyclePointsOnMap';
 import { useDeleteBin } from '../../hooks/useDeleteBin';
 import { useGetBins } from '../../hooks/useGetBins';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 const BinTitle = ({ _id, title = '' }: Pick<IBin, '_id' | 'title'>) => {
   const [inputValue, setInputValue] = useState(title);
@@ -116,8 +117,8 @@ export const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
             })
           ) : materialsQ.isError ? (
             <Typography>Error...</Typography>
-          ) : materialsQ.isLoading ? (
-            <span>Loading...</span>
+          ) : materialsQ.isLoading && materialsQ.isFetching ? (
+            <LoadingSpinner />
           ) : null}
         </div>
       </Collapse>
@@ -323,7 +324,6 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
     setIsEditMode(true);
   };
 
-  // todo add spinner while loading ruleSetQ
   return (
     <S.Bin>
       <S.BinPropertyContainer>
@@ -332,57 +332,61 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
       <S.BinPropertyContainer>
         <BinType typeID={bin.typeID} />
       </S.BinPropertyContainer>
-      <S.BinPropertyContainer>
-        <S.RulesAndEditRuleSet>
-          <BinRules
+      {ruleSetQ.isLoading && ruleSetQ.isFetching ? (
+        <LoadingSpinner />
+      ) : (
+        <S.BinPropertyContainer>
+          <S.RulesAndEditRuleSet>
+            <BinRules
+              isEditMode={isEditMode}
+              // todo create constant
+              selectedRuleSet={isEditMode ? selectedRuleSet : ruleSetQ.data ?? null}
+              allRuleSets={allRuleSets}
+            />
+            <S.EditRuleSetOfBin>
+              {!isEditMode ? (
+                allRuleSets &&
+                allRuleSets?.length > 1 && (
+                  <div>
+                    <IconButton onClick={handleEditClick}>
+                      <EditIcon fontSize="inherit" />
+                    </IconButton>
+                  </div>
+                )
+              ) : (
+                <>
+                  <div>
+                    <IconButton onClick={() => setIsEditMode(false)}>
+                      <CancelIcon fontSize="inherit" />
+                    </IconButton>
+                  </div>
+                  <div
+                    style={{
+                      visibility:
+                        selectedRuleSet?._id === getId(bin.ruleSetID) ? 'hidden' : 'visible',
+                    }}
+                  >
+                    <IconButton onClick={saveUpdatedBin}>
+                      <SaveIcon fontSize="inherit" />
+                    </IconButton>
+                  </div>
+                </>
+              )}
+            </S.EditRuleSetOfBin>
+          </S.RulesAndEditRuleSet>
+          <Divider variant="middle" />
+          <RecyclePointsOfBin
             isEditMode={isEditMode}
+            ruleSetOfBin={ruleSetQ.data ?? null}
+            selectedRecyclePoint={selectedRecyclePoint}
             // todo create constant
             selectedRuleSet={isEditMode ? selectedRuleSet : ruleSetQ.data ?? null}
-            allRuleSets={allRuleSets}
+            allRecyclePoints={allRecyclePoints}
+            setIsEditMode={setIsEditMode}
+            setSelectedRecyclePoint={setSelectedRecyclePoint}
           />
-          <S.EditRuleSetOfBin>
-            {!isEditMode ? (
-              allRuleSets &&
-              allRuleSets?.length > 1 && (
-                <div>
-                  <IconButton onClick={handleEditClick}>
-                    <EditIcon fontSize="inherit" />
-                  </IconButton>
-                </div>
-              )
-            ) : (
-              <>
-                <div>
-                  <IconButton onClick={() => setIsEditMode(false)}>
-                    <CancelIcon fontSize="inherit" />
-                  </IconButton>
-                </div>
-                <div
-                  style={{
-                    visibility:
-                      selectedRuleSet?._id === getId(bin.ruleSetID) ? 'hidden' : 'visible',
-                  }}
-                >
-                  <IconButton onClick={saveUpdatedBin}>
-                    <SaveIcon fontSize="inherit" />
-                  </IconButton>
-                </div>
-              </>
-            )}
-          </S.EditRuleSetOfBin>
-        </S.RulesAndEditRuleSet>
-        <Divider variant="middle" />
-        <RecyclePointsOfBin
-          isEditMode={isEditMode}
-          ruleSetOfBin={ruleSetQ.data ?? null}
-          selectedRecyclePoint={selectedRecyclePoint}
-          // todo create constant
-          selectedRuleSet={isEditMode ? selectedRuleSet : ruleSetQ.data ?? null}
-          allRecyclePoints={allRecyclePoints}
-          setIsEditMode={setIsEditMode}
-          setSelectedRecyclePoint={setSelectedRecyclePoint}
-        />
-      </S.BinPropertyContainer>
+        </S.BinPropertyContainer>
+      )}
       <BinActions bin={bin} />
     </S.Bin>
   );
