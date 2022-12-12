@@ -186,7 +186,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
                 variant="contained"
                 endIcon={suitableBin ? <PlaylistAddIcon /> : <AddIcon />}
               >
-                В переработку
+                В корзину
               </Button>
             )}
           </>
