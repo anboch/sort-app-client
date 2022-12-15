@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { localStorageKeys } from '../components/common/constants';
-import { apiRoutes } from '../routes';
+import { apiRoutes } from './api.routes';
 import { IJWTs } from './api.interface';
 
 const axiosConfig = {

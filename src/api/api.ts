@@ -13,7 +13,7 @@ import {
   IUser,
 } from './api.interface';
 import { AxiosResponse } from 'axios';
-import { apiRoutes } from '../routes';
+import { apiRoutes } from './api.routes';
 
 export const api = Object.freeze({
   async fetchSearchList(): Promise<ISearchLists> {

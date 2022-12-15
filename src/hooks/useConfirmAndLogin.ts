@@ -2,7 +2,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { api } from '../api';
 import { IConfirmDto, IJWTs } from '../api/api.interface';
-import { apiRoutes } from '../routes';
+import { apiRoutes } from '../api/api.routes';
 import { responseErrorMessages } from '../api/api.constants';
 import { ValueOf } from '../components/common/types';
 import { localStorageKeys } from '../components/common/constants';
