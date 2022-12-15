@@ -80,7 +80,6 @@ export const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
     setIsExpanded((prev) => !prev);
   };
 
-  // todo change Loading...
   return (
     <S.BinType>
       <S.BinTypeSummary>
@@ -143,7 +142,6 @@ export const BinRules = ({
   const selectedRuleIds = getIDs(selectedRuleSet?.ruleIDs ?? []);
   const isSelected = (ruleId: string) => (isEditMode ? selectedRuleIds?.includes(ruleId) : true);
 
-  // todo change 'Loading..'
   // todo fixed hight of rules before choose RP
   return (
     <S.BinRules>
@@ -167,7 +165,7 @@ export const BinRules = ({
           }
         })
       ) : (
-        <Typography>Loading...</Typography>
+        <LoadingSpinner />
       )}
     </S.BinRules>
   );
