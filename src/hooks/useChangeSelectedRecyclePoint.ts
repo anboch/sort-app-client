@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { IRecyclePoint, IRuleSet, IType } from '../api/api.interface';
-import { getAllRecyclePointsFromRuleSets, getId, makeUniqueById } from '../utils/utils';
+import {
+  getAllRecyclePointsFromRuleSets,
+  getAllRuleSetsFromTypes,
+  getId,
+  makeUniqueById,
+} from '../utils/utils';
 
 export const useChangeSelectedRecyclePoint = (allTypes: (IType | undefined)[]) => {
   const [allRuleSets, setAllRuleSets] = useState<IRuleSet[]>([]);
@@ -12,10 +17,7 @@ export const useChangeSelectedRecyclePoint = (allTypes: (IType | undefined)[]) =
   useEffect(() => {
     if (!allTypes.includes(undefined)) {
       // todo to know why allTypes not narrowing by !allTypes.includes(undefined) and remove allTypes as IType[]
-      const newAllRuleSets = (allTypes as IType[]).reduce((acc, type) => {
-        // todo check that type.ruleSetIDs is IRuleSet[]
-        return [...acc, ...(type.ruleSetIDs as IRuleSet[])];
-      }, [] as IRuleSet[]);
+      const newAllRuleSets = getAllRuleSetsFromTypes(allTypes as IType[]);
 
       const newAllUniqRuleSets = makeUniqueById(newAllRuleSets);
 

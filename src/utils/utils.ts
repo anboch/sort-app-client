@@ -1,4 +1,4 @@
-import { IRuleSet, IRecyclePoint } from '../api/api.interface';
+import { IRuleSet, IRecyclePoint, IType } from '../api/api.interface';
 
 // todo rename file
 export const getIDs = (arrIDs: string[] | { _id: string }[]): string[] => {
@@ -21,4 +21,11 @@ export const getAllRecyclePointsFromRuleSets = (ruleSets: IRuleSet[]): IRecycleP
     // todo check that rule.recyclePointIDs is IRecyclePoint[]
     return [...acc, ...(ruleSet.recyclePointIDs as IRecyclePoint[])];
   }, [] as IRecyclePoint[]);
+};
+
+export const getAllRuleSetsFromTypes = (types: IType[]): IRuleSet[] => {
+  return types.reduce((acc, type) => {
+    // todo check that type.ruleSetIDs is IRuleSet[]
+    return [...acc, ...(type.ruleSetIDs as IRuleSet[])];
+  }, [] as IRuleSet[]);
 };
