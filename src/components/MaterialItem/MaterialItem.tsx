@@ -9,13 +9,18 @@ import {
   Dialog,
 } from '@mui/material';
 import { useMemo, useState } from 'react';
-import { IBin, IMaterial, IUser } from '../../api/api.interface';
+import { IBin, IMaterial, IType, IUser } from '../../api/api.interface';
 import * as S from './MaterialItemStyles';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import AddIcon from '@mui/icons-material/Add';
 import { AddToBinForm } from '../AddToBinForm/AddToBinForm';
 import { UseQueryResult } from '@tanstack/react-query';
-import { getId, getIDs } from '../../utils/utils';
+import {
+  getAllRecyclePointsFromRuleSets,
+  getAllRuleSetsFromTypes,
+  getId,
+  getIDs,
+} from '../../utils/utils';
 import { BinCreation } from '../BinCreation/BinCreation';
 import { useGetTypes } from '../../hooks/useGetTypes';
 
@@ -120,7 +125,12 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
     () => binsQ.data?.find((bin) => getIDs(material.typeIDs).includes(getId(bin.typeID))),
     [binsQ.data, material.typeIDs]
   );
-  const hasTypes = material.typeIDs.length > 0;
+  // todo could be redo to find method
+  // todo add check that typeIDs is IType[]
+  const hasRecyclePoints = useMemo(() => {
+    return !!getAllRecyclePointsFromRuleSets(getAllRuleSetsFromTypes(material.typeIDs as IType[]))
+      .length;
+  }, [material.typeIDs]);
   const typeQs = useGetTypes(getIDs(material.typeIDs), isAddToBinFormOpen);
   const hasAdditionalInfo =
     !!material?.description?.length ||
@@ -163,7 +173,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         sx={{
           width: '95%',
           maxWidth: '800px',
-          borderColor: hasTypes ? 'success.light' : 'warning.light',
+          borderColor: hasRecyclePoints ? 'success.light' : 'warning.light',
         }}
       >
         <CardContent>
@@ -179,7 +189,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         <CardActions sx={{ justifyContent: 'flex-end' }}>
           {/* <S.Buttons> */}
           <>
-            {hasTypes && (
+            {hasRecyclePoints && (
               <Button
                 onClick={() => setIsAddToBinFormOpen(true)}
                 size="small"
