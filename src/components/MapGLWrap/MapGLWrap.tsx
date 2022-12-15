@@ -1,7 +1,7 @@
 import MapGL, { NavigationControl } from '@urbica/react-map-gl';
 import { ReactNode, useContext, useEffect } from 'react';
 import { ICoordinates } from '../../api/api.interface';
-import { ThemeContext, themeModeTypes } from '../../context/ThemeContex/ThemeContext';
+import { ThemeContext, themeModeTypes } from '../../context/ThemeContext';
 import { useGetUserLocation } from '../../hooks/useGetUserLocation';
 
 export interface IViewportSettings extends ICoordinates {

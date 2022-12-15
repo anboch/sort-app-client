@@ -5,10 +5,10 @@ import {
   ThemeProvider as MUIThemeProvider,
   useMediaQuery,
 } from '@mui/material';
-import { ValueOf } from '../../components/common/types';
+import { ValueOf } from '../components/common/types';
 import { ThemeProvider as SCThemeProvider } from 'styled-components';
-import { localStorageKeys } from '../../components/common/constants';
-import { customPaletteForTheme, customVarsForTheme } from '../../styles/theme';
+import { localStorageKeys } from '../components/common/constants';
+import { customPaletteForTheme, customVarsForTheme } from '../styles/theme';
 
 export const themeModeTypes = { AUTO: 'auto', LIGHT: 'light', DARK: 'dark' } as const;
 

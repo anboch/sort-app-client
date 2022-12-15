@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { ThemeContext, themeModeTypes } from '../../context/ThemeContex/ThemeContext';
+import { ThemeContext, themeModeTypes } from '../../context/ThemeContext';
 import * as S from './AppSettingsStyles';
 
 export const AppSettings = () => {

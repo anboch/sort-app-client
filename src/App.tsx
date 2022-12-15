@@ -9,7 +9,7 @@ import AboutPage from './views/About/AboutPage';
 import { pageRoutes } from './routes';
 import { LoginFormProvider } from './context/LoginFormContext';
 import { RecyclePointsPage } from './views/RecyclePoints';
-import { ThemeProvider } from './context/ThemeContex/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { ScrollToTop } from './components/ScrollToTop/ScrollToTop';
 
 interface IPage {
