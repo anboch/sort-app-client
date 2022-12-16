@@ -7,7 +7,7 @@ import { IBin, IType, IUser } from '../../api/api.interface';
 import { useCreateBin } from '../../hooks/useCreateBin';
 import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecyclePoint';
 import { LoginFormContext } from '../../context/LoginFormContext';
-import { BinRules } from '../Bin/Bin';
+import { BinRules } from '../BinRules/BinRules';
 import { RecyclePointsOnMap } from '../RecyclePointsOnMap/RecyclePointsOnMap';
 
 interface IBinCreationProps {
