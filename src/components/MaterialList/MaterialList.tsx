@@ -1,7 +1,7 @@
 import { IMaterial } from '../../api/api.interface';
 import * as S from './MaterialListStyles';
-import { useGetUser } from '../../hooks';
-import { MaterialItem } from '../MaterialItem';
+import { useGetUser } from '../../hooks/useGetUser';
+import { MaterialItem } from '../MaterialItem/MaterialItem';
 import { useGetBins } from '../../hooks/useGetBins';
 
 export interface MaterialListProps {

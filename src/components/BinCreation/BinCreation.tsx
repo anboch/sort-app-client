@@ -1,13 +1,13 @@
 import { Button, DialogActions, DialogTitle, TextField, Typography, useTheme } from '@mui/material';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import { UseQueryResult } from '@tanstack/react-query';
 
 import * as S from './BinCreationStyles';
 import { IBin, IType, IUser } from '../../api/api.interface';
 import { useCreateBin } from '../../hooks/useCreateBin';
-import { BinRules } from '../Bin/Bin';
 import { useChangeSelectedRecyclePoint } from '../../hooks/useChangeSelectedRecyclePoint';
 import { LoginFormContext } from '../../context/LoginFormContext';
-import { UseQueryResult } from '@tanstack/react-query';
+import { BinRules } from '../Bin/Bin';
 import { RecyclePointsOnMap } from '../RecyclePointsOnMap/RecyclePointsOnMap';
 
 interface IBinCreationProps {

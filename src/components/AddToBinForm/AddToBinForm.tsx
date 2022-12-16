@@ -1,11 +1,8 @@
-import Button from '@mui/material/Button';
-import DialogActions from '@mui/material/DialogActions';
-
-import DialogTitle from '@mui/material/DialogTitle';
-import * as S from './AddToBinFormStyles';
-import { Typography } from '@mui/material';
-import { getId } from '../../utils/utils';
 import { Dispatch, SetStateAction } from 'react';
+import { Typography, DialogTitle, DialogActions, Button } from '@mui/material';
+
+import * as S from './AddToBinFormStyles';
+import { getId } from '../../utils/utils';
 import { IBin, IMaterial } from '../../api/api.interface';
 import { useGetRuleSet } from '../../hooks/useGetRuleSet';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';

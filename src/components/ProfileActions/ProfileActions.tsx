@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import { IUser } from '../../api/api.interface';
-import { useLogout } from '../../hooks';
+import { useLogout } from '../../hooks/useLogout';
 import { useDeleteUser } from '../../hooks/useDeleteUser';
 import { AlertDialog } from '../AlertDialog/AlertDialog';
 import * as S from './ProfileActionsStyles';

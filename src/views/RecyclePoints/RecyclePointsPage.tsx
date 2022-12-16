@@ -2,8 +2,8 @@ import { useLocation } from 'react-router-dom';
 import { pages } from '../../App';
 import { withLayout } from '../../components/layout/Layout';
 import { OfferToLogin } from '../../components/OfferToLogin/OfferToLogin';
-import { useGetUser } from '../../hooks';
-import { MyRecyclePoints } from '../../components/MyRecyclePoints';
+import { useGetUser } from '../../hooks/useGetUser';
+import { MyRecyclePoints } from '../../components/MyRecyclePoints/MyRecyclePoints';
 
 const RecyclePointsPage = (): JSX.Element => {
   const userQ = useGetUser();

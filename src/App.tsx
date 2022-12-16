@@ -8,7 +8,7 @@ import ProfilePage from './views/Profile/ProfilePage';
 import AboutPage from './views/About/AboutPage';
 import { pageRoutes } from './routes';
 import { LoginFormProvider } from './context/LoginFormContext';
-import { RecyclePointsPage } from './views/RecyclePoints';
+import RecyclePointsPage from './views/RecyclePoints/RecyclePointsPage';
 import { ThemeProvider } from './context/ThemeContext';
 import { ScrollToTop } from './components/ScrollToTop/ScrollToTop';
 

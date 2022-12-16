@@ -1,5 +1,5 @@
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
-import { api } from '../api';
+import { api } from '../api/api';
 import { queryKeys } from '../api/api.constants';
 import { IType } from '../api/api.interface';
 

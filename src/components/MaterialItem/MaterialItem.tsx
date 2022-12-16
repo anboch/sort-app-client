@@ -24,21 +24,6 @@ import {
 import { BinCreation } from '../BinCreation/BinCreation';
 import { useGetTypes } from '../../hooks/useGetTypes';
 
-// interface IExpandMoreProps extends IconButtonProps {
-//   expand: boolean;
-// }
-
-// const ExpandMore = styled((props: IExpandMoreProps) => {
-//   const { expand, ...other } = props;
-//   return <IconButton {...other} />;
-// })(({ theme, expand }) => ({
-//   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-//   marginLeft: 'auto',
-//   transition: theme.transitions.create('transform', {
-//     duration: theme.transitions.duration.shortest,
-//   }),
-// }));
-
 export const MaterialItemTitles = ({ titles }: Pick<IMaterial, 'titles'>): JSX.Element => {
   return (
     <S.MaterialTitles>
@@ -179,15 +164,9 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         <CardContent>
           <S.MaterialPreview>
             <MaterialItemTitles titles={material.titles} />
-            {/* <S.MaterialAcceptInfo>
-              {typeIDs.length > 0 &&
-                <PublishedWithChangesIcon color='success' />
-              }
-            </S.MaterialAcceptInfo> */}
           </S.MaterialPreview>
         </CardContent>
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          {/* <S.Buttons> */}
           <>
             {hasRecyclePoints && (
               <Button
@@ -213,15 +192,6 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
               {isExpanded ? 'Скрыть' : 'Инфо'}
             </Button>
           )}
-          {/* </S.Buttons> */}
-          {/* <ExpandMore
-            expand={isExpanded}
-            onClick={handleExpandClick}
-            aria-isExpanded={isExpanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore> */}
         </CardActions>
         <Collapse in={isExpanded} timeout="auto" unmountOnExit>
           <CardContent>

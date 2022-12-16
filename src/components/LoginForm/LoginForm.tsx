@@ -5,13 +5,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useContext, useEffect, useState, KeyboardEvent } from 'react';
 import { LoginFormContext } from '../../context/LoginFormContext';
-import { api } from '../../api';
+import { api } from '../../api/api';
 import * as S from './LoginFormStyles';
 import { useQuery } from '@tanstack/react-query';
 import { Link, Dialog, Typography } from '@mui/material';
-import { useCountdown, useConfirmAndLogin } from '../../hooks';
 import { responseErrorMessages } from '../../api/api.constants';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
+import { useConfirmAndLogin } from '../../hooks/useConfirmAndLogin';
+import { useCountdown } from '../../hooks/useCountdown';
 
 export const LoginForm = (): JSX.Element => {
   const { isOpen, setIsOpen } = useContext(LoginFormContext);

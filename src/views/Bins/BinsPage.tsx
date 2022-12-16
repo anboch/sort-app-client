@@ -4,7 +4,7 @@ import { BinList } from '../../components/BinList/BinList';
 import { withLayout } from '../../components/layout/Layout';
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
 import { OfferToLogin } from '../../components/OfferToLogin/OfferToLogin';
-import { useGetUser } from '../../hooks';
+import { useGetUser } from '../../hooks/useGetUser';
 
 const BinsPage = (): JSX.Element => {
   const userQ = useGetUser();

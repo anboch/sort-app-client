@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { api } from '../api';
+import { api } from '../api/api';
 import { queryKeys } from '../api/api.constants';
 import { localStorageKeys } from '../components/common/constants';
 

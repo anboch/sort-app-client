@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { api } from '../api';
+import { api } from '../api/api';
 import { IConfirmDto, IJWTs } from '../api/api.interface';
 import { apiRoutes } from '../api/api.routes';
 import { responseErrorMessages } from '../api/api.constants';

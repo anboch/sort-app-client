@@ -1,6 +1,6 @@
 import { Link, Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { fuseOptions } from '../../hooks';
+import { fuseOptions } from '../../hooks/useFuseSearch';
 import { useSendFeedback } from '../../hooks/useSendFeedback';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import * as S from './MaterialNotFoundNoticeStyles';

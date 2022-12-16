@@ -6,7 +6,7 @@ import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
 import { OfferToLogin } from '../../components/OfferToLogin/OfferToLogin';
 import { Profile } from '../../components/Profile/Profile';
 
-import { useGetUser } from '../../hooks';
+import { useGetUser } from '../../hooks/useGetUser';
 import * as S from './ProfilePageStyles';
 
 const ProfilePage = (): JSX.Element => {

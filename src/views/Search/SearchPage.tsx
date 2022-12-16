@@ -1,18 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { SearchBar } from '../../components/SearchBar/';
+import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { withLayout } from '../../components/layout/Layout';
-import { Filters } from '../../components/Filters';
-import * as hooks from '../../hooks';
+import { Filters } from '../../components/Filters/Filters';
 import { StyledSearchPage } from './SearchPageStyles';
-import { MaterialList } from '../../components/MaterialList';
+import { MaterialList } from '../../components/MaterialList/MaterialList';
 import { IMaterial, ITag, SearchItemKind } from '../../api/api.interface';
-import { TagList } from '../../components/TagList';
+import { TagList } from '../../components/TagList/TagList';
 import { getIDs } from '../../utils/utils';
 import { MaterialNotFoundNotice } from '../../components/MaterialNotFoundNotice/MaterialNotFoundNotice';
 import { localStorageKeys } from '../../components/common/constants';
 import { useNavigate } from 'react-router-dom';
 import { pageRoutes } from '../../routes';
+import { useFetchSearchList } from '../../hooks/useFetchSearchList';
+import { useFuseSearch } from '../../hooks/useFuseSearch';
 
 export type OnChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
@@ -22,12 +23,12 @@ const Search = (): JSX.Element => {
   const [tagList, setTagList] = useState<ITag[]>([]);
   const [searchInputValue, setSearchInputValue] = useState<string>('');
 
-  const fetchSearchListQ = hooks.useFetchSearchList();
+  const fetchSearchListQ = useFetchSearchList();
   const allMaterialsObj = fetchSearchListQ.data?.materialsObj;
   const allTags = useMemo(() => fetchSearchListQ.data?.tags ?? [], [fetchSearchListQ.data?.tags]);
   const allMaterials = useMemo(() => Object.values(allMaterialsObj ?? {}), [allMaterialsObj]);
 
-  const { searchQuery, searchResult, search } = hooks.useFuseSearch(fetchSearchListQ.data?.union);
+  const { searchQuery, searchResult, search } = useFuseSearch(fetchSearchListQ.data?.union);
 
   const navigate = useNavigate();
 

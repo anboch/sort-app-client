@@ -2,10 +2,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Button, Input, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { KeyboardEvent, useEffect, useState } from 'react';
 
-import * as hooks from '../../hooks';
 import { SearchItemKind } from '../../api/api.interface';
 import { StyledSearchBar, SearchInput, HintsList } from './SearchBarStyles';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { useFetchSearchList } from '../../hooks/useFetchSearchList';
+import { useFuseSearch } from '../../hooks/useFuseSearch';
 
 interface ISearchBarProps {
   searchInputValue: string;
@@ -22,8 +23,8 @@ export const SearchBar = ({
   addFilter,
   exactSearch,
 }: ISearchBarProps): JSX.Element => {
-  const fetchSearchListQ = hooks.useFetchSearchList();
-  const hints = hooks.useFuseSearch(fetchSearchListQ.data?.union);
+  const fetchSearchListQ = useFetchSearchList();
+  const hints = useFuseSearch(fetchSearchListQ.data?.union);
   const [isInputInFocus, setIsInputInFocus] = useState(true);
   const ref = useOutsideClick(() => setIsInputInFocus(false));
 
