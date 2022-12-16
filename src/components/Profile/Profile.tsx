@@ -3,7 +3,7 @@ import { Marker } from '@urbica/react-map-gl';
 import { IUser } from '../../api/api.interface';
 import { useUpdateUser } from '../../hooks/useUpdateUser';
 import { ProfileActions } from '../ProfileActions/ProfileActions';
-import { EditableValue } from '../common/EditableValue';
+import { EditableValue } from '../EditableValue/EditableValue';
 import PersonPinCircleRoundedIcon from '@mui/icons-material/PersonPinCircleRounded';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
