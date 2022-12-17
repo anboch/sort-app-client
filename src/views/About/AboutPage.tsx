@@ -49,7 +49,7 @@ const AboutPage = (): JSX.Element => {
           <S.Details>
             <Typography>
               Если вы не занимались сортировкой вторсырья или хотите глубже изучить эту тему, то
-              советуем ознакомиться с сайтом{' '}
+              рекомендуем ознакомиться с сайтом{' '}
               <Link display="inline-block" href="https://rsbor-msk.ru/">
                 Раздельный сбор
               </Link>
