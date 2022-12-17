@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { SyntheticEvent } from 'react';
 import { ITag } from '../../api/api.interface';
-import { StyledFilter } from './FilterStyles';
+import * as S from './FilterStyles';
 
 export interface IFiltersProps {
   tagList: ITag[] | undefined;
@@ -11,7 +11,7 @@ export interface IFiltersProps {
 
 export const Filters = ({ tagList, selectedTags, onTagChange }: IFiltersProps): JSX.Element => {
   return (
-    <StyledFilter>
+    <S.Filter>
       <Autocomplete
         multiple
         value={selectedTags}
@@ -25,6 +25,6 @@ export const Filters = ({ tagList, selectedTags, onTagChange }: IFiltersProps): 
           <TextField {...params} variant="standard" label="Фильтры" />
         )}
       />
-    </StyledFilter>
+    </S.Filter>
   );
 };

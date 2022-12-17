@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { withLayout } from '../../components/layout/Layout';
 import { Filters } from '../../components/Filters/Filters';
-import { StyledSearchPage } from './SearchPageStyles';
+import * as S from './SearchPageStyles';
 import { MaterialList } from '../../components/MaterialList/MaterialList';
 import { IMaterial, ITag, SearchItemKind } from '../../api/api.interface';
 import { TagList } from '../../components/TagList/TagList';
@@ -93,7 +93,7 @@ const Search = (): JSX.Element => {
   // {shouldRedirect && <Navigate replace to="/home" />}
 
   return (
-    <StyledSearchPage>
+    <S.SearchPage>
       <SearchBar
         searchInputValue={searchInputValue}
         setSearchInputValue={setSearchInputValue}
@@ -120,7 +120,7 @@ const Search = (): JSX.Element => {
         materialListLength={materialList.length}
         clearSelectedTags={() => setSelectedTag([])}
       />
-    </StyledSearchPage>
+    </S.SearchPage>
   );
 };
 

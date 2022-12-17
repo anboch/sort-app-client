@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledFilter = styled.div`
+export const Filter = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 15px;

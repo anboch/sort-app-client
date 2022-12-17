@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledTagList = styled.div`
+export const TagList = styled.div`
   padding-bottom: 15px;
   width: 95%;
 `;

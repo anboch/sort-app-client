@@ -35,7 +35,7 @@ export const HintsList = styled.div`
   max-height: 260px;
 `;
 
-export const StyledSearchBar = styled.div`
+export const SearchBar = styled.div`
   max-width: 584px;
   padding-bottom: 15px;
   position: relative;

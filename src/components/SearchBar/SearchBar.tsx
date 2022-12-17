@@ -3,7 +3,7 @@ import { Button, Input, List, ListItem, ListItemButton, ListItemText } from '@mu
 import { KeyboardEvent, useEffect, useState } from 'react';
 
 import { SearchItemKind } from '../../api/api.interface';
-import { StyledSearchBar, SearchInput, HintsList } from './SearchBarStyles';
+import * as S from './SearchBarStyles';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { useFetchSearchList } from '../../hooks/useFetchSearchList';
 import { useFuseSearch } from '../../hooks/useFuseSearch';
@@ -42,11 +42,11 @@ export const SearchBar = ({
 
   // todo redo hints to Menu from List to navigate by keyboard
   return (
-    <StyledSearchBar ref={ref}>
-      <SearchInput withHints={isInputInFocus && hints.searchResult.length > 0}>
+    <S.SearchBar ref={ref}>
+      <S.SearchInput withHints={isInputInFocus && hints.searchResult.length > 0}>
         <SearchIcon sx={{ margin: '0 14px', color: 'primary.main' }} />
         <Input
-          onFocus={() => {
+          onFocus={(): void => {
             setIsInputInFocus(true);
           }}
           type="search"
@@ -83,9 +83,9 @@ export const SearchBar = ({
         >
           Найти
         </Button>
-      </SearchInput>
+      </S.SearchInput>
       {isInputInFocus && hints.searchResult.length > 0 && (
-        <HintsList>
+        <S.HintsList>
           <List>
             {hints.searchResult?.map((hint) => (
               <ListItem key={hint.title} disablePadding>
@@ -116,8 +116,8 @@ export const SearchBar = ({
               </ListItem>
             ))}
           </List>
-        </HintsList>
+        </S.HintsList>
       )}
-    </StyledSearchBar>
+    </S.SearchBar>
   );
 };
