@@ -123,14 +123,6 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
     !!material?.sortedRules?.localRules.length ||
     !!material?.tagIDs.length;
 
-  // const handleAddToBin = (): void => {
-  // if (!userQ.data) {
-  //   setIsLoginFormOpen(true);
-  // } else {
-  //   setIsAddToBinFormOpen(true);
-  // }
-  // };
-
   // todo redo make green, red or yellow borders for cards
   return (
     <S.MaterialItem>

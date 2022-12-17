@@ -3,10 +3,6 @@ import styled from 'styled-components';
 
 export const MaterialItem = styled.div`
   display: flex;
-  /* border: 1px solid #cdd2d7;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 10px; */
   justify-content: center;
   padding: 10px 0;
   width: 100%;

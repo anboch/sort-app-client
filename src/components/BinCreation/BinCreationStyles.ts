@@ -1,9 +1,5 @@
-import { DialogContent, Paper } from '@mui/material';
+import { DialogContent } from '@mui/material';
 import styled from 'styled-components';
-
-export const BinCreation = styled(Paper)(({ theme }) => ({
-  padding: '10px',
-}));
 
 // todo reduplicate CustomChip
 export const CustomChip = styled.span`

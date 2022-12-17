@@ -12,13 +12,10 @@ export const SearchInput = styled.div<ISearchInputProps>`
   border-radius: ${({ withHints }): string => (withHints ? '10px 10px 0px 0px' : '10px')};
   /* TODO constant search bar hight */
   height: 44px;
-  /* background: #e7ebf0b3; */
-  /* max-width: 584px; */
   width: 100%;
 `;
 
 export const HintsList = styled.div`
-  /* display: block; */
   position: absolute;
   /* TODO constant search bar hight */
   top: 44px;
@@ -31,7 +28,6 @@ export const HintsList = styled.div`
   overflow-y: auto;
   width: 100%;
   background-color: ${({ theme }): string => theme.palette.background.paper};
-  /* font-size: 16px; */
   max-height: 260px;
 `;
 

@@ -29,25 +29,13 @@ export const AddToBinForm = ({ setIsOpen, material, bin }: IAddToBinFormProps): 
             {'Положите материал '}
           </Typography>
           <S.CustomChip>{material.titles[0]}</S.CustomChip>
-          {/* <Typography variant="body1" display="inline">
-            {`"${material.titles[0]}"`}
-          </Typography> */}
           <div>
             <Typography variant="body1" display="inline">
               {bin?.title ? 'в корзину c названием ' : 'в корзину'}
             </Typography>
             {bin?.title && <S.CustomChip>{bin?.title}</S.CustomChip>}
           </div>
-          {/* <Typography variant="h6" display="inline">
-            {bin?.title}
-          </Typography> */}
         </div>
-        {/* <div>
-          <Typography display="block" variant="caption">
-            тип корзины
-          </Typography>
-          {typeof bin.typeID === 'object' && <Typography>{bin.typeID?.title}</Typography>}
-        </div> */}
         <div>
           {ruleSetQ.data &&
             typeof ruleSetQ.data?.ruleIDs === 'object' &&

@@ -1,7 +1,5 @@
-/* Core */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-/* Instruments */
 import { api } from '../api/api';
 import { queryKeys } from '../api/api.constants';
 import { IUser } from '../api/api.interface';

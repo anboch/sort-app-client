@@ -142,7 +142,7 @@ export const LoginForm = (): JSX.Element => {
         // todo redo to  visibility: hidden;
         !requestConfirmCodeQ.isFetching &&
         !requestConfirmCodeQ.isError && (
-          <S.RequestForm>
+          <div>
             <DialogTitle>Войти/зарегистрироваться с помощью email</DialogTitle>
             <S.FormContent>
               <DialogContentText>Мы отправим код для входа или регистрации</DialogContentText>
@@ -164,7 +164,7 @@ export const LoginForm = (): JSX.Element => {
               <Button onClick={handleClose}>Отмена</Button>
               <Button onClick={validateAndSetEmail}>Получить код</Button>
             </DialogActions>
-          </S.RequestForm>
+          </div>
         )}
       {!!confirmFor &&
         !confirmAndLoginQ.isFetching &&
