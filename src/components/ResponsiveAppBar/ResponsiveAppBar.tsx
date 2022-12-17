@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { KeyboardEvent, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,9 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { pages } from '../../../App';
+import { pages } from '../../App';
 import { Link, useLocation } from 'react-router-dom';
-import { pageRoutes } from '../../../routes';
+import { pageRoutes } from '../../routes';
 import { useTheme } from '@mui/material';
 
 export const ResponsiveAppBar = (): JSX.Element => {
