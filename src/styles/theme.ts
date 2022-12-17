@@ -1,8 +1,4 @@
-enum gridAreasEnum {
-  body = 'body',
-  header = 'header',
-  footer = 'footer',
-}
+import { layoutGridAreas } from '../components/layout/Layout';
 
 export const customPaletteForTheme = {
   common: {
@@ -23,10 +19,10 @@ export const customPaletteForTheme = {
 };
 
 export const customVarsForTheme = {
-  gridAreas: {
-    body: gridAreasEnum.body,
-    header: gridAreasEnum.header,
-    footer: gridAreasEnum.footer,
+  layoutGridAreas: {
+    body: layoutGridAreas.BODY,
+    header: layoutGridAreas.HEADER,
+    footer: layoutGridAreas.FOOTER,
   },
   shape: {
     borderRadius: 10,

@@ -1,8 +1,14 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 import styled from 'styled-components';
 import { StyledBody } from './Body/Body';
 import { Footer } from './Footer/Footer';
 import { StyledHeader } from './Header/Header';
+
+export const layoutGridAreas = {
+  BODY: 'body',
+  HEADER: 'header',
+  FOOTER: 'footer',
+} as const;
 import { LayoutProps } from './Layout.props';
 
 export const Layout = ({ children, className }: LayoutProps): JSX.Element => {
@@ -21,9 +27,9 @@ export const StyledLayout = styled(Layout)`
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
   grid-template-areas:
-    '. header .'
-    '. body .'
-    'footer footer footer';
+    '. ${layoutGridAreas.HEADER} .'
+    '. ${layoutGridAreas.BODY} .'
+    '${layoutGridAreas.FOOTER} ${layoutGridAreas.FOOTER} ${layoutGridAreas.FOOTER}';
 `;
 
 export const withLayout = <T extends Record<string, unknown>>(Component: FunctionComponent<T>) => {
