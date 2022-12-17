@@ -9,7 +9,11 @@ export const layoutGridAreas = {
   HEADER: 'header',
   FOOTER: 'footer',
 } as const;
-import { LayoutProps } from './Layout.props';
+
+export interface LayoutProps {
+  children: ReactNode;
+  className?: string;
+}
 
 export const Layout = ({ children, className }: LayoutProps): JSX.Element => {
   return (
