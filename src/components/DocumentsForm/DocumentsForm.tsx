@@ -23,7 +23,7 @@ export const DocumentsForm = ({
   openedDocument,
   setOpenedDocument,
 }: IDocumentsFormProps): JSX.Element => {
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpenedDocument(null);
   };
 

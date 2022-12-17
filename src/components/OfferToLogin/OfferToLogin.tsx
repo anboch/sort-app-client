@@ -13,7 +13,7 @@ export const OfferToLogin = ({ sectionTitle = '' }: { sectionTitle?: string }): 
       </Typography>
       <Button
         variant="outlined"
-        onClick={() => {
+        onClick={(): void => {
           setIsOpen(true);
         }}
       >

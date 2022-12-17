@@ -10,7 +10,7 @@ export const BinList = styled.div`
 
 export const NoBinNotice = styled.div`
   max-width: 500px;
-  padding: ${({ theme }) => theme.spacing(2, 1)};
+  padding: ${({ theme }): string => theme.spacing(2, 1)};
   display: flex;
   flex-direction: column;
   & > *:not(:last-child) {

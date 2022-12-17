@@ -39,7 +39,7 @@ export const LoginForm = (): JSX.Element => {
     requestConfirmCodeQ.data?.data.codeExpirationTime ?? 0
   );
 
-  const validateAndSetEmail = () => {
+  const validateAndSetEmail = (): void => {
     const isValidEmail = inputEmailValue.match(
       // eslint-disable-next-line no-useless-escape
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

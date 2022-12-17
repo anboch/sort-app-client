@@ -12,7 +12,7 @@ export const useGetUserLocation = (): {
   const [userCoordinates, setUserCoordinates] = useState<ICoordinates | null>(null);
   const userQ = useGetUser();
   const userM = useUpdateUser();
-  const coordinatesMutationFunc = (coordinates: ICoordinates) => {
+  const coordinatesMutationFunc = (coordinates: ICoordinates): void => {
     if (coordinates.latitude && coordinates.longitude) {
       userM.mutate({ position: { coordinates } });
       userCoordinatesToLS(coordinates);

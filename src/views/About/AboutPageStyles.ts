@@ -19,7 +19,7 @@ export const AboutPage = styled.div`
 `;
 
 export const AboutProject = styled(Paper)`
-  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+  border: ${({ theme }): string => `1px solid ${theme.palette.primary.light}`};
   padding: ${({ theme }): string => theme.spacing(1)};
   text-align: center;
 `;
@@ -31,8 +31,8 @@ export const Instructions = styled.div`
 `;
 
 export const Instruction = styled(Accordion).attrs({ square: true, disableGutters: true })`
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+  border-radius: ${({ theme }): string => theme.shape.borderRadius.toString().toString()}px;
+  border: ${({ theme }): string => `1px solid ${theme.palette.primary.light}`};
 `;
 
 export const Details = styled(AccordionDetails)`
@@ -45,7 +45,7 @@ export const Details = styled(AccordionDetails)`
 `;
 
 export const Contacts = styled(Paper)`
-  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+  border: ${({ theme }): string => `1px solid ${theme.palette.primary.light}`};
   text-align: center;
   padding: ${({ theme }): string => theme.spacing(1)};
   & a {

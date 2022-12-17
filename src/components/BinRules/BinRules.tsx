@@ -13,13 +13,14 @@ export const BinRules = ({
   selectedRuleSet: IRuleSet | null;
   allRuleSets: IRuleSet[] | null;
   isEditMode?: boolean;
-}) => {
+}): JSX.Element => {
   const theme = useTheme();
   const uniqRulesSortedByQuantity = useGetUniqRulesSortedByQuantity(
     isEditMode ? allRuleSets || [] : selectedRuleSet ? [selectedRuleSet] : []
   );
   const selectedRuleIds = getIDs(selectedRuleSet?.ruleIDs ?? []);
-  const isSelected = (ruleId: string) => (isEditMode ? selectedRuleIds?.includes(ruleId) : true);
+  const isSelected = (ruleId: string): boolean =>
+    isEditMode ? selectedRuleIds?.includes(ruleId) : true;
 
   // todo fixed hight of rules before choose RP
   return (

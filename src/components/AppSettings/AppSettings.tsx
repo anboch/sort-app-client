@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { ThemeContext, themeModeTypes } from '../../context/ThemeContext';
 import * as S from './AppSettingsStyles';
 
-export const AppSettings = () => {
+export const AppSettings = (): JSX.Element => {
   const { themeMode, toggleThemeMode } = useContext(ThemeContext);
 
   return (
@@ -20,19 +20,19 @@ export const AppSettings = () => {
         >
           <Button
             variant={themeMode === themeModeTypes.LIGHT ? 'contained' : undefined}
-            onClick={() => toggleThemeMode(themeModeTypes.LIGHT)}
+            onClick={(): void => toggleThemeMode(themeModeTypes.LIGHT)}
           >
             Светлая
           </Button>
           <Button
             variant={themeMode === themeModeTypes.AUTO ? 'contained' : undefined}
-            onClick={() => toggleThemeMode(themeModeTypes.AUTO)}
+            onClick={(): void => toggleThemeMode(themeModeTypes.AUTO)}
           >
             Авто
           </Button>
           <Button
             variant={themeMode === themeModeTypes.DARK ? 'contained' : undefined}
-            onClick={() => toggleThemeMode(themeModeTypes.DARK)}
+            onClick={(): void => toggleThemeMode(themeModeTypes.DARK)}
           >
             Тёмная
           </Button>

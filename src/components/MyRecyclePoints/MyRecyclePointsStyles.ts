@@ -6,7 +6,7 @@ export const MyRecyclePoints = styled.div`
   align-items: center;
   justify-content: center;
   width: 95%;
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border-radius: ${({ theme }): string => theme.shape.borderRadius.toString()}px;
   overflow: hidden;
 `;
 
@@ -22,7 +22,7 @@ export const SuitableBinList = styled.div`
 
 export const NoRecyclePointsNotice = styled.div`
   max-width: 500px;
-  padding: ${({ theme }) => theme.spacing(2, 1)};
+  padding: ${({ theme }): string => theme.spacing(2, 1)};
   display: flex;
   flex-direction: column;
   & > *:not(:last-child) {

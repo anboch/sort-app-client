@@ -44,7 +44,11 @@ export const PopperContainer = ({
       <S.Info>
         {children}
         <div>
-          <IconButton size="small" sx={{ padding: 0 }} onClick={() => setWithOpenedInfo(null)}>
+          <IconButton
+            size="small"
+            sx={{ padding: 0 }}
+            onClick={(): void => setWithOpenedInfo(null)}
+          >
             <CloseIcon />
           </IconButton>
         </div>

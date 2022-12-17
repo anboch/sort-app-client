@@ -6,6 +6,6 @@ export const RecyclePointsOfBinSummary = styled.div`
 `;
 
 export const RecyclePointsOfBinOnMap = styled.div`
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border-radius: ${({ theme }): string => theme.shape.borderRadius.toString().toString()}px;
   overflow: hidden;
 `;

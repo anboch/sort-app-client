@@ -15,10 +15,10 @@ export const ProfileActions = ({ userData }: IProfileActionsProps): JSX.Element 
   const { logout } = useLogout();
   const deleteUserM = useDeleteUser();
 
-  const deleteAccount = () => deleteUserM.mutate(userData._id);
+  const deleteAccount = (): void => deleteUserM.mutate(userData._id);
   const deleteAlertMessage = 'Вы действительно хотите удалить аккаунт?';
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (): void => {
     setIsAlertOpen(true);
     // todo add success sign
   };
@@ -26,7 +26,7 @@ export const ProfileActions = ({ userData }: IProfileActionsProps): JSX.Element 
   return (
     <S.ProfileActions>
       <Button onClick={handleDeleteClick}>Удалить аккаунт</Button>
-      <Button onClick={async () => await logout()}>Выйти из аккаунта</Button>
+      <Button onClick={async (): Promise<void> => await logout()}>Выйти из аккаунта</Button>
       <AlertDialog
         isOpen={isAlertOpen}
         setIsOpen={setIsAlertOpen}

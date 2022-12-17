@@ -39,7 +39,7 @@ export const BinCreation = ({
     setSelectedRecyclePoint,
   } = useChangeSelectedRecyclePoint(materialTypes);
 
-  const saveBin = () => {
+  const saveBin = (): void => {
     if (!userQ.data) {
       setIsLoginFormOpen(true);
     } else if (selectedType && selectedRuleSet) {
@@ -112,7 +112,7 @@ export const BinCreation = ({
         setSelectedRecyclePoint={setSelectedRecyclePoint}
       />
       <DialogActions>
-        <Button onClick={() => setIsOpen(false)}>Отмена</Button>
+        <Button onClick={(): void => setIsOpen(false)}>Отмена</Button>
         <Button disabled={!selectedType || !selectedRuleSet || isDuplicateTitle} onClick={saveBin}>
           Создать
         </Button>

@@ -32,7 +32,7 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
     setSelectedRecyclePoint,
   } = useChangeSelectedRecyclePoint(useMemo(() => [typeQ.data], [typeQ.data]));
 
-  const saveUpdatedBin = () => {
+  const saveUpdatedBin = (): void => {
     if (selectedRuleSet?._id !== getId(bin.ruleSetID)) {
       binM.mutate(
         { _id: bin._id, ruleSetID: selectedRuleSet?._id },
@@ -56,7 +56,7 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
         : null
     );
 
-  const handleEditClick = () => {
+  const handleEditClick = (): void => {
     setRecyclePointFromRuleSetOfBinAsSelected();
     setIsEditMode(true);
   };
@@ -93,7 +93,7 @@ export const Bin = ({ bin }: { bin: IBin }): JSX.Element => {
               ) : (
                 <>
                   <div>
-                    <IconButton onClick={() => setIsEditMode(false)}>
+                    <IconButton onClick={(): void => setIsEditMode(false)}>
                       <CancelIcon fontSize="inherit" />
                     </IconButton>
                   </div>

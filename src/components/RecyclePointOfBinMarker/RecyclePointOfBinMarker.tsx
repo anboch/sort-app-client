@@ -19,7 +19,7 @@ export const RecyclePointOfBinMarker = ({
   setWithOpenedInfo,
   setSelectedRecyclePoint,
 }: IRecyclePointMarkerProps): JSX.Element => {
-  const handleMarkerClick = (e: MouseEvent<HTMLElement>) => {
+  const handleMarkerClick = (e: MouseEvent<HTMLElement>): void => {
     setSelectedRecyclePoint(recyclePoint);
     if (isInSelectedRuleSet) {
       setWithOpenedInfo(e.currentTarget);
@@ -31,7 +31,7 @@ export const RecyclePointOfBinMarker = ({
       latitude={recyclePoint?.position?.coordinates.latitude ?? null}
       longitude={recyclePoint?.position?.coordinates.longitude ?? null}
     >
-      <div style={{ cursor: 'pointer' }} onClick={(e) => handleMarkerClick(e)}>
+      <div style={{ cursor: 'pointer' }} onClick={(e): void => handleMarkerClick(e)}>
         {isInSelectedRuleSet ? (
           <WhereToVoteRoundedIcon
             color="success"

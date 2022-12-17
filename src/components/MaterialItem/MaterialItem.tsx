@@ -138,7 +138,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         fullWidth
         scroll={'body'}
         open={isAddToBinFormOpen}
-        onClose={() => setIsAddToBinFormOpen(false)}
+        onClose={(): void => setIsAddToBinFormOpen(false)}
       >
         {isAddToBinFormOpen && suitableBin && (
           <AddToBinForm setIsOpen={setIsAddToBinFormOpen} material={material} bin={suitableBin} />
@@ -170,7 +170,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
           <>
             {hasRecyclePoints && (
               <Button
-                onClick={() => setIsAddToBinFormOpen(true)}
+                onClick={(): void => setIsAddToBinFormOpen(true)}
                 size="small"
                 variant="contained"
                 endIcon={suitableBin ? <PlaylistAddIcon /> : <AddIcon />}

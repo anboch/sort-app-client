@@ -39,7 +39,7 @@ export const Tag = styled.div`
   margin: ${({ theme }): string => theme.spacing(0.5)};
   padding: ${({ theme }): string => theme.spacing(0, 1)};
   background-color: ${({ theme }): string => theme.palette.grey[200]};
-  color: ${({ theme }) => theme.palette.getContrastText(theme.palette.grey[200])};
+  color: ${({ theme }): string => theme.palette.getContrastText(theme.palette.grey[200])};
   border-radius: 15px;
 `;
 
@@ -51,22 +51,22 @@ export const MaterialInfo = styled.div`
   & > * {
     width: 30%;
     min-width: 250px;
-    padding: ${({ theme }) => theme.spacing(1)};
+    padding: ${({ theme }): string => theme.spacing(1)};
   }
   & > *:not(:last-child) {
-    margin-bottom: ${({ theme }) => theme.spacing(1)};
+    margin-bottom: ${({ theme }): string => theme.spacing(1)};
   }
 `;
 
 export const MaterialInfoItemTitle = styled(Typography).attrs({
   variant: 'subtitle2',
 })`
-  color: ${({ theme }) => theme.palette.primary.light};
+  color: ${({ theme }): string => theme.palette.primary.light};
 `;
 
 export const SimilarMaterialAndDescription = styled.div`
   & > *:not(:last-child) {
-    margin-bottom: ${({ theme }) => theme.spacing(1)};
+    margin-bottom: ${({ theme }): string => theme.spacing(1)};
   }
 `;
 

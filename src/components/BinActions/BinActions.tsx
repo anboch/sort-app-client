@@ -8,13 +8,13 @@ import { AlertDialog } from '../AlertDialog/AlertDialog';
 
 export const BinActions = ({ bin }: { bin: IBin }): JSX.Element => {
   const deleteBinM = useDeleteBin();
-  const deleteBin = () => deleteBinM.mutate(bin._id);
+  const deleteBin = (): void => deleteBinM.mutate(bin._id);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const deleteAlertMessage = bin.title
     ? `Вы действительно хотите удалить корзину с названием: ${bin.title} ?`
     : 'Вы действительно хотите удалить корзину?';
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (): void => {
     setIsAlertOpen(true);
   };
 

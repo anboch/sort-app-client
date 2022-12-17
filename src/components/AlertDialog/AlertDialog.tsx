@@ -11,8 +11,8 @@ export const AlertDialog = ({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   message: string;
   action: () => void;
-}) => {
-  const handleClose = () => {
+}): JSX.Element => {
+  const handleClose = (): void => {
     setIsOpen(false);
   };
 

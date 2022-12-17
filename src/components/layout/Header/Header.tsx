@@ -11,6 +11,6 @@ const Header = ({ className }: HeaderProps): JSX.Element => {
 };
 
 export const StyledHeader = styled(Header)`
-  grid-area: ${({ theme }): string => theme.gridAreas.header};
+  grid-area: ${({ theme }): string => theme.layoutGridAreas.header};
   padding: 5px;
 `;

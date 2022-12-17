@@ -23,7 +23,7 @@ const ProfilePropertyItem = ({
 }: {
   propertyTitle: string;
   property: string;
-}) => {
+}): JSX.Element => {
   return (
     <div>
       <Typography variant="caption">{propertyTitle}</Typography>
@@ -40,7 +40,7 @@ const UserGeoLocation = (): JSX.Element => {
   const [isCoordsChanged, setIsCoordsChanged] = useState<boolean>(false);
   const { userCoordinates, coordinatesMutationFunc } = useGetUserLocation();
 
-  const saveNewUserLocation = () => {
+  const saveNewUserLocation = (): void => {
     if (isCoordsChanged) {
       coordinatesMutationFunc({
         latitude: +viewport.latitude.toFixed(6),
@@ -85,7 +85,7 @@ const UserGeoLocation = (): JSX.Element => {
                 <SaveIcon />
               </IconButton>
             )}
-            <IconButton onClick={() => setIsExpanded(false)}>
+            <IconButton onClick={(): void => setIsExpanded(false)}>
               <CloseIcon />
             </IconButton>
           </S.SaveAndCloseButtons>
@@ -112,7 +112,7 @@ const UserGeoLocation = (): JSX.Element => {
 export const Profile = ({ userData }: IProfileProps): JSX.Element => {
   const [inputValue, setInputValue] = useState(userData.name ?? '');
   const userM = useUpdateUser();
-  const nameMutationFunc = (inputValue: string) => userM.mutate({ name: inputValue });
+  const nameMutationFunc = (inputValue: string): void => userM.mutate({ name: inputValue });
   return (
     <S.Profile>
       <Typography sx={{ display: 'flex', justifyContent: 'end' }} variant="subtitle1">

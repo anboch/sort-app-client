@@ -1,6 +1,6 @@
 import { IRule, IRuleSet } from '../api/api.interface';
 
-export const useGetUniqRulesSortedByQuantity = (ruleSets: IRuleSet[]) => {
+export const useGetUniqRulesSortedByQuantity = (ruleSets: IRuleSet[]): IRule[] => {
   const allRules = ruleSets.reduce((acc, ruleSet) => {
     // todo check that ruleSet.ruleIDs is IRule[]
     return [...acc, ...(ruleSet.ruleIDs as IRule[])];
@@ -9,7 +9,7 @@ export const useGetUniqRulesSortedByQuantity = (ruleSets: IRuleSet[]) => {
   return getUniqRulesSortedByQuantity(allRules);
 };
 
-const getUniqRulesSortedByQuantity = (rules: IRule[]) => {
+const getUniqRulesSortedByQuantity = (rules: IRule[]): IRule[] => {
   const quantityHash = rules.reduce((acc, rule) => {
     acc[rule._id] = (acc[rule._id] || 0) + 1;
     return acc;

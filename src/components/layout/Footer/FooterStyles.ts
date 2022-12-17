@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 
 export const Footer = styled('div')`
-  grid-area: ${({ theme }): string => theme.gridAreas.footer};
+  grid-area: ${({ theme }): string => theme.layoutGridAreas.footer};
   display: flex;
   flex-direction: column;
   justify-content: center;

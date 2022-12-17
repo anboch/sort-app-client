@@ -15,7 +15,7 @@ interface IAddToBinFormProps {
 
 export const AddToBinForm = ({ setIsOpen, material, bin }: IAddToBinFormProps): JSX.Element => {
   const ruleSetQ = useGetRuleSet(getId(bin.ruleSetID));
-  const handleCloseDialog = () => {
+  const handleCloseDialog = (): void => {
     setIsOpen(false);
   };
 

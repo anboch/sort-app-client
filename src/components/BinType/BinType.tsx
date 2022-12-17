@@ -9,12 +9,12 @@ import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import { MaterialPreviewDialog } from '../MaterialPreviewDialog/MaterialPreviewDialog';
 import { IBin, IMaterial } from '../../api/api.interface';
 
-export const BinType = ({ typeID }: Pick<IBin, 'typeID'>) => {
+export const BinType = ({ typeID }: Pick<IBin, 'typeID'>): JSX.Element => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [materialForPreview, setMaterialForPreview] = useState<IMaterial | null>(null);
   const materialsQ = useGetMaterialsByType(getId(typeID), isExpanded);
 
-  const handleExpandClick = () => {
+  const handleExpandClick = (): void => {
     setIsExpanded((prev) => !prev);
   };
 

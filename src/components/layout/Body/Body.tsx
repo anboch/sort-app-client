@@ -6,7 +6,7 @@ const Body = ({ children, className }: BodyProps): JSX.Element => {
 };
 
 export const StyledBody = styled(Body)`
-  grid-area: ${({ theme }): string => theme.gridAreas.body};
+  grid-area: ${({ theme }): string => theme.layoutGridAreas.body};
   min-height: 90vh;
   padding: 20px 5px;
   /* display: flex; */

@@ -12,7 +12,7 @@ export const MaterialPreviewDialog = ({
   material,
   setMaterial,
 }: IMaterialPreviewProps): JSX.Element => {
-  const handleCloseDialog = () => {
+  const handleCloseDialog = (): void => {
     setMaterial(null);
   };
 

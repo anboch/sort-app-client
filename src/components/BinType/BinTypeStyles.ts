@@ -10,7 +10,7 @@ export const TypeTitle = styled(Typography)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: ${({ theme }) => theme.spacing(0, 1)};
+  padding: ${({ theme }): string => theme.spacing(0, 1)};
   text-align: center;
   overflow-wrap: anywhere;
 `;

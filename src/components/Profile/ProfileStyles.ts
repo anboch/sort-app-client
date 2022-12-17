@@ -6,8 +6,8 @@ export const Profile = styled(Paper)`
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  padding: ${({ theme }) => theme.spacing(1)};
-  border: ${({ theme }) => `1px solid ${theme.palette.primary.light}`};
+  padding: ${({ theme }): string => theme.spacing(1)};
+  border: ${({ theme }): string => `1px solid ${theme.palette.primary.light}`};
 
   & > *:not(:first-child) {
     padding: ${({ theme }): string => theme.spacing(0, 1)};
@@ -36,6 +36,6 @@ export const SaveAndCloseButtons = styled.div<{ isCoordsChanged: boolean }>`
 `;
 
 export const UserGeoLocationMap = styled.div`
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border-radius: ${({ theme }): string => theme.shape.borderRadius.toString().toString()}px;
   overflow: hidden;
 `;

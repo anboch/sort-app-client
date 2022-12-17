@@ -14,10 +14,10 @@ export const Footer = (): JSX.Element => {
       </Typography>
       <Divider />
       <S.Documents>
-        <Link component="button" onClick={() => setOpenedDocument(documentTypes.UA)}>
+        <Link component="button" onClick={(): void => setOpenedDocument(documentTypes.UA)}>
           Пользовательское соглашение
         </Link>
-        <Link component="button" onClick={() => setOpenedDocument(documentTypes.CONF)}>
+        <Link component="button" onClick={(): void => setOpenedDocument(documentTypes.CONF)}>
           Политика конфиденциальности
         </Link>
       </S.Documents>

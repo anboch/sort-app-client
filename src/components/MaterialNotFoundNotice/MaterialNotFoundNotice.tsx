@@ -26,7 +26,7 @@ export const MaterialNotFoundNotice = ({
   const theme = useTheme();
 
   const requestValueExists = searchQuery.length >= fuseOptions.minMatchCharLength;
-  const sentAndInform = async (value: string) => {
+  const sentAndInform = async (value: string): Promise<void> => {
     setIsLoading(true);
     await sentMaterialSuggestion(value);
     setFailedRequestValue(value);
@@ -96,7 +96,7 @@ export const MaterialNotFoundNotice = ({
           component={Link}
           style={{ cursor: 'pointer' }}
           // color="info"
-          onClick={async () => await sentAndInform(searchQuery)}
+          onClick={async (): Promise<void> => await sentAndInform(searchQuery)}
         >
           нажмите здесь
         </Typography>

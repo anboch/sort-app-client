@@ -36,7 +36,7 @@ export const RecyclePointsOfBin = ({
             : ruleSetOfBin?.recyclePointIDs.length
         } из ${allRecyclePoints.length}`;
 
-  const handleChange = () => {
+  const handleChange = (): void => {
     setIsExpanded((prev) => !prev);
   };
 

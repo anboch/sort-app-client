@@ -19,7 +19,7 @@ export const RecyclePointMarker = ({
   setWithOpenedInfo,
   setSelectedRecyclePoint,
 }: IRecyclePointMarkerProps): JSX.Element => {
-  const handleMarkerClick = (e: MouseEvent<HTMLElement>) => {
+  const handleMarkerClick = (e: MouseEvent<HTMLElement>): void => {
     setSelectedRecyclePoint(recyclePoint);
     setWithOpenedInfo(e.currentTarget);
   };
@@ -31,7 +31,7 @@ export const RecyclePointMarker = ({
     >
       <S.Sign
         isAllAccept={numberOfSuitableBins === numberOfUserBins}
-        onClick={(e) => handleMarkerClick(e)}
+        onClick={(e): void => handleMarkerClick(e)}
       >
         <Typography>{`${numberOfSuitableBins}/${numberOfUserBins}`}</Typography>
       </S.Sign>

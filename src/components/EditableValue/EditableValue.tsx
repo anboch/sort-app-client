@@ -27,7 +27,7 @@ export const EditableValue = ({
   const [isEditMode, setIsEditMode] = useState(false);
   const ref = useOutsideClick(() => setIsEditMode(false));
 
-  const closeInputWithSave = () => {
+  const closeInputWithSave = (): void => {
     if (currentValue !== inputValue.trim()) {
       mutationFunc(inputValue.trim());
     }
@@ -50,7 +50,7 @@ export const EditableValue = ({
           </Typography>
           {!isEditMode ? (
             <div>
-              <IconButton onClick={() => setIsEditMode(true)}>
+              <IconButton onClick={(): void => setIsEditMode(true)}>
                 <EditIcon fontSize="inherit" />
               </IconButton>
             </div>
@@ -59,13 +59,13 @@ export const EditableValue = ({
               {currentValue !== inputValue.trim() && !errorMessage && (
                 <IconButton
                   // todo add listener on enter button and run closeInputWithSave
-                  onClick={() => closeInputWithSave()}
+                  onClick={(): void => closeInputWithSave()}
                   // size="small"
                 >
                   <SaveIcon fontSize="inherit" />
                 </IconButton>
               )}
-              <IconButton onClick={() => setIsEditMode(false)}>
+              <IconButton onClick={(): void => setIsEditMode(false)}>
                 <CancelIcon fontSize="inherit" />
               </IconButton>
             </div>
@@ -76,7 +76,11 @@ export const EditableValue = ({
             {currentValue ? (
               <Typography variant="subtitle1">{currentValue}</Typography>
             ) : (
-              <Typography display="inline" onClick={() => setIsEditMode(true)} variant="subtitle1">
+              <Typography
+                display="inline"
+                onClick={(): void => setIsEditMode(true)}
+                variant="subtitle1"
+              >
                 Введите {title}...
               </Typography>
             )}
