@@ -143,7 +143,7 @@ export const LoginForm = (): JSX.Element => {
         !requestConfirmCodeQ.isFetching &&
         !requestConfirmCodeQ.isError && (
           <div>
-            <DialogTitle>Войти/зарегистрироваться с помощью email</DialogTitle>
+            <DialogTitle>Войти / зарегистрироваться с помощью email</DialogTitle>
             <S.FormContent>
               <DialogContentText>Мы отправим код для входа или регистрации</DialogContentText>
               <TextField

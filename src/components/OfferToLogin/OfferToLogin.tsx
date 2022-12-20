@@ -17,7 +17,7 @@ export const OfferToLogin = ({ sectionTitle = '' }: { sectionTitle?: string }): 
           setIsOpen(true);
         }}
       >
-        войти/зарегистрироваться
+        войти / зарегистрироваться
       </Button>
     </S.OfferToLogin>
   );
