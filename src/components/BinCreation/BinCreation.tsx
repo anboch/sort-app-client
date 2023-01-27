@@ -16,6 +16,7 @@ interface IBinCreationProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   userQ: UseQueryResult<IUser, unknown>;
   userBins: IBin[] | undefined;
+  isRecyclePointFarAway: boolean;
 }
 
 export const BinCreation = ({
@@ -24,6 +25,7 @@ export const BinCreation = ({
   setIsOpen,
   userQ,
   userBins,
+  isRecyclePointFarAway,
 }: IBinCreationProps): JSX.Element => {
   const theme = useTheme();
   const [titleValue, setTitleValue] = useState<string>(`№ ${userQ.data?.binCounter ?? 1}`);
@@ -110,6 +112,7 @@ export const BinCreation = ({
         allRecyclePoints={allRecyclePoints}
         selectedRuleSet={selectedRuleSet}
         setSelectedRecyclePoint={setSelectedRecyclePoint}
+        isRecyclePointFarAway={isRecyclePointFarAway}
       />
       <DialogActions>
         <Button onClick={(): void => setIsOpen(false)}>Отмена</Button>

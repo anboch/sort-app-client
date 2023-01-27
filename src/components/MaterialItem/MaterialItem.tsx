@@ -9,7 +9,7 @@ import {
   Dialog,
 } from '@mui/material';
 import { useMemo, useState } from 'react';
-import { IBin, IMaterial, IType, IUser } from '../../api/api.interface';
+import { IBin, IMaterial, IUser } from '../../api/api.interface';
 import * as S from './MaterialItemStyles';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import AddIcon from '@mui/icons-material/Add';
@@ -20,9 +20,11 @@ import {
   getAllRuleSetsFromTypes,
   getId,
   getIDs,
+  isArrayOfObjects,
 } from '../../utils/utils';
 import { BinCreation } from '../BinCreation/BinCreation';
 import { useGetTypes } from '../../hooks/useGetTypes';
+import { useRemotenessOfRecyclePoints } from '../../hooks/useRemotenessOfRecyclePoints';
 
 export const MaterialItemTitles = ({ titles }: Pick<IMaterial, 'titles'>): JSX.Element => {
   return (
@@ -112,10 +114,14 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
   );
   // todo could be redo to find method
   // todo add check that typeIDs is IType[]
-  const hasRecyclePoints = useMemo(() => {
-    return !!getAllRecyclePointsFromRuleSets(getAllRuleSetsFromTypes(material.typeIDs as IType[]))
-      .length;
+  const allRecyclePoints = useMemo(() => {
+    return isArrayOfObjects(material.typeIDs)
+      ? getAllRecyclePointsFromRuleSets(getAllRuleSetsFromTypes(material.typeIDs))
+      : [];
   }, [material.typeIDs]);
+  const { distanceToNearestRecyclePoint, isRecyclePointFarAway } =
+    useRemotenessOfRecyclePoints(allRecyclePoints);
+
   const typeQs = useGetTypes(getIDs(material.typeIDs), isAddToBinFormOpen);
   const hasAdditionalInfo =
     !!material?.description?.length ||
@@ -142,6 +148,7 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
             materialTypes={typeQs.map((typeQ) => typeQ.data)}
             userQ={userQ}
             userBins={binsQ.data}
+            isRecyclePointFarAway={isRecyclePointFarAway}
           />
         )}
       </Dialog>
@@ -150,17 +157,27 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
         sx={{
           width: '95%',
           maxWidth: '800px',
-          borderColor: hasRecyclePoints ? 'success.light' : 'warning.light',
+          // borderStyle: isRecyclePointFarAway ? 'dashed' : 'solid',
+          borderColor: allRecyclePoints.length
+            ? !isRecyclePointFarAway
+              ? 'success.light'
+              : 'warning.light'
+            : 'warning.dark',
         }}
       >
         <CardContent>
           <S.MaterialPreview>
             <MaterialItemTitles titles={material.titles} />
+            {isRecyclePointFarAway && (
+              <Typography align="right" variant="subtitle2" sx={{ color: 'warning.light' }}>
+                Ближайший пункт приёма примерно в {distanceToNearestRecyclePoint}км
+              </Typography>
+            )}
           </S.MaterialPreview>
         </CardContent>
         <CardActions sx={{ justifyContent: 'flex-end' }}>
           <>
-            {hasRecyclePoints && (
+            {!!allRecyclePoints.length && (
               <Button
                 onClick={(): void => setIsAddToBinFormOpen(true)}
                 size="small"

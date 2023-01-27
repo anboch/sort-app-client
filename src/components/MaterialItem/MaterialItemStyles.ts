@@ -11,10 +11,10 @@ export const MaterialItem = styled.div`
 export const MaterialPreview = styled.div`
   display: flex;
   width: 100%;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
   justify-content: space-between;
   & > * {
-    width: 30%;
+    width: 50%;
     min-width: 230px;
   }
 `;

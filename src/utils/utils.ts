@@ -1,4 +1,4 @@
-import { IRuleSet, IRecyclePoint, IType } from '../api/api.interface';
+import { IRuleSet, IRecyclePoint, IType, ICoordinates } from '../api/api.interface';
 
 // todo rename file
 export const getIDs = (arrIDs: string[] | { _id: string }[]): string[] => {
@@ -43,3 +43,21 @@ export const getAllRuleSetsFromTypes = (types: IType[]): IRuleSet[] => {
     return [...acc, ...(type.ruleSetIDs as IRuleSet[])];
   }, [] as IRuleSet[]);
 };
+export const getDistanceFromLatLonInKm = (coord1: ICoordinates, coord2: ICoordinates): number => {
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(coord2.latitude - coord1.latitude); // deg2rad below
+  const dLon = deg2rad(coord2.longitude - coord1.longitude);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(coord1.latitude)) *
+      Math.cos(deg2rad(coord2.latitude)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+};
+
+function deg2rad(deg: number): number {
+  return deg * (Math.PI / 180);
+}

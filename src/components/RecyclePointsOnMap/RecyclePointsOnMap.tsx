@@ -7,11 +7,12 @@ import { RecyclePointInfo } from '../MyRecyclePoints/MyRecyclePoints';
 import { PopperContainer } from '../PopperContainer/PopperContainer';
 
 interface IBinRecyclePointsOnMapProps {
-  isEditMode?: boolean;
+  isEditMode?: boolean | undefined;
   selectedRecyclePoint: IRecyclePoint | null;
   allRecyclePoints: IRecyclePoint[];
   selectedRuleSet: IRuleSet | null;
   setSelectedRecyclePoint: Dispatch<SetStateAction<IRecyclePoint | null>>;
+  isRecyclePointFarAway: boolean;
 }
 
 export const RecyclePointsOnMap = ({
@@ -20,6 +21,7 @@ export const RecyclePointsOnMap = ({
   allRecyclePoints,
   selectedRuleSet,
   setSelectedRecyclePoint,
+  isRecyclePointFarAway,
 }: IBinRecyclePointsOnMapProps): JSX.Element => {
   const [withOpenedInfo, setWithOpenedInfo] = useState<HTMLElement | null>(null);
   const isInSelectedRuleSet = (recyclePointId: string): boolean =>
@@ -27,7 +29,7 @@ export const RecyclePointsOnMap = ({
 
   return (
     <>
-      <Map mapHight={'60vh'}>
+      <Map mapHight={'60vh'} zoom={isRecyclePointFarAway ? 2 : undefined}>
         <PopperContainer
           withOpenedInfo={withOpenedInfo}
           selectedRecyclePoint={selectedRecyclePoint}

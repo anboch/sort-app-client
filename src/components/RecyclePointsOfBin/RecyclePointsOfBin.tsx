@@ -5,6 +5,8 @@ import MapIcon from '@mui/icons-material/Map';
 import * as S from './RecyclePointsOfBinStyle';
 import { IRuleSet, IRecyclePoint } from '../../api/api.interface';
 import { RecyclePointsOnMap } from '../RecyclePointsOnMap/RecyclePointsOnMap';
+import { useRemotenessOfRecyclePoints } from '../../hooks/useRemotenessOfRecyclePoints';
+import { isArrayOfObjects } from '../../utils/utils';
 
 interface IBinRecyclePointsProps {
   isEditMode: boolean;
@@ -27,6 +29,13 @@ export const RecyclePointsOfBin = ({
 }: IBinRecyclePointsProps): JSX.Element => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [downloadMap, setDownloadMap] = useState<boolean>(false);
+  const { isRecyclePointFarAway } = useRemotenessOfRecyclePoints(
+    isEditMode
+      ? allRecyclePoints
+      : selectedRuleSet?.recyclePointIDs && isArrayOfObjects(selectedRuleSet?.recyclePointIDs)
+      ? selectedRuleSet?.recyclePointIDs
+      : []
+  );
   const infoAboutSelectedAndAllRecyclePoints =
     ruleSetOfBin?.recyclePointIDs.length === allRecyclePoints.length
       ? allRecyclePoints.length
@@ -56,7 +65,7 @@ export const RecyclePointsOfBin = ({
     <div>
       <Typography variant="caption">пункты приёма</Typography>
       <S.RecyclePointsOfBinSummary>
-        {ruleSetOfBin && allRecyclePoints && (
+        {ruleSetOfBin && !!allRecyclePoints.length && (
           <Typography>
             По выбранным правилам{' '}
             <Typography component="span" style={{ whiteSpace: 'nowrap' }}>
@@ -77,6 +86,7 @@ export const RecyclePointsOfBin = ({
               allRecyclePoints={allRecyclePoints}
               selectedRuleSet={selectedRuleSet}
               setSelectedRecyclePoint={setSelectedRecyclePoint}
+              isRecyclePointFarAway={isRecyclePointFarAway}
             />
           </S.RecyclePointsOfBinOnMap>
         )}
