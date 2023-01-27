@@ -12,6 +12,20 @@ export const getId = (model: string | { _id: string }): string => {
   return model;
 };
 
+export const isArrayOfObjects = (array: unknown[]): array is object[] => {
+  for (const value of array) {
+    if (typeof value !== 'object') return false;
+  }
+  return true;
+};
+
+export const isArrayOfDefinedValues = <T>(array: (T | undefined)[]): array is T[] => {
+  for (const value of array) {
+    if (typeof value === 'undefined') return false;
+  }
+  return true;
+};
+
 export const makeUniqueById = <T extends { _id: string }>(arr: T[]): T[] => [
   ...new Map(arr.map((item) => [item._id, item])).values(),
 ];

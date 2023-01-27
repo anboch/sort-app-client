@@ -4,6 +4,7 @@ import {
   getAllRecyclePointsFromRuleSets,
   getAllRuleSetsFromTypes,
   getId,
+  isArrayOfDefinedValues,
   makeUniqueById,
 } from '../utils/utils';
 
@@ -15,9 +16,8 @@ export const useChangeSelectedRecyclePoint = (allTypes: (IType | undefined)[]) =
   const [selectedType, setSelectedType] = useState<IType | null>(null);
 
   useEffect(() => {
-    if (!allTypes.includes(undefined)) {
-      // todo to know why allTypes not narrowing by !allTypes.includes(undefined) and remove allTypes as IType[]
-      const newAllRuleSets = getAllRuleSetsFromTypes(allTypes as IType[]);
+    if (isArrayOfDefinedValues(allTypes)) {
+      const newAllRuleSets = getAllRuleSetsFromTypes(allTypes);
 
       const newAllUniqRuleSets = makeUniqueById(newAllRuleSets);
 
@@ -29,8 +29,7 @@ export const useChangeSelectedRecyclePoint = (allTypes: (IType | undefined)[]) =
   }, [allTypes]);
 
   useEffect(() => {
-    // todo to know why allTypes not narrowing by !allTypes.includes(undefined) and remove allTypes as IType[]
-    if (selectedRecyclePoint && !allTypes.includes(undefined)) {
+    if (selectedRecyclePoint && isArrayOfDefinedValues(allTypes)) {
       const newSelectedRuleSets = allRuleSets.filter((ruleSet) =>
         ruleSet.recyclePointIDs.map((RP) => getId(RP)).includes(getId(selectedRecyclePoint))
       );
@@ -42,7 +41,7 @@ export const useChangeSelectedRecyclePoint = (allTypes: (IType | undefined)[]) =
       setSelectedRuleSet(newSelectedSortedRuleSets[0] ?? null);
 
       if (newSelectedSortedRuleSets[0]) {
-        const newSelectedTypes = (allTypes as IType[]).filter((type) =>
+        const newSelectedTypes = allTypes.filter((type) =>
           type.ruleSetIDs.map((RS) => getId(RS)).includes(getId(newSelectedSortedRuleSets[0]))
         );
 
