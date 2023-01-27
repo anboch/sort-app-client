@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import { useEffect, useState } from 'react';
 import { ICoordinates, IGeolocation } from '../api/api.interface';
 import { localStorageKeys } from '../components/common/constants';
@@ -9,7 +9,9 @@ export const useGetUserLocation = (): {
   userCoordinates: ICoordinates | null;
   coordinatesMutationFunc: (coordinates: ICoordinates) => void;
 } => {
-  const [userCoordinates, setUserCoordinates] = useState<ICoordinates | null>(null);
+  const [userCoordinates, setUserCoordinates] = useState<ICoordinates | null>(
+    getUserCoordinatesFromLS()
+  );
   const userQ = useGetUser();
   const userM = useUpdateUser();
   const coordinatesMutationFunc = (coordinates: ICoordinates): void => {
@@ -19,10 +21,24 @@ export const useGetUserLocation = (): {
     }
   };
 
-  const getGeoData = async () => {
+  function getUserCoordinatesFromLS(): ICoordinates {
+    return JSON.parse(
+      localStorage.getItem(localStorageKeys.userCoordinates) ?? 'null',
+      (key, value) => {
+        if (typeof value === 'object' && key === '') {
+          return value;
+        }
+        return typeof value === 'number' ? value : null;
+      }
+    );
+  }
+
+  const getGeoData = async (source: CancelTokenSource): Promise<IGeolocation | undefined> => {
     try {
       // todo add the api address to env
-      const response = await axios.get<IGeolocation>('https://geolocation-db.com/json/');
+      const response = await axios.get<IGeolocation>('https://geolocation-db.com/json/', {
+        cancelToken: source.token,
+      });
       if (response.status === 200) {
         return response.data;
       }
@@ -36,15 +52,9 @@ export const useGetUserLocation = (): {
   };
 
   useEffect(() => {
-    const coordinatesFromLS: ICoordinates = JSON.parse(
-      localStorage.getItem(localStorageKeys.userCoordinates) ?? 'null',
-      (key, value) => {
-        if (typeof value === 'object' && key === '') {
-          return value;
-        }
-        return typeof value === 'number' ? value : null;
-      }
-    );
+    let isCanceled = false;
+    const source = axios.CancelToken.source();
+    const coordinatesFromLS: ICoordinates = getUserCoordinatesFromLS();
     let newUserCoordinates = {} as ICoordinates;
 
     (async (): Promise<void> => {
@@ -52,7 +62,10 @@ export const useGetUserLocation = (): {
         if (coordinatesFromLS) {
           newUserCoordinates = coordinatesFromLS;
         } else {
-          const geoData = await getGeoData();
+          const geoData = await getGeoData(source);
+          if (isCanceled) {
+            return;
+          }
           if (geoData?.latitude && geoData?.longitude) {
             newUserCoordinates = { latitude: geoData.latitude, longitude: geoData.longitude };
             userCoordinatesToLS(newUserCoordinates);
@@ -60,14 +73,21 @@ export const useGetUserLocation = (): {
         }
       } else if (userQ.data.position?.coordinates) {
         newUserCoordinates = userQ.data.position?.coordinates;
-        if (!coordinatesFromLS) {
+        if (
+          !coordinatesFromLS ||
+          coordinatesFromLS?.latitude !== newUserCoordinates.latitude ||
+          coordinatesFromLS?.longitude !== newUserCoordinates.longitude
+        ) {
           userCoordinatesToLS(newUserCoordinates);
         }
       } else {
         if (coordinatesFromLS) {
           newUserCoordinates = coordinatesFromLS;
         } else {
-          const geoData = await getGeoData();
+          const geoData = await getGeoData(source);
+          if (isCanceled) {
+            return;
+          }
           if (geoData?.latitude && geoData?.longitude) {
             newUserCoordinates = { latitude: geoData.latitude, longitude: geoData.longitude };
             userCoordinatesToLS(newUserCoordinates);
@@ -77,11 +97,21 @@ export const useGetUserLocation = (): {
       }
 
       if (newUserCoordinates.latitude && newUserCoordinates.longitude) {
-        setUserCoordinates(newUserCoordinates);
+        if (
+          userCoordinates?.latitude !== newUserCoordinates.latitude ||
+          userCoordinates?.longitude !== newUserCoordinates.longitude
+        ) {
+          setUserCoordinates(newUserCoordinates);
+        }
       } else {
         localStorage.removeItem(localStorageKeys.userCoordinates);
       }
     })();
+
+    return () => {
+      isCanceled = true;
+      source.cancel();
+    };
   }, [userQ.data]);
 
   return { userCoordinates, coordinatesMutationFunc };
