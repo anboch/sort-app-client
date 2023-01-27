@@ -1,8 +1,10 @@
 import { Marker } from '@urbica/react-map-gl';
+import LocalTaxiRoundedIcon from '@mui/icons-material/LocalTaxiRounded';
 import WhereToVoteRoundedIcon from '@mui/icons-material/WhereToVoteRounded';
 import AddLocationRoundedIcon from '@mui/icons-material/AddLocationRounded';
 import { Dispatch, SetStateAction, MouseEvent } from 'react';
 import { IRecyclePoint } from '../../api/api.interface';
+import * as S from './RecyclePointOfBinMarkerStyles';
 
 interface IRecyclePointMarkerProps {
   recyclePoint: IRecyclePoint;
@@ -31,7 +33,12 @@ export const RecyclePointOfBinMarker = ({
       latitude={recyclePoint?.position?.coordinates.latitude ?? null}
       longitude={recyclePoint?.position?.coordinates.longitude ?? null}
     >
-      <div style={{ cursor: 'pointer' }} onClick={(e): void => handleMarkerClick(e)}>
+      <S.Sign onClick={(e): void => handleMarkerClick(e)}>
+        {!!recyclePoint.contacts?.ecoTaxi && (
+          <S.TaxiIcon>
+            <LocalTaxiRoundedIcon color="warning" fontSize="small" />
+          </S.TaxiIcon>
+        )}
         {isInSelectedRuleSet ? (
           <WhereToVoteRoundedIcon
             color="success"
@@ -40,7 +47,7 @@ export const RecyclePointOfBinMarker = ({
         ) : (
           <AddLocationRoundedIcon color="info" />
         )}
-      </div>
+      </S.Sign>
     </Marker>
   );
 };

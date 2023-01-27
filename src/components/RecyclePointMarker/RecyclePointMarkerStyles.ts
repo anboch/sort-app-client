@@ -11,3 +11,9 @@ export const Sign = styled.div<{ isAllAccept: boolean }>`
     isAllAccept ? theme.palette.success.main : theme.palette.grey[500]};
   border-radius: ${({ theme }): string => theme.shape.borderRadius.toString().toString()}px;
 `;
+
+export const TaxiIcon = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+`;

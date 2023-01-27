@@ -31,20 +31,44 @@ export const RecyclePointInfo = ({
           <Typography variant="caption">режим работы</Typography>
           <OpeningHours openingHours={recyclePoint.openingHours} />
         </div>
-        <Typography variant="caption">контакты</Typography>
-        <Link
-          // todo outsideLink component
-          display="block"
-          target="_blank"
-          href={recyclePoint?.contacts?.site}
-          rel="noopener noreferrer"
-        >
-          {recyclePoint?.contacts?.site}
-        </Link>
-        <div>
-          <Typography variant="caption">описание</Typography>
-          <Typography variant="subtitle1">{recyclePoint?.description}</Typography>
-        </div>
+        {recyclePoint?.contacts?.site && (
+          <>
+            <Typography variant="caption">контакты</Typography>
+            {recyclePoint?.contacts?.site && (
+              <Link
+                // todo outsideLink component
+                variant="subtitle1"
+                display="block"
+                target="_blank"
+                href={recyclePoint?.contacts?.site}
+                rel="noopener noreferrer"
+              >
+                {recyclePoint?.contacts?.site}
+              </Link>
+            )}
+          </>
+        )}
+        {recyclePoint?.contacts?.ecoTaxi && (
+          <div>
+            <Typography variant="caption">дополнительные услуги</Typography>
+            <Link
+              variant="subtitle1"
+              // todo outsideLink component
+              display="block"
+              target="_blank"
+              href={recyclePoint?.contacts?.ecoTaxi}
+              rel="noopener noreferrer"
+            >
+              Эко-такси
+            </Link>
+          </div>
+        )}
+        {recyclePoint?.description && (
+          <div>
+            <Typography variant="caption">описание</Typography>
+            <Typography variant="subtitle1">{recyclePoint?.description}</Typography>
+          </div>
+        )}
       </S.RecyclePointInfo>
     );
   }

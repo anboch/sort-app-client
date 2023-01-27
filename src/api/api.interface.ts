@@ -105,7 +105,8 @@ interface IDailySchedule {
   periods: [{ start: string; end: string }];
 }
 interface IContacts {
-  site: string;
+  site?: string;
+  ecoTaxi?: string;
 }
 
 export interface ICoordinates {

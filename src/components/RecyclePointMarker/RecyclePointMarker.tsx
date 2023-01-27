@@ -1,5 +1,6 @@
 import { Marker } from '@urbica/react-map-gl';
 import { Dispatch, SetStateAction, MouseEvent } from 'react';
+import LocalTaxiRoundedIcon from '@mui/icons-material/LocalTaxiRounded';
 import { IRecyclePoint } from '../../api/api.interface';
 import { Typography } from '@mui/material';
 import * as S from './RecyclePointMarkerStyles';
@@ -33,6 +34,11 @@ export const RecyclePointMarker = ({
         isAllAccept={numberOfSuitableBins === numberOfUserBins}
         onClick={(e): void => handleMarkerClick(e)}
       >
+        {!!recyclePoint.contacts?.ecoTaxi && (
+          <S.TaxiIcon>
+            <LocalTaxiRoundedIcon color="warning" fontSize="small" />
+          </S.TaxiIcon>
+        )}
         <Typography>{`${numberOfSuitableBins}/${numberOfUserBins}`}</Typography>
       </S.Sign>
     </Marker>
