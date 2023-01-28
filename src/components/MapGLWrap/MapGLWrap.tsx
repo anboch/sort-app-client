@@ -46,6 +46,7 @@ export const MapGLWrap = ({
       <MapGL
         scrollZoom={false}
         pitchWithRotate={false}
+        dragRotate={false}
         style={{ width: '100%', height: mapHight }}
         mapStyle={
           theme === themeModeTypes.LIGHT
