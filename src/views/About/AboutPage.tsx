@@ -14,10 +14,14 @@ import { withLayout } from '../../components/layout/Layout';
 import { pageRoutes } from '../../routes';
 import * as S from './AboutPageStyles';
 import { localStorageKeys } from '../../components/common/constants';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { pages } from '../../App';
 
 const AboutPage = (): JSX.Element => {
+  const [expended1, setExpended1] = useState(false);
+  const [expended2, setExpended2] = useState(false);
+  const [expended3, setExpended3] = useState(false);
+
   useEffect(() => {
     if (!localStorage.getItem(localStorageKeys.viewedAboutPage)) {
       localStorage.setItem(localStorageKeys.viewedAboutPage, 'true');
@@ -38,7 +42,7 @@ const AboutPage = (): JSX.Element => {
         </Typography>
       </S.AboutProject>
       <S.Instructions>
-        <S.Instruction>
+        <S.Instruction expanded={expended1} onChange={(): void => setExpended1((state) => !state)}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -100,7 +104,7 @@ const AboutPage = (): JSX.Element => {
             </Typography> */}
           </S.Details>
         </S.Instruction>
-        <S.Instruction>
+        <S.Instruction expanded={expended2} onChange={(): void => setExpended2((state) => !state)}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
@@ -139,7 +143,7 @@ const AboutPage = (): JSX.Element => {
             </Typography>
           </S.Details>
         </S.Instruction>
-        <S.Instruction>
+        <S.Instruction expanded={expended3} onChange={(): void => setExpended3((state) => !state)}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"

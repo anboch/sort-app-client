@@ -30,9 +30,12 @@ export const Instructions = styled.div`
   }
 `;
 
-export const Instruction = styled(Accordion).attrs({ square: true, disableGutters: true })`
+export const Instruction = styled(Accordion).attrs({ square: true, disableGutters: true })<{
+  expanded: boolean;
+}>`
   border-radius: ${({ theme }): string => theme.shape.borderRadius.toString().toString()}px;
-  border: ${({ theme }): string => `1px solid ${theme.palette.primary.light}`};
+  border: ${({ theme, expanded }): string =>
+    `${expanded ? '1px' : '3px'} solid ${theme.palette.primary.light}`};
 `;
 
 export const Details = styled(AccordionDetails)`
