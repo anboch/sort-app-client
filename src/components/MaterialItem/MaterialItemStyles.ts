@@ -11,16 +11,26 @@ export const MaterialItem = styled.div`
 export const MaterialPreview = styled.div`
   display: flex;
   width: 100%;
-  flex-wrap: wrap-reverse;
-  justify-content: space-between;
-  & > * {
-    width: 50%;
-    min-width: 230px;
-  }
+  flex-direction: column;
 `;
 
 export const MaterialTitles = styled.div`
-  /* min-width: 230px; */
+  width: 60%;
+  & > * {
+    position: relative;
+    left: 8px;
+  }
+
+  & > *:before {
+    content: '-';
+    position: absolute;
+    left: -8px;
+    top: -1px;
+  }
+`;
+
+export const RemotenessWarnMessage = styled.div`
+  width: 100%;
 `;
 
 export const MaterialAcceptInfo = styled.div`

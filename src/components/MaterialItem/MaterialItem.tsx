@@ -30,7 +30,7 @@ export const MaterialItemTitles = ({ titles }: Pick<IMaterial, 'titles'>): JSX.E
   return (
     <S.MaterialTitles>
       {titles.map((title) => (
-        <ListItemText key={title} primary={`- ${title}`} />
+        <ListItemText key={title} primary={title} />
       ))}
     </S.MaterialTitles>
   );
@@ -167,12 +167,14 @@ export const MaterialItem = ({ material, userQ, binsQ }: IMaterialItemProps): JS
       >
         <CardContent>
           <S.MaterialPreview>
-            <MaterialItemTitles titles={material.titles} />
             {isRecyclePointFarAway && (
-              <Typography align="right" variant="subtitle2" sx={{ color: 'warning.light' }}>
-                Ближайший пункт приёма примерно в {distanceToNearestRecyclePoint}км
-              </Typography>
+              <S.RemotenessWarnMessage>
+                <Typography align="right" variant="subtitle2" sx={{ color: 'warning.light' }}>
+                  Ближайший пункт приёма примерно в {distanceToNearestRecyclePoint}км
+                </Typography>
+              </S.RemotenessWarnMessage>
             )}
+            <MaterialItemTitles titles={material.titles} />
           </S.MaterialPreview>
         </CardContent>
         <CardActions sx={{ justifyContent: 'flex-end' }}>
