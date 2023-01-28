@@ -60,6 +60,7 @@ export const ResponsiveAppBar = (): JSX.Element => {
               }}
             >
               СОРТИРУЙ
+              <Typography sx={{ alignSelf: 'end', ml: 0.5 }}>β</Typography>
             </Typography>
           </Link>
           <Box
