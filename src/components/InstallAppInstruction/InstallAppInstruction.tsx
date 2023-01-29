@@ -7,7 +7,7 @@ const PostScriptum = (): JSX.Element => {
     <>
       <Divider variant="middle" />
       <Typography>
-        Если не получается установить - напишите по контактам внизу страницы и мы поможем!
+        Если возникнут трудности - напишите по контактам внизу страницы и мы поможем!
       </Typography>
     </>
   );
@@ -23,9 +23,15 @@ export const InstallAppInstruction = ({
   if (browserType === browserTypes.CHROME) {
     return (
       <>
-        <Typography>- Зайдите в меню браузера, нажав на три точки в углу экрана</Typography>
-        <Typography>- Нажмите &quot;установить приложение&quot;</Typography>
-        <Typography>- Подтвердите установку кнопкой &quot;установить&quot;</Typography>
+        <Typography>
+          - Зайдите в меню браузера, нажав на <b>три точки</b> в углу экрана
+        </Typography>
+        <Typography>
+          - Нажмите &quot;<b>установить приложение</b>&quot;
+        </Typography>
+        <Typography>
+          - Подтвердите установку кнопкой &quot;<b>установить</b>&quot;
+        </Typography>
         <PostScriptum />
       </>
     );
@@ -33,44 +39,68 @@ export const InstallAppInstruction = ({
     return (
       <>
         <Typography>
-          - Нажмите на значок &quot;поделиться&quot; в нижней или верхней части экрана
+          - Нажмите на значок &quot;<b>поделиться</b>&quot; в нижней или верхней части экрана
         </Typography>
-        <Typography>- Нажмите &quot;На экран домой&quot;</Typography>
-        <Typography>- Подтвердите установку кнопкой &quot;добавить&quot;</Typography>
+        <Typography>
+          - Нажмите &quot;<b>На экран домой</b>&quot;
+        </Typography>
+        <Typography>
+          - Подтвердите установку кнопкой &quot;<b>добавить</b>&quot;
+        </Typography>
         <PostScriptum />
       </>
     );
   } else if (browserType === browserTypes.YANDEX) {
     return (
       <>
-        <Typography>- Зайдите в меню браузера, нажав на три точки в углу экрана</Typography>
-        <Typography>- Нажмите &quot;добавить ярлык&quot;</Typography>
+        <Typography>
+          - Зайдите в меню браузера, нажав на <b>три точки</b> в углу экрана
+        </Typography>
+        <Typography>
+          - Нажмите &quot;<b>добавить ярлык</b>&quot;
+        </Typography>
         <PostScriptum />
       </>
     );
   } else if (browserType === browserTypes.SAMSUNG) {
     return (
       <>
-        <Typography>- Зайдите в меню браузера, нажав на три полоски в углу экрана</Typography>
-        <Typography>- Нажмите &quot;добавить страницу в&quot;</Typography>
-        <Typography>- Нажмите &quot;домашний экран&quot;</Typography>
+        <Typography>
+          - Зайдите в меню браузера, нажав на <b>три полоски</b> в углу экрана
+        </Typography>
+        <Typography>
+          - Нажмите &quot;<b>добавить страницу в</b>&quot;
+        </Typography>
+        <Typography>
+          - Нажмите &quot;<b>домашний экран</b>&quot;
+        </Typography>
         <PostScriptum />
       </>
     );
   } else if (browserType === browserTypes.OPERA) {
     return (
       <>
-        <Typography>- Зайдите в меню браузера, нажав на три точки в углу экрана</Typography>
-        <Typography>- Нажмите &quot;домашний экран&quot;</Typography>
-        <Typography>- Подтвердите установку кнопкой &quot;добавить&quot;</Typography>
+        <Typography>
+          - Зайдите в меню браузера, нажав на <b>три точки</b> в углу экрана
+        </Typography>
+        <Typography>
+          - Нажмите &quot;<b>домашний экран</b>&quot;
+        </Typography>
+        <Typography>
+          - Подтвердите установку кнопкой &quot;<b>добавить</b>&quot;
+        </Typography>
         <PostScriptum />
       </>
     );
   } else if (browserType === browserTypes.FIREFOX) {
     return (
       <>
-        <Typography>- Зайдите в меню браузера, нажав на три точки в углу экрана</Typography>
-        <Typography>- Нажмите &quot;установить&quot;</Typography>
+        <Typography>
+          - Зайдите в меню браузера, нажав на <b>три точки</b> в углу экрана
+        </Typography>
+        <Typography>
+          - Нажмите &quot;<b>установить</b>&quot;
+        </Typography>
         <PostScriptum />
       </>
     );
