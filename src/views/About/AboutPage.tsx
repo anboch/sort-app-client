@@ -16,11 +16,21 @@ import * as S from './AboutPageStyles';
 import { localStorageKeys } from '../../components/common/constants';
 import { useEffect, useState } from 'react';
 import { pages } from '../../App';
+import { useCheckBrowser } from '../../hooks/useCheckBrowser';
+import { browserPlatformTypes, useCheckPlatform } from '../../hooks/useCheckPlatform';
+import { InstallAppInstruction } from '../../components/InstallAppInstruction/InstallAppInstruction';
 
 const AboutPage = (): JSX.Element => {
+  const browserType = useCheckBrowser();
+  const browserPlatform = useCheckPlatform();
+  const displayInstallAppInfo =
+    browserPlatform === browserPlatformTypes.ANDROID ||
+    browserPlatform === browserPlatformTypes.IOS;
+
   const [expended1, setExpended1] = useState(false);
   const [expended2, setExpended2] = useState(false);
   const [expended3, setExpended3] = useState(false);
+  const [expended4, setExpended4] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem(localStorageKeys.viewedAboutPage)) {
@@ -186,6 +196,23 @@ const AboutPage = (): JSX.Element => {
             </Typography>
           </S.Details>
         </S.Instruction>
+        {displayInstallAppInfo && (
+          <S.Instruction
+            expanded={expended4}
+            onChange={(): void => setExpended4((state) => !state)}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography variant="subtitle1">Установить на телефон/планшет</Typography>
+            </AccordionSummary>
+            <S.Details>
+              <InstallAppInstruction browserType={browserType} />
+            </S.Details>
+          </S.Instruction>
+        )}
       </S.Instructions>
       <S.Contacts>
         <Typography>
