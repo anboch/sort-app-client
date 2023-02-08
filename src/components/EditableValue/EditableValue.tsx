@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState, KeyboardEvent } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -27,9 +27,17 @@ export const EditableValue = ({
   const [isEditMode, setIsEditMode] = useState(false);
   const ref = useOutsideClick(() => setIsEditMode(false));
 
+  const actionByEnterKey = (event: KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+      closeInputWithSave();
+    }
+  };
+
   const closeInputWithSave = (): void => {
-    if (currentValue !== inputValue.trim()) {
+    if (currentValue !== inputValue.trim() && !errorMessage) {
       mutationFunc(inputValue.trim());
+    } else if (!errorMessage) {
+      setIsEditMode(false);
     }
   };
 
@@ -91,6 +99,7 @@ export const EditableValue = ({
               autoFocus
               value={inputValue}
               onChange={(e): void => setInputValue(e.target.value)}
+              onKeyDown={actionByEnterKey}
               id="filled-basic"
               // label={title}
               variant="standard"
