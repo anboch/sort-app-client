@@ -15,12 +15,13 @@ export const BinRules = ({
   isEditMode?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
-  const uniqRulesSortedByQuantity = useGetUniqRulesSortedByQuantity(
-    isEditMode ? allRuleSets || [] : selectedRuleSet ? [selectedRuleSet] : []
-  );
   const selectedRuleIds = getIDs(selectedRuleSet?.ruleIDs ?? []);
   const isSelected = (ruleId: string): boolean =>
     isEditMode ? selectedRuleIds?.includes(ruleId) : true;
+
+  const uniqRulesSortedByQuantity = useGetUniqRulesSortedByQuantity(
+    isEditMode ? allRuleSets || [] : selectedRuleSet ? [selectedRuleSet] : []
+  ).filter((rule) => isSelected(rule._id));
 
   // todo fixed hight of rules before choose RP
   return (
@@ -37,11 +38,7 @@ export const BinRules = ({
       ) : allRuleSets ? (
         uniqRulesSortedByQuantity.map((rule) => {
           if (typeof rule === 'object' && rule.description) {
-            return (
-              <S.BinRule key={rule._id} selected={isSelected(rule._id)}>
-                - {rule.description}
-              </S.BinRule>
-            );
+            return <Typography key={rule._id}>- {rule.description}</Typography>;
           }
         })
       ) : (
