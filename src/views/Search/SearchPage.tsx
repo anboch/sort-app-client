@@ -97,7 +97,7 @@ const Search = (): JSX.Element => {
       <SearchBar
         searchInputValue={searchInputValue}
         setSearchInputValue={setSearchInputValue}
-        placeholder="Введите запрос"
+        placeholder="Картон, тетрапак, lego"
         addFilter={addFilter}
         exactSearch={search}
       />
