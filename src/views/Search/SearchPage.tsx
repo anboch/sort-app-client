@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import { pageRoutes } from '../../routes';
 import { useFetchSearchList } from '../../hooks/useFetchSearchList';
 import { useFuseSearch } from '../../hooks/useFuseSearch';
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import { Typography } from '@mui/material';
 
 export type OnChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
@@ -92,12 +94,29 @@ const Search = (): JSX.Element => {
 
   // {shouldRedirect && <Navigate replace to="/home" />}
 
+  // todo send error notification to the server
+  if (fetchSearchListQ.isError) {
+    return (
+      <S.SearchPage>
+        <Typography variant="body1">
+          Ошибка при загрузке данных, попробуйте обновить страницу
+        </Typography>
+      </S.SearchPage>
+    );
+  }
+  if (
+    (fetchSearchListQ.isLoading && fetchSearchListQ.isFetching) ||
+    !fetchSearchListQ.data?.union?.length
+  ) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <S.SearchPage>
       <SearchBar
         searchInputValue={searchInputValue}
         setSearchInputValue={setSearchInputValue}
-        placeholder="Картон, тетрапак, lego"
+        placeholder="Картон, тетрапак, lego ..."
         addFilter={addFilter}
         exactSearch={search}
       />
